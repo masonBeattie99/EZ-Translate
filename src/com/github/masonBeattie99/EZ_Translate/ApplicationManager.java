@@ -13,41 +13,66 @@ import java.awt.event.WindowEvent;
 import javax.swing.JOptionPane;
 import javax.swing.*;
 import com.github.masonBeattie99.EZ_Translate.services.*;
+//import java.util.Scanner;
+import java.io.FileInputStream;
+import java.io.PrintWriter;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 public class ApplicationManager {
 	
+	private static String CONFIG_FILE = "configuration\\config.txt";
+	
 	//interface classes
-	EZTranslateMenu ezmenu;
-	ConfigurationInterface configinter;
-	TranslationInterface trslinter;
-	ApplicationConfigurationMenu acm;
-	KeybindConfigurationMenu kcm;
-	LocalizationConfigurationMenu lcm;
+	private EZTranslateMenu ezmenu;
+	private ConfigurationInterface configinter;
+	private TranslationInterface trslinter;
+	private ApplicationConfigurationMenu acm;
+	private KeybindConfigurationMenu kcm;
+	private LocalizationConfigurationMenu lcm;
 	
 	//service classes
-	DetectionService ds;
-	TranslationService ts;
-	LanguageDetectionService lds;
+	private DetectionService ds;
+	private TranslationService ts;
+	private LanguageDetectionService lds;
 	
-	//shudown notification components
-	JFrame noti;
+	//file reading objects
+	private FileInputStream configFile;
+	private PrintWriter configWriter;
+	//private Scanner in;
 	
+	//shudown notification jframe components
+	private JFrame noti;
+	
+	//configuration variables and lists
+	private ArrayList<String> apps;
+	private String currOpenKey;
+	private String currCloseKey;
+	private String currLocal;
 	/**
-	 * default constructor for ApplicationManager. Initializes all objects for faster run time during appliaction
+	 * default constructor for ApplicationManager. Initializes all objects used by the application initially for faster run time during appliaction
 	 */
 	public ApplicationManager() {
 		
+		//interface objects
 		ezmenu = new EZTranslateMenu(this);
 		configinter = new ConfigurationInterface(this);
 		trslinter = new TranslationInterface(this);
 		acm = new ApplicationConfigurationMenu(this);
 		kcm = new KeybindConfigurationMenu(this);
 		lcm = new LocalizationConfigurationMenu(this);
+		
+		//service objects
 		ds = new DetectionService(this);
 		ts = new TranslationService(this);
 		lds = new LanguageDetectionService(this);
 		
+		//notification frame
 		noti = new JFrame();
+		
+		//file objects
+		
+		this.startup();
 		
 	}//default constructor
 
@@ -60,7 +85,14 @@ public class ApplicationManager {
 	 */
 	public void startup() {
 		
-		JOptionPane.showMessageDialog(noti, "Starting Application");
+		try {
+		configFile = new FileInputStream(CONFIG_FILE);
+		}
+		catch(FileNotFoundException e) {
+			JOptionPane.showMessageDialog(noti, "Config File Not Found. Exiting Program", "File Error", JOptionPane.ERROR_MESSAGE);
+			this.shutdown();
+		}
+		JOptionPane.showMessageDialog(noti, "Config File Reading Successful, Starting Application");
 		
 		displayMainMenu();
 		
@@ -71,6 +103,12 @@ public class ApplicationManager {
 	 */
 	public void shutdown() {
 		
+		try {
+			configFile.close();
+		}
+		catch(FileNotFoundException e) {
+			
+		}
 		JOptionPane.showMessageDialog(noti, "Application Has Successfully Shut Down!");
 		ezmenu.dispatchEvent(new WindowEvent(ezmenu, WindowEvent.WINDOW_CLOSING));
 		
@@ -182,6 +220,11 @@ public class ApplicationManager {
 		kcm.hideMenu();
 	}//hideKCM
 	
+	//file methods
+	
+	/**
+	 * loads the configuration file and its contents
+	 */
 	
 	//further methods TBD
 	

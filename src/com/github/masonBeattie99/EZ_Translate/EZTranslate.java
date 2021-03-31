@@ -10,7 +10,7 @@ public class EZTranslate {
 		
 		ApplicationManager am = new ApplicationManager();
 		
-		am.startup();
+		//am.startup();
 		
 		//am.shutdown();
 		
