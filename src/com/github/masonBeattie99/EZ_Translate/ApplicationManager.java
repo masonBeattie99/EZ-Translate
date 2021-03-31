@@ -2,6 +2,8 @@
  * Handles the interactions of the different components of the application
  * Performs the startup and closing tasks of the application
  * 
+ * Maintains the contents of the configuration file for the application for configuration integrity
+ * 
  * @author mason
  *
  */
@@ -11,6 +13,7 @@ import java.awt.event.WindowEvent;
 import javax.swing.JOptionPane;
 import javax.swing.*;
 import com.github.masonBeattie99.EZ_Translate.services.*;
+
 public class ApplicationManager {
 	
 	//interface classes
