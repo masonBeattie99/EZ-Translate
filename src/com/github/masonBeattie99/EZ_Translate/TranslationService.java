@@ -3,6 +3,10 @@
  * @author mason
  *
  */
+package com.github.masonBeattie99.EZ_Translate;
 public class TranslationService {
-
-}
+	
+	public TranslationService(ApplicationManager am) {
+		
+	}//constructor
+}//class
