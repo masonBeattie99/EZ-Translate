@@ -3,7 +3,8 @@
  * @author mason
  *
  */
-package com.github.masonBeattie99.EZ_Translate;
+package com.github.masonBeattie99.EZ_Translate.services;
+import com.github.masonBeattie99.EZ_Translate.ApplicationManager;
 public class DetectionService {
 
 	public DetectionService(ApplicationManager am) {
