@@ -13,17 +13,11 @@ import java.awt.event.WindowEvent;
 import javax.swing.JOptionPane;
 import javax.swing.*;
 import com.github.masonBeattie99.EZ_Translate.services.*;
-//import java.util.Scanner;
-import java.io.FileInputStream;
-import java.io.PrintWriter;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
+import com.github.masonBeattie99.EZ_Translate.configuration.Configuration;
 
 public class ApplicationManager {
 	
-	private static String CONFIG_FILE = "configuration\\config.txt";
-	
-	//interface classes
+	//interface object
 	private EZTranslateMenu ezmenu;
 	private ConfigurationInterface configinter;
 	private TranslationInterface trslinter;
@@ -31,24 +25,17 @@ public class ApplicationManager {
 	private KeybindConfigurationMenu kcm;
 	private LocalizationConfigurationMenu lcm;
 	
-	//service classes
+	//configuration object
+	private Configuration config;
+	
+	//service object
 	private DetectionService ds;
 	private TranslationService ts;
 	private LanguageDetectionService lds;
 	
-	//file reading objects
-	private FileInputStream configFile;
-	private PrintWriter configWriter;
-	//private Scanner in;
-	
-	//shudown notification jframe components
+	//shutdown notification JFrame components
 	private JFrame noti;
 	
-	//configuration variables and lists
-	private ArrayList<String> apps;
-	private String currOpenKey;
-	private String currCloseKey;
-	private String currLocal;
 	/**
 	 * default constructor for ApplicationManager. Initializes all objects used by the application initially for faster run time during appliaction
 	 */
@@ -61,6 +48,9 @@ public class ApplicationManager {
 		acm = new ApplicationConfigurationMenu(this);
 		kcm = new KeybindConfigurationMenu(this);
 		lcm = new LocalizationConfigurationMenu(this);
+		
+		//configuration object
+		config = new Configuration();
 		
 		//service objects
 		ds = new DetectionService(this);
@@ -85,15 +75,13 @@ public class ApplicationManager {
 	 */
 	public void startup() {
 		
-		try {
-		configFile = new FileInputStream(CONFIG_FILE);
+		if(config.readFile()) {
+			JOptionPane.showMessageDialog(noti, "Config File Reading Successful, Starting Application");
 		}
-		catch(FileNotFoundException e) {
-			JOptionPane.showMessageDialog(noti, "Config File Not Found. Exiting Program", "File Error", JOptionPane.ERROR_MESSAGE);
+		else {
+			JOptionPane.showMessageDialog(noti, "Error: FileNotFoundException.", "FileNotFoundException", JOptionPane.ERROR_MESSAGE);
 			this.shutdown();
 		}
-		JOptionPane.showMessageDialog(noti, "Config File Reading Successful, Starting Application");
-		
 		displayMainMenu();
 		
 	}//startup
@@ -103,14 +91,14 @@ public class ApplicationManager {
 	 */
 	public void shutdown() {
 		
-		try {
-			configFile.close();
+		if(config.updateFile()) {
+			JOptionPane.showMessageDialog(noti, "Application Has Successfully Shut Down!");
+			ezmenu.dispatchEvent(new WindowEvent(ezmenu, WindowEvent.WINDOW_CLOSING));
 		}
-		catch(FileNotFoundException e) {
-			
+		else {
+			JOptionPane.showMessageDialog(noti, "Error: FileNotFoundException.", "FileNotFoundException", JOptionPane.ERROR_MESSAGE);
 		}
-		JOptionPane.showMessageDialog(noti, "Application Has Successfully Shut Down!");
-		ezmenu.dispatchEvent(new WindowEvent(ezmenu, WindowEvent.WINDOW_CLOSING));
+		
 		
 	}//shutdown
 	
