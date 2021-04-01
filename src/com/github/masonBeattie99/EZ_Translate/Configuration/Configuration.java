@@ -18,7 +18,7 @@ public class Configuration {
 	private static String CONFIG_DELIM = "%";
 	private static String APPS_DELIM = "#";
 	private static String NO_CONFIG = "NOT CONFIGURED";
-	private static String CONFIG_FILE = "config.txt";
+	private static String CONFIG_FILE = ".config.txt";
 	private static int APP_LIMIT = 10;
 	
 	//file reading objects

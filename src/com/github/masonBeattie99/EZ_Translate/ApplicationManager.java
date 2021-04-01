@@ -206,12 +206,21 @@ public class ApplicationManager {
 		kcm.hideMenu();
 	}//hideKCM
 	
-	//methods for interacting with configuration class and its components
-	
+	//method for interaction with configuration object
+	/**
+	 * returns the configuration object for use by components
+	 * @return the configuration object
+	 */
+	public Configuration accessConfig() {
+		return config;
+	}//accessConfig
 	
 	//further methods TBD
 	
 	
+	/**
+	 * 
+	 */
 	//insert new methods here
 	
 }//class
