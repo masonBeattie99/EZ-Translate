@@ -15,6 +15,8 @@ import java.util.Scanner;
 public class Configuration {
 
 	//static variables for configuration file
+	private static String CONFIG_DELIM = "%";
+	private static String APPS_DELIM = "#";
 	private static String NO_CONFIG = "NOT CONFIGURED";
 	private static String CONFIG_FILE = "config.txt";
 	private static int APP_LIMIT = 10;
@@ -34,7 +36,7 @@ public class Configuration {
 	private Scanner in;
 	
 	//configuration variables and lists
-	private String apps;
+	private ArrayList<String> apps;
 	private String currOpenKey;
 	private String currCloseKey;
 	private String currLocal;
@@ -47,7 +49,7 @@ public class Configuration {
 	 */
 	public Configuration(){
 		
-		apps = "";
+		apps = new ArrayList<String>();
 		currOpenKey = "";
 		currCloseKey = "";
 		currLocal = "";
@@ -60,18 +62,36 @@ public class Configuration {
 	 */
 	public boolean readFile() {
 		
-		String temp = "";
+		String configLine = "";
+		String appsLine = "";
 		
 		try {
 			configFile = new File(CONFIG_FILE);
 			in = new Scanner(configFile);
 			
 			if(in.hasNext()) {
-				in.useDelimiter("%");
+				configLine = in.nextLine();
+				Scanner ls = new Scanner(configLine); 
+				ls.useDelimiter(CONFIG_DELIM);
+				
+				currLocal = ls.next();
+				currOpenKey = ls.next();
+				currCloseKey = ls.next();
+				appsLine = ls.next();
+				
+				Scanner als = new Scanner(appsLine);
+				als.useDelimiter(APPS_DELIM);
+				
+				while(als.hasNext()) {
+					apps.add(als.next());
+				}
+				
+				ls.close();
+				als.close();
 				
 			}
 			else {
-				apps = NO_CONFIG;
+				apps.add(NO_CONFIG);
 				currOpenKey = NO_CONFIG;
 				currCloseKey = NO_CONFIG;
 				currLocal = "eng";//default localization is English. If no configuration is available then automatically assign English
@@ -95,14 +115,29 @@ public class Configuration {
 	 */
 	public boolean updateFile() {
 		
+		String appString = "";
+		
 		try {
 			configWriter = new PrintWriter(CONFIG_FILE);
 			
+			//creates a string of apps that is readable by the system
+			
+			for(int i = 0; i < apps.size(); i++) {
+				
+				if(i != apps.size() - 1) {
+					appString += apps.get(i) + APPS_DELIM;
+				}
+				else {
+					appString += apps.get(i);
+				}
+				
+			}
+			
 			configWriter.write(
-					currLocal + "%" + 
-					currOpenKey + "%" +
-					currCloseKey + "%" +
-					apps);
+					currLocal + CONFIG_DELIM + 
+					currOpenKey + CONFIG_DELIM +
+					currCloseKey + CONFIG_DELIM +
+					appString);
 			
 		}
 		catch(FileNotFoundException e) {
@@ -110,11 +145,11 @@ public class Configuration {
 			return false;
 		}
 		
-		
-		
 		return true;
 		
 	}//updateFile
+	
+	//methods for handling application configurations
 	
 	/**
 	 * updates the application string
@@ -122,10 +157,101 @@ public class Configuration {
 	 * @param data to change
 	 * @return true upon success, false upon failure
 	 */
-	public boolean updateApp(String changedConfig, String data) {
+	public boolean updateApp(String app) {
+		
+		//if no app is configured, removes no configuraion message and adds an app in its place
+		if(apps.get(0).equals(NO_CONFIG)){
+			apps.set(0,app);
+		}
+		else if(apps.size() == APP_LIMIT){
+			return false;
+		}
+		else {
+			apps.add(app);
+		}
 		
 		return true;
 		
 	}//updateFile
+	
+	/**
+	 * removes an application from the list
+	 * @param application to be removed
+	 * @return true upon success, false upon failure
+	 */
+	public boolean removeApp(String app) {
+		
+		for(int i = 0; i < apps.size(); i++) {
+			if(apps.get(i).equals(app)) {
+				apps.remove(i);
+				return true;
+			}
+		}
+		
+		return false;
+		
+	}//removeapp
+	
+	
+	//methods for handling keybind configurations
+	
+	/**
+	 * updates the current Open Key Bind
+	 * @param Key Bind to configure
+	 * @return true upon success, false upon failure
+	 */
+	public boolean updateOpenKey(String newKey) {
+		
+		currOpenKey = newKey;
+		
+		return true;
+		
+	}//updateOpenKey
+	
+	/**
+	 * updates the current Close Key Bind
+	 * @param Key Bind to configure
+	 * @return 
+	 */
+	public boolean updateCloseKey(String newKey) {
+		
+		currCloseKey = newKey;
+		
+		return true;
+		
+	}//updateCloseKey
+	
+	/**
+	 * clears the current Open Key Bind
+	 */
+	public void clearOpenKey() {
+		
+		currOpenKey = NO_CONFIG;
+		
+	}//clearOpenkey
+	
+	/**
+	 * clears the current Close Key Bind
+	 */
+	public void clearCloseKey() {
+		
+		currCloseKey = NO_CONFIG;
+		
+		//maybe insert line to update file
+		
+	}//clearCloseKey
+	
+	//methods for handling localization configuration. No method to clear localization due to issues pertaining to having no localization set
+	
+	/**
+	 * changes current localization configuration
+	 * @param local to change to
+	 * @return true upon success, false upon failure
+	 */
+	public void changeLocal(String newLocal) {
+		
+		currLocal = newLocal;
+		
+	}//changeLocal
 	
 }//class
