@@ -21,15 +21,6 @@ public class Configuration {
 	private static String CONFIG_FILE = "config.txt";
 	private static int APP_LIMIT = 10;
 	
-	/**
-	//static variables for configurations themselves
-	private static String 
-	private static int APP_INDEX = 3;
-	private static int OPEN_KEY_INDEX = 1;
-	private static int CLOSE_KEY_INDEX = 2;
-	private static int LOCAL_INDEX = 0;
-	*/
-	
 	//file reading objects
 	private File configFile;
 	private PrintWriter configWriter;
@@ -40,10 +31,7 @@ public class Configuration {
 	private String currOpenKey;
 	private String currCloseKey;
 	private String currLocal;
-	
-	//hash map to store configuration settings
-	//private ArrayList<Map<String, String>> configs;
-	
+
 	/**
 	 * constructor for Configuration
 	 */
@@ -74,10 +62,37 @@ public class Configuration {
 				Scanner ls = new Scanner(configLine); 
 				ls.useDelimiter(CONFIG_DELIM);
 				
-				currLocal = ls.next();
-				currOpenKey = ls.next();
-				currCloseKey = ls.next();
-				appsLine = ls.next();
+				//checking if local exists within line
+				if(!ls.next().isBlank()) {
+					currLocal = ls.next();
+				}
+				else {
+					currLocal = "eng";
+				}
+				
+				//checking if open key data exists within line
+				if(!ls.next().isBlank()) {
+					currOpenKey = ls.next();
+				}
+				else {
+					currOpenKey = NO_CONFIG;
+				}
+				
+				//checking if close key data exists within line
+				if(!ls.next().isBlank()) {
+					currCloseKey = ls.next();
+				}
+				else {
+					currCloseKey = NO_CONFIG;
+				}
+				
+				//checking if application data exists within line
+				if(!ls.next().isBlank()) {
+					appsLine = ls.next();
+				}
+				else {
+					apps.add(NO_CONFIG);
+				}
 				
 				Scanner als = new Scanner(appsLine);
 				als.useDelimiter(APPS_DELIM);
@@ -120,8 +135,7 @@ public class Configuration {
 		try {
 			configWriter = new PrintWriter(CONFIG_FILE);
 			
-			//creates a string of apps that is readable by the system
-			
+			//creates a string of apps that is formatted for storage within the configuration file. Does not add delimiter for last item
 			for(int i = 0; i < apps.size(); i++) {
 				
 				if(i != apps.size() - 1) {
@@ -192,7 +206,6 @@ public class Configuration {
 		
 	}//removeapp
 	
-	
 	//methods for handling keybind configurations
 	
 	/**
@@ -253,5 +266,73 @@ public class Configuration {
 		currLocal = newLocal;
 		
 	}//changeLocal
+	
+	//Methods to return specific configurations, or all configurations
+	
+	/**
+	 * returns the localization configuration
+	 * @return current localConfig
+	 */
+	public String getLocal() {
+		
+		return currLocal;
+		
+	}//getLocal
+	
+	/**
+	 * returns the open keybind
+	 * @return current open keybind
+	 */
+	public String getOpenKey() {
+		
+		return currOpenKey;
+		
+	}//getOpenKey
+	
+	/**
+	 * returns the close keybind
+	 * @return current close keybind
+	 */
+	public String getCloseKey() {
+		
+		return currCloseKey;
+		
+	}//getCloseKey
+	
+	/**
+	 * returns the applications in a user readable string that does not include delimiters
+	 * @return apps formatted into a string
+	 */
+	public String getApps() {
+		String appString = "";
+		
+		for(int i = 0; i < apps.size(); i++) {
+			
+			//does not add new line if last value
+			if(i != apps.size() - 1) {
+				appString += apps.get(i) + "/n";
+			}
+			else {
+				appString += apps.get(i);
+			}
+		}
+		
+		return appString;
+		
+	}//getApps
+	
+	/**
+	 * returns all configurations as a string through get methods provided and labeling corresponding configurations
+	 * @return all current configurations
+	 */
+	public String getConfig() {
+		
+		String result = "";
+		
+		result = String.format("Localization: %s \nOpening Keybind: %s \nClosing Keybind: %s \nApplications: %s", this.getLocal(), this.getOpenKey(), this.getCloseKey(), this.getApps());
+		
+		return result;
+		
+	}//getConfig
 	
 }//class

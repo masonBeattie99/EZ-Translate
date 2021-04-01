@@ -101,9 +101,7 @@ public class ApplicationManager {
 		
 		
 	}//shutdown
-	
-	//menu display methods
-	
+		
 	
 	//displaying menus
 	
@@ -208,11 +206,8 @@ public class ApplicationManager {
 		kcm.hideMenu();
 	}//hideKCM
 	
-	//file methods
+	//methods for interacting with configuration class and its components
 	
-	/**
-	 * loads the configuration file and its contents
-	 */
 	
 	//further methods TBD
 	
