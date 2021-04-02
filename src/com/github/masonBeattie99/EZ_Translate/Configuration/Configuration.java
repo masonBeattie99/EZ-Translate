@@ -5,7 +5,7 @@
 package com.github.masonBeattie99.EZ_Translate.configuration;
 
 import java.io.File;
-import java.io.PrintWriter;
+import java.io.FileWriter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,15 +15,15 @@ import java.util.Scanner;
 public class Configuration {
 
 	//static variables for configuration file
-	private static String CONFIG_DELIM = "%";
+	private static String CONFIG_DELIM = ".";
 	private static String APPS_DELIM = "#";
-	private static String NO_CONFIG = "NOT CONFIGURED";
+	private static String NO_CONFIG = "NOT_CONFIGURED";
 	private static String CONFIG_FILE = "src/com/github/masonBeattie99/EZ_Translate/configuration/config.txt";
 	private static int APP_LIMIT = 10;
 	
 	//file reading objects
 	private File configFile;
-	private PrintWriter configWriter;
+	private FileWriter configWriter;
 	private Scanner in;
 	
 	//configuration variables and lists
@@ -44,6 +44,7 @@ public class Configuration {
 		
 	}//constructor
 	
+	//THIS PART IS MESSED UP. NOT RETAINING LOCALIZATION UPON READING OF FILE
 	/**
 	 * reads the configuration file
 	 * @return true upon success, false upon failure
@@ -55,15 +56,28 @@ public class Configuration {
 		
 		try {
 			configFile = new File(CONFIG_FILE);
-			in = new Scanner(configFile);
+			
+			if(configFile.exists()) {
+				in = new Scanner(configFile);
+			}
+			else {
+				configFile.createNewFile();
+				in = new Scanner(configFile);
+			}
+			
+			System.out.println("FILE IS BEING READ");
 			
 			if(in.hasNext()) {
+				
+				//setting up scanner and delimiters
 				configLine = in.nextLine();
+				System.out.println(configLine);
 				Scanner ls = new Scanner(configLine); 
 				ls.useDelimiter(CONFIG_DELIM);
 				
 				//checking if local exists within line
 				if(!ls.next().isBlank()) {
+					
 					currLocal = ls.next();
 				}
 				else {
@@ -72,6 +86,7 @@ public class Configuration {
 				
 				//checking if open key data exists within line
 				if(!ls.next().isBlank()) {
+					
 					currOpenKey = ls.next();
 				}
 				else {
@@ -80,6 +95,7 @@ public class Configuration {
 				
 				//checking if close key data exists within line
 				if(!ls.next().isBlank()) {
+					
 					currCloseKey = ls.next();
 				}
 				else {
@@ -88,6 +104,7 @@ public class Configuration {
 				
 				//checking if application data exists within line
 				if(!ls.next().isBlank()) {
+					
 					appsLine = ls.next();
 				}
 				else {
@@ -101,6 +118,7 @@ public class Configuration {
 					apps.add(als.next());
 				}
 				
+				in.close();
 				ls.close();
 				als.close();
 				
@@ -119,6 +137,10 @@ public class Configuration {
 			e.printStackTrace();
 			return false;
 		}
+		catch(IOException i) {
+			i.printStackTrace();
+			return false;
+		}
 		
 	}//readConfig
 	
@@ -131,9 +153,12 @@ public class Configuration {
 	public boolean updateFile() {
 		
 		String appString = "";
+		String configString = "";
+		
+		
 		
 		try {
-			configWriter = new PrintWriter(CONFIG_FILE);
+			configWriter = new FileWriter(configFile);
 			
 			//creates a string of apps that is formatted for storage within the configuration file. Does not add delimiter for last item
 			for(int i = 0; i < apps.size(); i++) {
@@ -147,15 +172,26 @@ public class Configuration {
 				
 			}
 			
-			configWriter.write(
+			configString=(
 					currLocal + CONFIG_DELIM + 
 					currOpenKey + CONFIG_DELIM +
 					currCloseKey + CONFIG_DELIM +
 					appString);
 			
+			System.out.println(configString);
+			
+			configWriter.write(configString);
+			
+			configWriter.flush();
+			configWriter.close();
+			
 		}
 		catch(FileNotFoundException e) {
 			e.printStackTrace();
+			return false;
+		}
+		catch(IOException i) {
+			i.printStackTrace();
 			return false;
 		}
 		

@@ -45,11 +45,14 @@ public class ApplicationManager {
 	 */
 	public ApplicationManager() {
 
-		//localization resource
-		localResource = ResourceBundle.getBundle("com.github.masonBeattie99.EZ_Translate.resources.Localization");
-		
 		//configuration object
 		config = new Configuration();
+		
+		//localization resource. Changes based on current local
+		if(config.getLocal().equals("eng"))	localResource = ResourceBundle.getBundle("com.github.masonBeattie99.EZ_Translate.resources.Localization_us");
+		else if(config.getLocal().equals("ger")) localResource = ResourceBundle.getBundle("com.github.masonBeattie99.EZ_Translate.resources.Localization_de");
+		else if(config.getLocal().equals("rus")) localResource = ResourceBundle.getBundle("com.github.masonBeattie99.EZ_Translate.resources.Localization_ru");
+		else localResource = ResourceBundle.getBundle("com.github.masonBeattie99.EZ_Translate.resources.Localization");
 		
 		//interface objects
 		ezmenu = new EZTranslateMenu(this);
@@ -229,6 +232,21 @@ public class ApplicationManager {
 	public ResourceBundle accessLocal() {
 		return localResource;
 	}//accessLocal
+	
+	//since the localization functionality is maintained by the application manager. Changes to the current local will be updated here
+	//the configuration handles storing and loading
+	/**
+	 * changes the current resource bundle utilized by the application
+	 * @param the local to change to
+	 */
+	public void changeLocal(String newLocal) {
+		
+		if(newLocal.equals("eng")) localResource = ResourceBundle.getBundle("com.github.masonBeattie99.EZ_Translate.resources.Localization_us");
+		else if(newLocal.equals("ger")) localResource = ResourceBundle.getBundle("com.github.masonBeattie99.EZ_Translate.resources.Localization_de");
+		else if(newLocal.equals("rus")) localResource = ResourceBundle.getBundle("com.github.masonBeattie99.EZ_Translate.resources.Localization_ru");
+		else localResource = ResourceBundle.getBundle("com.github.masonBeattie99.EZ_Translate.resources.Localization");
+		
+	}//changeLocal
 	
 	//further methods TBD
 
