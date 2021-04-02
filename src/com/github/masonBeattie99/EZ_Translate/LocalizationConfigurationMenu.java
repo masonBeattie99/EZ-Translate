@@ -30,7 +30,10 @@ public class LocalizationConfigurationMenu extends Menu{
 						am.accessLocal().getString("localChoicesRus")};
 				locals = new JComboBox<String>(options);
 				
-				//adding buttons to frame
+				//setting the default selection to the current localization
+				locals.setSelectedItem((String) am.accessConfig().getLocal());
+				
+				//adding items to frame
 				cp.add(upLocalBtn);
 				cp.add(locals);
 				cp.add(closeBtn);
@@ -41,7 +44,8 @@ public class LocalizationConfigurationMenu extends Menu{
 					
 					@Override
 					public void actionPerformed(ActionEvent evt) {
-						
+						am.accessConfig().changeLocal((String)locals.getSelectedItem());
+						am.changeLocal((String)locals.getSelectedItem());
 					}
 					
 				});

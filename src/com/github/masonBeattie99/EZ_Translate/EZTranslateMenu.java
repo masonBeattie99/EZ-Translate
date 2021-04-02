@@ -30,6 +30,7 @@ public class EZTranslateMenu extends Menu{
 		startBtn = new JButton(am.accessLocal().getString("startBtn"));
 		shutdownBtn = new JButton (am.accessLocal().getString("closeBtn"));
 		
+		//adding items to frame
 		cp.add(configBtn);
 		cp.add(startBtn);
 		cp.add(shutdownBtn);

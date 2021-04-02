@@ -15,6 +15,8 @@ public class ConfigurationInterface extends Menu{
 	private JButton keyBtn;
 	private JButton localBtn;
 	private JButton closeBtn;
+	private JTextField configs;
+	private JLabel configLabel;
 	
 	/**
 	 * constructs an EZTranslateMenu
@@ -29,12 +31,19 @@ public class ConfigurationInterface extends Menu{
 		keyBtn = new JButton(am.accessLocal().getString("configKeyBndBtn"));
 		localBtn = new JButton(am.accessLocal().getString("configLocalBtn"));
 		closeBtn = new JButton (am.accessLocal().getString("closeBtn"));
+		configLabel = new JLabel(am.accessLocal().getString("configsLabel"));
+		configs = new JTextField();
+		configs.setEditable(false);
 		
-		//adding buttons to frame
+		//adding items to frame
 		cp.add(appBtn);
 		cp.add(keyBtn);
 		cp.add(localBtn);
+		cp.add(configLabel);
+		cp.add(configs);
 		cp.add(closeBtn);
+		
+		configs.setText(am.accessConfig().getConfig());
 		
 		
 		//button functionality
@@ -79,7 +88,7 @@ public class ConfigurationInterface extends Menu{
 		
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setTitle(am.accessLocal().getString("configMenuLabel"));
-		setSize(350,120);
+		setSize(700,240);
 		
 		
 	}//constructor

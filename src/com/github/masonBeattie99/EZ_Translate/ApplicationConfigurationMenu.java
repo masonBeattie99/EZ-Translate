@@ -13,6 +13,7 @@ public class ApplicationConfigurationMenu extends Menu{
 			private JButton deAppBtn;
 			private JButton closeBtn;
 			private JTextField apps;
+			private JLabel appsLabel;
 			
 			/**
 			 * constructs an EZTranslateMenu
@@ -26,18 +27,20 @@ public class ApplicationConfigurationMenu extends Menu{
 				addAppBtn = new JButton(am.accessLocal().getString("addAppMsg"));
 				deAppBtn = new JButton(am.accessLocal().getString("deleAppMsg"));
 				closeBtn = new JButton (am.accessLocal().getString("closeBtn"));
-				apps = new JTextField(am.accessLocal().getString("appLabel"));
+				appsLabel = new JLabel(am.accessLocal().getString("appLabel"));
+				apps = new JTextField();
 				apps.setEditable(false);
 				
-				//adding buttons to frame
+				//adding items to frame
 				cp.add(addAppBtn);
 				cp.add(deAppBtn);
 				cp.add(closeBtn);
+				cp.add(appsLabel);
 				cp.add(apps);
 				
 				//populating textfield item
 				
-				apps.setText("Testing");
+				apps.setText(am.accessConfig().getApps());
 				
 				//button functionality
 				addAppBtn.addActionListener(new ActionListener() {

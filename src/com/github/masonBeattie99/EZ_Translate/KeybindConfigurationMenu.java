@@ -26,7 +26,7 @@ public class KeybindConfigurationMenu extends Menu{
 			upCloseKeyBtn = new JButton(am.accessLocal().getString("upCloseKeyBtn"));
 			closeBtn = new JButton (am.accessLocal().getString("closeBtn"));
 			
-			//adding buttons to frame
+			//adding items to frame
 			cp.add(upOpenKeyBtn);
 			cp.add(upCloseKeyBtn);
 			cp.add(closeBtn);
