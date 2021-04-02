@@ -25,6 +25,7 @@ public class Localization_de extends Localization{
 		if(key.equals("configAppBtn")) return "Anwendungen konfigurieren";
 		if(key.equals("configKeyBndBtn")) return "Konfigurieren Sie die Tastenkombinationen";
 		if(key.equals("configLocalBtn")) return "Konfigurieren Sie die Lokalisierung";
+		if(key.equals("configsLabel")) return "Aktuelle Konfigurationen";
 		if(key.equals("configMenuLabel")) return "Konfigurationsmenü";
 		if(key.equals("configBtn")) return "Konfigurationseinstellungen";
 		if(key.equals("startBtn")) return "Anfang";
@@ -56,6 +57,7 @@ public class Localization_de extends Localization{
 				"configAppBtn",
 				"configKeyBndBtn",
 				"configLocalBtn",
+				"configsLabel",
 				"configMenuLabel",
 				"configBtn",
 				"startBtn",

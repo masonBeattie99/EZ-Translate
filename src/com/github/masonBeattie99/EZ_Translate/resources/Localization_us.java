@@ -25,6 +25,7 @@ public class Localization_us extends Localization{
 		if(key.equals("configAppBtn")) return "Configure Applications";
 		if(key.equals("configKeyBndBtn")) return "Configure Key Binds";
 		if(key.equals("configLocalBtn")) return "Configure Localization";
+		if(key.equals("configsLabel")) return "Current Configurations";
 		if(key.equals("configMenuLabel")) return "Configuration Menu";
 		if(key.equals("configBtn")) return "Configuration Settings";
 		if(key.equals("startBtn")) return "Start";
@@ -56,6 +57,7 @@ public class Localization_us extends Localization{
 				"configAppBtn",
 				"configKeyBndBtn",
 				"configLocalBtn",
+				"configsLabel",
 				"configMenuLabel",
 				"configBtn",
 				"startBtn",

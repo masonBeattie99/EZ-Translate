@@ -25,6 +25,7 @@ public class Localization_ru extends Localization{
 		if(key.equals("configAppBtn")) return "Настроить приложения";
 		if(key.equals("configKeyBndBtn")) return "Настроить привязку клавиш";
 		if(key.equals("configLocalBtn")) return "Настроить локализацию";
+		if(key.equals("configsLabel")) return "Текущие конфигурации";
 		if(key.equals("configMenuLabel")) return "Меню конфигурации";
 		if(key.equals("configBtn")) return "Настройки конфигурации";
 		if(key.equals("startBtn")) return "Начинать";
@@ -56,6 +57,7 @@ public class Localization_ru extends Localization{
 				"configAppBtn",
 				"configKeyBndBtn",
 				"configLocalBtn",
+				"configsLabel",
 				"configMenuLabel",
 				"configBtn",
 				"startBtn",
