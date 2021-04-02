@@ -7,6 +7,7 @@ package com.github.masonBeattie99.EZ_Translate;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+@SuppressWarnings("serial")
 public class ConfigurationInterface extends Menu{
 
 	//private variables
@@ -24,10 +25,10 @@ public class ConfigurationInterface extends Menu{
 		
 		cp.setLayout(new FlowLayout());
 		
-		appBtn = new JButton("Configure Applications");
-		keyBtn = new JButton("Configure Keybinds");
-		localBtn = new JButton("Configure Localization");
-		closeBtn = new JButton ("Close");
+		appBtn = new JButton(am.accessLocal().getString("configAppBtn"));
+		keyBtn = new JButton(am.accessLocal().getString("configKeyBndBtn"));
+		localBtn = new JButton(am.accessLocal().getString("configLocalBtn"));
+		closeBtn = new JButton (am.accessLocal().getString("closeBtn"));
 		
 		//adding buttons to frame
 		cp.add(appBtn);
@@ -77,7 +78,7 @@ public class ConfigurationInterface extends Menu{
 		});
 		
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setTitle("Configuration Menu");
+		setTitle(am.accessLocal().getString("configMenuLabel"));
 		setSize(350,120);
 		
 		

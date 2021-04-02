@@ -5,6 +5,7 @@ package com.github.masonBeattie99.EZ_Translate;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+@SuppressWarnings("serial")
 public class KeybindConfigurationMenu extends Menu{
 
 	//private variables
@@ -21,11 +22,9 @@ public class KeybindConfigurationMenu extends Menu{
 			
 			cp.setLayout(new FlowLayout());
 			
-			upOpenKeyBtn = new JButton("Update Open Keybind");
-			upCloseKeyBtn = new JButton("Update Close Keybind");
-			closeBtn = new JButton ("Close");
-			
-			closeBtn = new JButton ("Close");
+			upOpenKeyBtn = new JButton(am.accessLocal().getString("upOpenKeyBtn"));
+			upCloseKeyBtn = new JButton(am.accessLocal().getString("upCloseKeyBtn"));
+			closeBtn = new JButton (am.accessLocal().getString("closeBtn"));
 			
 			//adding buttons to frame
 			cp.add(upOpenKeyBtn);
@@ -61,7 +60,7 @@ public class KeybindConfigurationMenu extends Menu{
 			});
 			
 			setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-			setTitle("Keybind Configuration Menu");
+			setTitle(am.accessLocal().getString("keyConfigMenuLabel"));
 			setSize(350,120);
 			
 			

@@ -5,6 +5,7 @@ package com.github.masonBeattie99.EZ_Translate;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+@SuppressWarnings("serial")
 public class ApplicationConfigurationMenu extends Menu{
 
 	//private variables
@@ -22,10 +23,10 @@ public class ApplicationConfigurationMenu extends Menu{
 				
 				cp.setLayout(new FlowLayout());
 				
-				addAppBtn = new JButton("Add Application");
-				deAppBtn = new JButton("Delete Application");
-				closeBtn = new JButton ("Close");
-				apps = new JTextField("Applications");
+				addAppBtn = new JButton(am.accessLocal().getString("addAppMsg"));
+				deAppBtn = new JButton(am.accessLocal().getString("deleAppMsg"));
+				closeBtn = new JButton (am.accessLocal().getString("closeBtn"));
+				apps = new JTextField(am.accessLocal().getString("appLabel"));
 				apps.setEditable(false);
 				
 				//adding buttons to frame
@@ -67,7 +68,7 @@ public class ApplicationConfigurationMenu extends Menu{
 				});
 				
 				setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-				setTitle("Application Configuration Menu");
+				setTitle(am.accessLocal().getString("appConfigMenuLabel"));
 				setSize(350,120);
 				
 				

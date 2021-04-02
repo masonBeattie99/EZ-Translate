@@ -9,6 +9,7 @@ package com.github.masonBeattie99.EZ_Translate;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+@SuppressWarnings("serial")
 public class EZTranslateMenu extends Menu{
 
 	//variables
@@ -25,9 +26,9 @@ public class EZTranslateMenu extends Menu{
 		
 		cp.setLayout(new FlowLayout());
 		
-		configBtn = new JButton("Configuration Settings");
-		startBtn = new JButton("Start");
-		shutdownBtn = new JButton ("Close");
+		configBtn = new JButton(am.accessLocal().getString("configBtn"));
+		startBtn = new JButton(am.accessLocal().getString("startBtn"));
+		shutdownBtn = new JButton (am.accessLocal().getString("closeBtn"));
 		
 		cp.add(configBtn);
 		cp.add(startBtn);
@@ -63,7 +64,7 @@ public class EZTranslateMenu extends Menu{
 		});
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setTitle("EZTranslate Menu");
+		setTitle(am.accessLocal().getString("mainMenuLabel"));
 		setSize(700,240);
 		
 		

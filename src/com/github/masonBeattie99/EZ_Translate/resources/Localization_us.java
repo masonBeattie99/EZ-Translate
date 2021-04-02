@@ -33,7 +33,9 @@ public class Localization_us extends Localization{
 		if(key.equals("upCloseKeyBtn")) return "Update Close Key Bind";
 		if(key.equals("keyConfigMenuLabel")) return "Keybind Configuration Menu";
 		if(key.equals("upLocalBtn")) return "Update Localization";
-		if(key.equals("localChoices")) return "\"eng\", \"ger\", \"rus\"";
+		if(key.equals("localChoicesEng")) return "eng";
+		if(key.equals("localChoicesGer")) return "ger";
+		if(key.equals("localChoicesRus")) return "rus";
 		if(key.equals("localConfigMenuLabel")) return "Localization Configuration Menu";
 		
 		return null;
@@ -62,7 +64,9 @@ public class Localization_us extends Localization{
 				"upCloseKeyBtn",
 				"keyConfigMenuLabel",
 				"upLocalBtn",
-				"localChoices",
+				"localChoicesEng",
+				"localChoicesGer",
+				"localChoicesRus",
 				"localConfigMenuLabel"
 				));
 	}

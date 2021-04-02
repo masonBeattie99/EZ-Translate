@@ -33,7 +33,9 @@ public class Localization_de extends Localization{
 		if(key.equals("upCloseKeyBtn")) return "Aktualisieren Sie die schließen Schlüsselbindung ";
 		if(key.equals("keyConfigMenuLabel")) return "Tastaturkonfigurationsmenü";
 		if(key.equals("upLocalBtn")) return "Lokalisierung aktualisieren";
-		if(key.equals("localChoices")) return "\"eng\", \"deu\", \"rus\"";
+		if(key.equals("localChoicesEng")) return "eng";
+		if(key.equals("localChoicesGer")) return "deu";
+		if(key.equals("localChoicesRus")) return "rus";
 		if(key.equals("localConfigMenuLabel")) return "Konfigurationsmenü für die Lokalisierung";
 		
 		return null;
@@ -62,7 +64,9 @@ public class Localization_de extends Localization{
 				"upCloseKeyBtn",
 				"keyConfigMenuLabel",
 				"upLocalBtn",
-				"localChoices",
+				"localChoicesEng",
+				"localChoicesGer",
+				"localChoicesRus",
 				"localConfigMenuLabel"
 				));
 	}

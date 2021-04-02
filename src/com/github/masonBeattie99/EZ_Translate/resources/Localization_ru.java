@@ -33,7 +33,9 @@ public class Localization_ru extends Localization{
 		if(key.equals("upCloseKeyBtn")) return "Обновить привязку клавиш закрытия";
 		if(key.equals("keyConfigMenuLabel")) return "Меню настройки привязки клавиш";
 		if(key.equals("upLocalBtn")) return "Обновить локализацию";
-		if(key.equals("localChoices")) return "«анг», «нем», «рус»";
+		if(key.equals("localChoicesEng")) return "анг";
+		if(key.equals("localChoicesGer")) return "нем";
+		if(key.equals("localChoicesRus")) return "рус";
 		if(key.equals("localConfigMenuLabel")) return "Меню настройки локализации";
 		
 		return null;
@@ -62,7 +64,9 @@ public class Localization_ru extends Localization{
 				"upCloseKeyBtn",
 				"keyConfigMenuLabel",
 				"upLocalBtn",
-				"localChoices",
+				"localChoicesEng",
+				"localChoicesGer",
+				"localChoicesRus",
 				"localConfigMenuLabel"
 				));
 	}

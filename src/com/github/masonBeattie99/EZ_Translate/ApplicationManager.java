@@ -14,7 +14,8 @@ import javax.swing.JOptionPane;
 import javax.swing.*;
 import com.github.masonBeattie99.EZ_Translate.services.*;
 import com.github.masonBeattie99.EZ_Translate.configuration.Configuration;
-
+import com.github.masonBeattie99.EZ_Translate.resources.*;
+import java.util.ResourceBundle;
 public class ApplicationManager {
 	
 	//interface object
@@ -33,6 +34,9 @@ public class ApplicationManager {
 	private TranslationService ts;
 	private LanguageDetectionService lds;
 	
+	//localization resource object
+	private ResourceBundle localResource;
+	
 	//shutdown notification JFrame components
 	private JFrame noti;
 	
@@ -40,6 +44,12 @@ public class ApplicationManager {
 	 * default constructor for ApplicationManager. Initializes all objects used by the application initially for faster run time during appliaction
 	 */
 	public ApplicationManager() {
+
+		//localization resource
+		localResource = ResourceBundle.getBundle("com.github.masonBeattie99.EZ_Translate.resources.Localization");
+		
+		//configuration object
+		config = new Configuration();
 		
 		//interface objects
 		ezmenu = new EZTranslateMenu(this);
@@ -48,9 +58,6 @@ public class ApplicationManager {
 		acm = new ApplicationConfigurationMenu(this);
 		kcm = new KeybindConfigurationMenu(this);
 		lcm = new LocalizationConfigurationMenu(this);
-		
-		//configuration object
-		config = new Configuration();
 		
 		//service objects
 		ds = new DetectionService(this);
@@ -61,7 +68,6 @@ public class ApplicationManager {
 		noti = new JFrame();
 		
 		//file objects
-		
 		this.startup();
 		
 	}//default constructor
@@ -76,13 +82,13 @@ public class ApplicationManager {
 	public void startup() {
 		
 		if(config.readFile()) {
-			JOptionPane.showMessageDialog(noti, "Config File Reading Successful, Starting Application");
+			JOptionPane.showMessageDialog(noti, localResource.getString("startupNoti"));
+			displayMainMenu();
 		}
 		else {
-			JOptionPane.showMessageDialog(noti, "Error: FileNotFoundException.", "FileNotFoundException", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(noti, localResource.getString("errFileNotFoundMsg"), localResource.getString("fileNotFoundMsg"), JOptionPane.ERROR_MESSAGE);
 			this.shutdown();
 		}
-		displayMainMenu();
 		
 	}//startup
 	
@@ -92,11 +98,11 @@ public class ApplicationManager {
 	public void shutdown() {
 		
 		if(config.updateFile()) {
-			JOptionPane.showMessageDialog(noti, "Application Has Successfully Shut Down!");
+			JOptionPane.showMessageDialog(noti, localResource.getString("shutdownNoti"));
 			ezmenu.dispatchEvent(new WindowEvent(ezmenu, WindowEvent.WINDOW_CLOSING));
 		}
 		else {
-			JOptionPane.showMessageDialog(noti, "Error: FileNotFoundException.", "FileNotFoundException", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(noti, localResource.getString("errFileNotFoundMsg"), localResource.getString("fileNotFoundMsg"), JOptionPane.ERROR_MESSAGE);
 		}
 		
 		
@@ -206,7 +212,8 @@ public class ApplicationManager {
 		kcm.hideMenu();
 	}//hideKCM
 	
-	//method for interaction with configuration object
+	//methods for interaction with configuration and localization objects
+	
 	/**
 	 * returns the configuration object for use by components
 	 * @return the configuration object
@@ -215,12 +222,16 @@ public class ApplicationManager {
 		return config;
 	}//accessConfig
 	
-	//further methods TBD
-	
-	
 	/**
-	 * 
+	 * returns the localization resource object for use by components
+	 * @return the localization object
 	 */
+	public ResourceBundle accessLocal() {
+		return localResource;
+	}//accessLocal
+	
+	//further methods TBD
+
 	//insert new methods here
 	
 }//class

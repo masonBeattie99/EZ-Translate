@@ -5,6 +5,7 @@ package com.github.masonBeattie99.EZ_Translate;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+@SuppressWarnings("serial")
 public class LocalizationConfigurationMenu extends Menu{
 
 	//private variables
@@ -12,7 +13,6 @@ public class LocalizationConfigurationMenu extends Menu{
 			private JButton closeBtn;
 			private JComboBox<String> locals;
 			private String[] options = new String[3];
-			private String currentLocal;
 			/**
 			 * constructs an EZTranslateMenu
 			 */
@@ -22,11 +22,13 @@ public class LocalizationConfigurationMenu extends Menu{
 				
 				cp.setLayout(new FlowLayout());
 				
-				upLocalBtn = new JButton("Update Localization");
-				closeBtn = new JButton ("Close");
-				options = new String[] {"eng", "ger", "rus"};
+				upLocalBtn = new JButton(am.accessLocal().getString("upLocalBtn"));
+				closeBtn = new JButton (am.accessLocal().getString("closeBtn"));
+				options = new String[] {
+						am.accessLocal().getString("localChoicesEng"), 
+						am.accessLocal().getString("localChoicesGer"),
+						am.accessLocal().getString("localChoicesRus")};
 				locals = new JComboBox<String>(options);
-				currentLocal = "";
 				
 				//adding buttons to frame
 				cp.add(upLocalBtn);
@@ -48,7 +50,7 @@ public class LocalizationConfigurationMenu extends Menu{
 						
 					@Override
 					public void actionPerformed(ActionEvent evt) {
-						currentLocal = (String) locals.getSelectedItem();
+						
 					}
 						
 				});
@@ -63,7 +65,7 @@ public class LocalizationConfigurationMenu extends Menu{
 				});
 				
 				setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-				setTitle("Localization Configuration Menu");
+				setTitle(am.accessLocal().getString("localConfigMenuLabel"));
 				setSize(350,120);
 				
 				
