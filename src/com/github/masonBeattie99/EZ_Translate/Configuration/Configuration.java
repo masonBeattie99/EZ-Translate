@@ -44,7 +44,8 @@ public class Configuration {
 		
 	}//constructor
 	
-	//THIS PART IS MESSED UP. NOT RETAINING LOCALIZATION UPON READING OF FILE
+//THIS PART IS MESSED UP. NOT RETAINING LOCALIZATION UPON READING OF FILE
+	
 	/**
 	 * reads the configuration file
 	 * @return true upon success, false upon failure
@@ -199,7 +200,7 @@ public class Configuration {
 		
 	}//updateFile
 	
-	//methods for handling application configurations
+//methods for handling application configurations
 	
 	/**
 	 * updates the application string
@@ -242,7 +243,7 @@ public class Configuration {
 		
 	}//removeapp
 	
-	//methods for handling keybind configurations
+//methods for handling keybind configurations
 	
 	/**
 	 * updates the current Open Key Bind
@@ -290,7 +291,7 @@ public class Configuration {
 		
 	}//clearCloseKey
 	
-	//methods for handling localization configuration. No method to clear localization due to issues pertaining to having no localization set
+//methods for handling localization configuration. No method to clear localization due to issues pertaining to having no localization set
 	
 	/**
 	 * changes current localization configuration
@@ -303,12 +304,26 @@ public class Configuration {
 		
 	}//changeLocal
 	
-	//Methods to return specific configurations, or all configurations
+//methods that allow for key binds to be verified
+	
+	/**
+	 * verifies that the key bind is supported in this system.
+	 * @param key bind to be verified
+	 * @return true if valid, false if invalid
+	 */
+	public boolean verifyKeyB(String keyBind) {
+		
+		return true;
+		
+	}//verifyKeyB
+	
+//methods to return specific configurations, or all configurations
 	
 	/**
 	 * returns the localization configuration
 	 * @return current localConfig
 	 */
+
 	public String getLocal() {
 		
 		return currLocal;
