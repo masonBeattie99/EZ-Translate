@@ -44,8 +44,8 @@ public class LocalizationConfigurationMenu extends Menu{
 					
 					@Override
 					public void actionPerformed(ActionEvent evt) {
+						am.changeLocal((String) locals.getSelectedItem());
 						am.accessConfig().changeLocal((String)locals.getSelectedItem());
-						am.changeLocal((String)locals.getSelectedItem());
 					}
 					
 				});
@@ -54,6 +54,8 @@ public class LocalizationConfigurationMenu extends Menu{
 						
 					@Override
 					public void actionPerformed(ActionEvent evt) {
+						
+						//potentially add something here
 						
 					}
 						
