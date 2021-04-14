@@ -9,7 +9,6 @@ import java.io.FileWriter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.Scanner;
 
 public class Configuration {
@@ -66,65 +65,52 @@ public class Configuration {
 				in = new Scanner(configFile);
 			}
 			
-			System.out.println("FILE IS BEING READ");
-			
 			if(in.hasNext()) {
 				
+				System.out.println("FILE IS BEING READ");
+				
 				//setting up scanner and delimiters
+				
 				configLine = in.nextLine();
 				System.out.println(configLine);
 				Scanner ls = new Scanner(configLine); 
-				ls.useDelimiter(CONFIG_DELIM);
+				ls.useDelimiter("\\"+CONFIG_DELIM);
 				
-				//checking if local exists within line
-				if(!ls.next().isBlank()) {
+				System.out.println(ls.delimiter());
+				
+				currLocal = ls.next();
+				System.out.println("LOCALE: " + currLocal);
+				
+				currOpenKey = ls.next();
+				System.out.println("KEY 1 " + currOpenKey);
+				
+				currCloseKey = ls.next();
+				System.out.println("KEY 2 " +currCloseKey);
+				
+				appsLine = ls.next();
+				
+				Scanner appls = new Scanner(appsLine);
+				appls.useDelimiter("\\"+APPS_DELIM);
+				while(appls.hasNext()) {
 					
-					currLocal = ls.next();
-				}
-				else {
-					currLocal = "eng";
-				}
-				
-				//checking if open key data exists within line
-				if(!ls.next().isBlank()) {
+					apps.add(appls.next());
 					
-					currOpenKey = ls.next();
-				}
-				else {
-					currOpenKey = NO_CONFIG;
 				}
 				
-				//checking if close key data exists within line
-				if(!ls.next().isBlank()) {
-					
-					currCloseKey = ls.next();
-				}
-				else {
-					currCloseKey = NO_CONFIG;
-				}
 				
-				//checking if application data exists within line
-				if(!ls.next().isBlank()) {
-					
-					appsLine = ls.next();
-				}
-				else {
-					apps.add(NO_CONFIG);
-				}
+				System.out.println("FINISHED READING FILE, VALUES: " + currLocal + " " + currOpenKey + " " + currCloseKey + " " + apps.toString());
 				
-				Scanner als = new Scanner(appsLine);
-				als.useDelimiter(APPS_DELIM);
 				
-				while(als.hasNext()) {
-					apps.add(als.next());
-				}
+				appls.close();
 				
 				in.close();
 				ls.close();
-				als.close();
 				
 			}
 			else {
+				
+				System.out.println("NOT EVEN READ BABY");
+				
 				apps.add(NO_CONFIG);
 				currOpenKey = NO_CONFIG;
 				currCloseKey = NO_CONFIG;
@@ -252,10 +238,26 @@ public class Configuration {
 	 */
 	public boolean updateOpenKey(String newKey) {
 		
-		currOpenKey = newKey;
+		if(verifyKeyB(newKey)) {
+			
+			//shaves off the last + if it is the last value if key bind is valid
+			if(newKey.charAt(newKey.length() - 1) == '+') {
+				
+				newKey = newKey.substring(0, newKey.length() - 1);
+			
+			}
+			
+			currOpenKey = newKey;
+			
+			return true;
 		
-		return true;
-		
+		}
+		else {
+			
+			//returns false upon invalid keybind
+			return false;
+			
+		}
 	}//updateOpenKey
 	
 	/**
@@ -313,7 +315,19 @@ public class Configuration {
 	 */
 	public boolean verifyKeyB(String keyBind) {
 		
-		return true;
+		//checking value of the current open bind
+		if(keyBind.length() != 0) {
+			
+			//add further validation code here
+			
+			
+			return true;
+		}
+		else {
+			
+			return false;
+		
+		}
 		
 	}//verifyKeyB
 	

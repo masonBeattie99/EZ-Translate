@@ -15,9 +15,12 @@ public class KeybindConfigurationMenu extends Menu{
 		private JButton closeBtn;
 		
 		//there might need to be an invisible text field to fix this issue
-		private JTextField keyInputField;
+		private JTextField openKeyInputField;
+		private JTextField closeKeyInputField;
 		
-		private boolean typing;
+		//variables used for storing keybind values to be sent to configuraiton
+		private String currentOpenBind;
+		private String currentCloseBind;
 		
 		
 		//testing code, remove when done
@@ -29,6 +32,10 @@ public class KeybindConfigurationMenu extends Menu{
 		 */
 		public KeybindConfigurationMenu(ApplicationManager am) {
 			
+			//variable used to store input
+			currentOpenBind = "";
+			currentCloseBind = "";
+			
 			//testing code
 			noti = new JFrame();
 			
@@ -38,45 +45,22 @@ public class KeybindConfigurationMenu extends Menu{
 			
 			upOpenKeyBtn = new JButton(am.accessLocal().getString("upOpenKeyBtn"));
 			upCloseKeyBtn = new JButton(am.accessLocal().getString("upCloseKeyBtn"));
-			saveKeyBtn = new JButton("TEMP SAVE BUTTON");
+			saveKeyBtn = new JButton("TEMP SAVE CLOSE BUTTON");
 			closeBtn = new JButton (am.accessLocal().getString("closeBtn"));
+			openKeyInputField = new JTextField("THE DISPLAY FUNCTIONS" + currentOpenBind);
+			closeKeyInputField = new JTextField("THE DISPLAY FUNCTIONS" + currentCloseBind);
 			
-			keyInputField = new JTextField();
-	
+			//input fields are used solely for display
+			openKeyInputField.setEditable(false);
+			closeKeyInputField.setEditable(false);
+			
 			//adding items to frame
 			cp.add(upOpenKeyBtn);
+			cp.add(openKeyInputField);
 			cp.add(upCloseKeyBtn);
+			cp.add(closeKeyInputField);
 			cp.add(closeBtn);
-			cp.add(saveKeyBtn);
-			cp.add(keyInputField);
-			
-			/**
-			cp.addKeyListener(new KeyListener(){
-				
-				@Override
-				public void keyTyped(KeyEvent e) {
-					
-					
-				}
-				
-				@Override
-				public void keyPressed(KeyEvent e) {
-					System.out.print("Something happened");
-					JOptionPane.showMessageDialog(noti, "Key Pressed: " + e.getKeyCode() + " - Key Pressed: " + e.getKeyChar());
-					am.shutdown();
-					
-				}
-				
-				@Override
-				public void keyReleased(KeyEvent e) {
-					
-					
-					
-				}
-				
-			});
-			*/
-			
+			cp.add(saveKeyBtn);			
 			
 			//button functionality
 			upOpenKeyBtn.addActionListener(new ActionListener() {
@@ -84,41 +68,65 @@ public class KeybindConfigurationMenu extends Menu{
 				@Override
 				public void actionPerformed(ActionEvent evt) {
 					
+					//testing message
 					System.out.println("ITS HAPPENING");
 					
-					keyInputField.grabFocus();
+					//resets the current config
+					currentOpenBind = "";
+					am.accessConfig().clearOpenKey();
 					
-					keyInputField.addKeyListener(new KeyAdapter() {
+					//forces input into the text field
+					openKeyInputField.grabFocus();
+					
+					
+					openKeyInputField.addKeyListener(new KeyAdapter() {
 						
-						@Override public void keyReleased(final KeyEvent e) {
+						@Override public void keyPressed(final KeyEvent e) {
 							System.out.print("Something happened");
-							JOptionPane.showMessageDialog(noti, "Key Pressed: " + e.getKeyCode() + " - Key Pressed: " + e.getKeyChar());
-							am.shutdown();
+							JOptionPane.showMessageDialog(noti, "Key Pressed: " + KeyEvent.getKeyText(e.getExtendedKeyCode()));
+							
+							currentOpenBind += KeyEvent.getKeyText(e.getExtendedKeyCode()) + "+";
+							
+							openKeyInputField.setText(currentOpenBind + " ");
+							
 						}
 						
 					});
 					
-					/**
-					while (!typing) {
-						
-					}
-					*/
-					
 				}
 				
-			});
+			});//update open key
 			
 			upCloseKeyBtn.addActionListener(new ActionListener() {
 					
 				@Override
 				public void actionPerformed(ActionEvent evt) {
-				/**
-					while (!typing) {
-						
-					}
-				*/
-				}
 					
+					//testing message
+					System.out.println("ITS HAPPENING");
+					
+					//resets the current config
+					currentCloseBind = "";
+					am.accessConfig().clearCloseKey();
+					
+					//forces input into the text field
+					closeKeyInputField.grabFocus();
+					
+					closeKeyInputField.addKeyListener(new KeyAdapter() {
+						
+						@Override public void keyPressed(final KeyEvent e) {
+							System.out.print("Something happened");
+							JOptionPane.showMessageDialog(noti, "Key Pressed: " + KeyEvent.getKeyText(e.getExtendedKeyCode()));
+							
+							currentCloseBind += KeyEvent.getKeyText(e.getExtendedKeyCode()) + "+";
+							
+							closeKeyInputField.setText(currentCloseBind);
+							
+						}
+						
+					});
+					
+				}
 			});
 			
 			closeBtn.addActionListener(new ActionListener(){
@@ -128,7 +136,50 @@ public class KeybindConfigurationMenu extends Menu{
 					am.hideKCM();
 				}
 				
-			});
+			});//update close key
+			
+			saveKeyBtn.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent evt) {
+					
+					//checking open key bind
+					if(am.accessConfig().updateOpenKey(currentOpenBind)) {
+						
+						JOptionPane.showMessageDialog(noti, "TEMP MESSAGE SUCCESS");
+						
+					}
+					else{
+						
+						//display the error
+						JOptionPane.showMessageDialog(noti, "TEMP ERR MESSAGE UPDATE FAILURE", "TEMP ERR MESSAGE UPDATE FAILURE", JOptionPane.ERROR_MESSAGE);
+						
+						//resets the current config
+						currentOpenBind = "";
+						am.accessConfig().clearOpenKey();
+						
+					}
+					
+					//checking close key bind
+					if(am.accessConfig().updateCloseKey(currentCloseBind)){
+						
+						JOptionPane.showMessageDialog(noti, "TEMP MESSAGE SUCCESS");
+						
+					}
+					else{
+						
+						//display the error
+						JOptionPane.showMessageDialog(noti, "TEMP ERR MESSAGE UPDATE FAILURE", "TEMP ERR MESSAGE UPDATE FAILURE", JOptionPane.ERROR_MESSAGE);
+						
+						//resets the current config
+						currentCloseBind = "";
+						am.accessConfig().clearCloseKey();
+						
+					}
+					
+				}
+				
+			});//save key btn
 			
 			setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 			setTitle(am.accessLocal().getString("keyConfigMenuLabel"));
