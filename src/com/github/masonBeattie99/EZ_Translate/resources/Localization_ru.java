@@ -19,8 +19,8 @@ public class Localization_ru extends Localization{
 		if(key.equals("shutdownNoti")) return "Приложение успешно закрыто!";
 		if(key.equals("addAppMsg")) return "Добавить приложение";
 		if(key.equals("deleAppMsg")) return "Удалить приложение";
-		if(key.equals("closeMsg")) return "Закрывать";
-		if(key.equals("appliMsg")) return "Приложения";
+		if(key.equals("closeBtn")) return "Закрывать";
+		if(key.equals("appLabel")) return "Приложения";
 		if(key.equals("appConfigMenuLabel")) return "Меню конфигурации приложения";
 		if(key.equals("configAppBtn")) return "Настроить приложения";
 		if(key.equals("configKeyBndBtn")) return "Настроить привязку клавиш";
@@ -51,7 +51,7 @@ public class Localization_ru extends Localization{
 				"shutdownNoti",
 				"addAppMsg",
 				"deleAppMsg",
-				"closeMsg",
+				"closeBtn",
 				"appliMsg",
 				"appConfigMenuLabel",
 				"configAppBtn",

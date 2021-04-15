@@ -19,8 +19,8 @@ public class Localization_de extends Localization{
 		if(key.equals("shutdownNoti")) return "Anwendung wurde erfolgreich beendet!";
 		if(key.equals("addAppMsg")) return "Anwendung hinzufügen";
 		if(key.equals("deleAppMsg")) return "Anwendung löschen";
-		if(key.equals("closeMsg")) return "Schließen";
-		if(key.equals("appliMsg")) return "Anwendungen";
+		if(key.equals("closeBtn")) return "Schließen";
+		if(key.equals("appLabel")) return "Anwendungen";
 		if(key.equals("appConfigMenuLabel")) return "Anwendungskonfigurationsmenü";
 		if(key.equals("configAppBtn")) return "Anwendungen konfigurieren";
 		if(key.equals("configKeyBndBtn")) return "Konfigurieren Sie die Tastenkombinationen";
@@ -51,8 +51,8 @@ public class Localization_de extends Localization{
 				"shutdownNoti",
 				"addAppMsg",
 				"deleAppMsg",
-				"closeMsg",
-				"appliMsg",
+				"closeBtn",
+				"appLabel",
 				"appConfigMenuLabel",
 				"configAppBtn",
 				"configKeyBndBtn",
