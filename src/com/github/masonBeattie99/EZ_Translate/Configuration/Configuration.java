@@ -67,41 +67,58 @@ public class Configuration {
 			
 			if(in.hasNext()) {
 				
-				System.out.println("FILE IS BEING READ");
-				
 				//setting up scanner and delimiters
 				
 				configLine = in.nextLine();
-				System.out.println(configLine);
 				Scanner ls = new Scanner(configLine); 
 				ls.useDelimiter("\\"+CONFIG_DELIM);
 				
-				System.out.println(ls.delimiter());
+				if(ls.hasNext()) {
+					currLocal = ls.next();
+				}
+				else {
+					currLocal = NO_CONFIG;
+				}
 				
-				currLocal = ls.next();
-				System.out.println("LOCALE: " + currLocal);
+				if(ls.hasNext()) {
+					currOpenKey = ls.next();
+				}
+				else {
+					currOpenKey = NO_CONFIG;
+				}
 				
-				currOpenKey = ls.next();
-				System.out.println("KEY 1 " + currOpenKey);
+				if(ls.hasNext()) {
+					currCloseKey = ls.next();
+				}
+				else {
+					currCloseKey = NO_CONFIG;
+				}
 				
-				currCloseKey = ls.next();
-				System.out.println("KEY 2 " +currCloseKey);
-				
-				appsLine = ls.next();
-				
-				Scanner appls = new Scanner(appsLine);
-				appls.useDelimiter("\\"+APPS_DELIM);
-				while(appls.hasNext()) {
+				if(ls.hasNext()) {
 					
-					apps.add(appls.next());
+					appsLine = ls.next();
+					Scanner appls = new Scanner(appsLine);
+					appls.useDelimiter("\\"+APPS_DELIM);
+					
+					//read input file
+					while(appls.hasNext()) {
+						
+						apps.add(appls.next());
+						
+					}
+					
+					appls.close();
+					
+				}
+				else {
+					
+					apps.add(NO_CONFIG);
 					
 				}
 				
 				
+				
 				System.out.println("FINISHED READING FILE, VALUES: " + currLocal + " " + currOpenKey + " " + currCloseKey + " " + apps.toString());
-				
-				
-				appls.close();
 				
 				in.close();
 				ls.close();
@@ -267,9 +284,26 @@ public class Configuration {
 	 */
 	public boolean updateCloseKey(String newKey) {
 		
-		currCloseKey = newKey;
+		if(verifyKeyB(newKey)) {
+			
+			//shaves off the last + if it is the last value if key bind is valid
+			if(newKey.charAt(newKey.length() - 1) == '+') {
+				
+				newKey = newKey.substring(0, newKey.length() - 1);
+			
+			}
+			
+			currCloseKey = newKey;
+			
+			return true;
 		
-		return true;
+		}
+		else {
+			
+			//returns false upon invalid keybind
+			return false;
+			
+		}
 		
 	}//updateCloseKey
 	
@@ -337,7 +371,6 @@ public class Configuration {
 	 * returns the localization configuration
 	 * @return current localConfig
 	 */
-
 	public String getLocal() {
 		
 		return currLocal;

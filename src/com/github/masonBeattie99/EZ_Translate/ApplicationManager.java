@@ -48,11 +48,7 @@ public class ApplicationManager {
 		//configuration object
 		config = new Configuration();
 		
-		//localization resource. Changes based on current local
-		if(config.getLocal().equals("eng"))	localResource = ResourceBundle.getBundle("com.github.masonBeattie99.EZ_Translate.resources.Localization_us");
-		else if(config.getLocal().equals("ger")) localResource = ResourceBundle.getBundle("com.github.masonBeattie99.EZ_Translate.resources.Localization_de");
-		else if(config.getLocal().equals("rus")) localResource = ResourceBundle.getBundle("com.github.masonBeattie99.EZ_Translate.resources.Localization_ru");
-		else localResource = ResourceBundle.getBundle("com.github.masonBeattie99.EZ_Translate.resources.Localization");
+		localResource = ResourceBundle.getBundle("com.github.masonBeattie99.EZ_Translate.resources.Localization");
 		
 		//interface objects
 		ezmenu = new EZTranslateMenu(this);
@@ -78,9 +74,8 @@ public class ApplicationManager {
 	
 	//startup and shutdown methods
 	
-	
 	/**
-	 * performs the startup activities of the application
+	 * performs the startup activities of the application, remove this method depending on decision for startup functions
 	 */
 	public void startup() {
 		
@@ -91,6 +86,20 @@ public class ApplicationManager {
 		else {
 			JOptionPane.showMessageDialog(noti, localResource.getString("errFileNotFoundMsg"), localResource.getString("fileNotFoundMsg"), JOptionPane.ERROR_MESSAGE);
 			this.shutdown();
+		}
+		
+		//localization resource. Changes based on current local
+		if(config.getLocal().equals("eng"))	{
+			localResource = ResourceBundle.getBundle("com.github.masonBeattie99.EZ_Translate.resources.Localization_us");
+		}
+		else if(config.getLocal().equals("ger")) {
+			localResource = ResourceBundle.getBundle("com.github.masonBeattie99.EZ_Translate.resources.Localization_de");
+		}
+		else if(config.getLocal().equals("rus")) {
+			localResource = ResourceBundle.getBundle("com.github.masonBeattie99.EZ_Translate.resources.Localization_ru");
+		}
+		else {
+			localResource = ResourceBundle.getBundle("com.github.masonBeattie99.EZ_Translate.resources.Localization");
 		}
 		
 	}//startup
@@ -241,10 +250,18 @@ public class ApplicationManager {
 	 */
 	public void changeLocal(String newLocal) {
 		
-		if(newLocal.equals("eng")) localResource = ResourceBundle.getBundle("com.github.masonBeattie99.EZ_Translate.resources.Localization_us");
-		else if(newLocal.equals("ger")) localResource = ResourceBundle.getBundle("com.github.masonBeattie99.EZ_Translate.resources.Localization_de");
-		else if(newLocal.equals("rus")) localResource = ResourceBundle.getBundle("com.github.masonBeattie99.EZ_Translate.resources.Localization_ru");
-		else localResource = ResourceBundle.getBundle("com.github.masonBeattie99.EZ_Translate.resources.Localization");
+		if(newLocal.equals("eng")) {
+			localResource = ResourceBundle.getBundle("com.github.masonBeattie99.EZ_Translate.resources.Localization_us");
+		}
+		else if(newLocal.equals("ger")) {
+			localResource = ResourceBundle.getBundle("com.github.masonBeattie99.EZ_Translate.resources.Localization_de");
+		}
+		else if(newLocal.equals("rus")) {
+			localResource = ResourceBundle.getBundle("com.github.masonBeattie99.EZ_Translate.resources.Localization_ru");
+		}
+		else {
+			localResource = ResourceBundle.getBundle("com.github.masonBeattie99.EZ_Translate.resources.Localization");
+		}
 		
 	}//changeLocal
 	
