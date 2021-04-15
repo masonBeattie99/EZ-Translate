@@ -47,8 +47,8 @@ public class KeybindConfigurationMenu extends Menu{
 			upCloseKeyBtn = new JButton(am.accessLocal().getString("upCloseKeyBtn"));
 			saveKeyBtn = new JButton("TEMP SAVE CLOSE BUTTON");
 			closeBtn = new JButton (am.accessLocal().getString("closeBtn"));
-			openKeyInputField = new JTextField("THE DISPLAY FUNCTIONS" + currentOpenBind);
-			closeKeyInputField = new JTextField("THE DISPLAY FUNCTIONS" + currentCloseBind);
+			openKeyInputField = new JTextField(am.accessConfig().getOpenKey());
+			closeKeyInputField = new JTextField(am.accessConfig().getCloseKey());
 			
 			//input fields are used solely for display
 			openKeyInputField.setEditable(false);
