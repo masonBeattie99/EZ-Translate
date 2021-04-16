@@ -224,7 +224,12 @@ public class Configuration {
 			apps.add(app);
 		}
 		
-		return true;
+		if(this.updateFile()) {
+			return true;
+		}
+		else {
+			return false;
+		}
 		
 	}//updateFile
 	
@@ -242,7 +247,12 @@ public class Configuration {
 			}
 		}
 		
-		return false;
+		if(this.updateFile()) {
+			return true;
+		}
+		else {
+			return false;
+		}
 		
 	}//removeapp
 	
@@ -266,7 +276,12 @@ public class Configuration {
 			
 			currOpenKey = newKey;
 			
-			return true;
+			if(this.updateFile()) {
+				return true;
+			}
+			else {
+				return false;
+			}
 		
 		}
 		else {
@@ -275,6 +290,7 @@ public class Configuration {
 			return false;
 			
 		}
+		
 	}//updateOpenKey
 	
 	/**
@@ -295,7 +311,12 @@ public class Configuration {
 			
 			currCloseKey = newKey;
 			
-			return true;
+			if(this.updateFile()) {
+				return true;
+			}
+			else {
+				return false;
+			}
 		
 		}
 		else {
@@ -337,6 +358,8 @@ public class Configuration {
 	public void changeLocal(String newLocal) {
 		
 		currLocal = newLocal;
+		
+		this.updateFile();
 		
 	}//changeLocal
 	

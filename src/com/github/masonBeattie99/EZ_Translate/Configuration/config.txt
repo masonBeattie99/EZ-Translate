@@ -1,1 +1,1 @@
-ger.Ctrl+Shift+Shift.Ctrl+Shift+R.NOT_CONFIGURED
+rus.Shift+?+?.Shift+?+?.NOT_CONFIGURED

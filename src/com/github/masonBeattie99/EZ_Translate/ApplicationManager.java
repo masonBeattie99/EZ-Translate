@@ -40,6 +40,9 @@ public class ApplicationManager {
 	//shutdown notification JFrame components
 	private JFrame noti;
 	
+	//variable to determine if file reading was successful
+	private boolean success;
+	
 	/**
 	 * default constructor for ApplicationManager. Initializes all objects used by the application initially for faster run time during appliaction
 	 */
@@ -48,7 +51,23 @@ public class ApplicationManager {
 		//configuration object
 		config = new Configuration();
 		
-		localResource = ResourceBundle.getBundle("com.github.masonBeattie99.EZ_Translate.resources.Localization");
+		success = config.readFile();
+		
+		localResource = ResourceBundle.getBundle("com.github.masonBeattie99.EZ_Translate.resources.Localization");		
+		
+		//localization resource. Changes based on current local
+		if(config.getLocal().equals("eng"))	{
+			localResource = ResourceBundle.getBundle("com.github.masonBeattie99.EZ_Translate.resources.Localization_us");
+		}
+		else if(config.getLocal().equals("ger")) {
+			localResource = ResourceBundle.getBundle("com.github.masonBeattie99.EZ_Translate.resources.Localization_de");
+		}
+		else if(config.getLocal().equals("rus")) {
+			localResource = ResourceBundle.getBundle("com.github.masonBeattie99.EZ_Translate.resources.Localization_ru");
+		}
+		else {
+			localResource = ResourceBundle.getBundle("com.github.masonBeattie99.EZ_Translate.resources.Localization");
+		}
 		
 		//interface objects
 		ezmenu = new EZTranslateMenu(this);
@@ -79,27 +98,13 @@ public class ApplicationManager {
 	 */
 	public void startup() {
 		
-		if(config.readFile()) {
+		if(success) {
 			JOptionPane.showMessageDialog(noti, localResource.getString("startupNoti"));
 			displayMainMenu();
 		}
 		else {
 			JOptionPane.showMessageDialog(noti, localResource.getString("errFileNotFoundMsg"), localResource.getString("fileNotFoundMsg"), JOptionPane.ERROR_MESSAGE);
 			this.shutdown();
-		}
-		
-		//localization resource. Changes based on current local
-		if(config.getLocal().equals("eng"))	{
-			localResource = ResourceBundle.getBundle("com.github.masonBeattie99.EZ_Translate.resources.Localization_us");
-		}
-		else if(config.getLocal().equals("ger")) {
-			localResource = ResourceBundle.getBundle("com.github.masonBeattie99.EZ_Translate.resources.Localization_de");
-		}
-		else if(config.getLocal().equals("rus")) {
-			localResource = ResourceBundle.getBundle("com.github.masonBeattie99.EZ_Translate.resources.Localization_ru");
-		}
-		else {
-			localResource = ResourceBundle.getBundle("com.github.masonBeattie99.EZ_Translate.resources.Localization");
 		}
 		
 	}//startup
