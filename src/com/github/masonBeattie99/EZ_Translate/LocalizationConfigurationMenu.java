@@ -4,6 +4,8 @@
 package com.github.masonBeattie99.EZ_Translate;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Locale;
+
 import javax.swing.*;
 @SuppressWarnings("serial")
 public class LocalizationConfigurationMenu extends Menu{
@@ -13,10 +15,17 @@ public class LocalizationConfigurationMenu extends Menu{
 			private JButton closeBtn;
 			private JComboBox<String> locals;
 			private String[] options = new String[3];
+			
+			ApplicationManager am;
+			
 			/**
 			 * constructs an EZTranslateMenu
+			 * @param the application manager object
 			 */
 			public LocalizationConfigurationMenu(ApplicationManager am) {
+				
+				//assigns new application manager
+				this.am = am;
 				
 				Container cp = getContentPane();
 				
@@ -76,5 +85,31 @@ public class LocalizationConfigurationMenu extends Menu{
 				
 				
 			}//constructor
+			
+			/**
+			 * changes sets text components to new localization settings
+			 */
+			public void updateText() {
+				
+				//this.setLocale((Locale) am.accessLocal());
+				
+				upLocalBtn.setText(am.accessLocal().getString("upLocalBtn"));
+				closeBtn.setText(am.accessLocal().getString("closeBtn"));
+				options = new String[] {
+						am.accessLocal().getString("localChoicesEng"), 
+						am.accessLocal().getString("localChoicesGer"),
+						am.accessLocal().getString("localChoicesRus")};
+				
+				//removes all items within dropdown box, then readds items from options string
+				locals.removeAllItems();
+				for(int i = 0; i < options.length; i++) {
+					
+					locals.addItem(options[i]);
+					
+				}
+				
+				this.setTitle(am.accessLocal().getString("localConfigMenuLabel"));
+				
+			}//updateText
 	
 }

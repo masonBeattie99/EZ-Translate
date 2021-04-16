@@ -268,6 +268,13 @@ public class ApplicationManager {
 			localResource = ResourceBundle.getBundle("com.github.masonBeattie99.EZ_Translate.resources.Localization");
 		}
 		
+		ezmenu.updateText();
+		configinter.updateText();
+		trslinter.updateText();
+		acm.updateText();
+		kcm.updateText();
+		lcm.updateText();
+		
 	}//changeLocal
 	
 	//further methods TBD
