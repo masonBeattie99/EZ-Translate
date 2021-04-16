@@ -14,7 +14,7 @@ public class KeybindConfigurationMenu extends Menu{
 		private JButton saveKeyBtn;
 		private JButton closeBtn;
 		
-		//there might need to be an invisible text field to fix this issue
+		//text fields
 		private JTextField openKeyInputField;
 		private JTextField closeKeyInputField;
 		
@@ -26,11 +26,16 @@ public class KeybindConfigurationMenu extends Menu{
 		//testing code, remove when done
 		private JFrame noti;
 		
+		ApplicationManager am;
+		
 		
 		/**
 		 * constructs an EZTranslateMenu
+		 * @param the application manager object
 		 */
 		public KeybindConfigurationMenu(ApplicationManager am) {
+			
+			this.am = am;
 			
 			//variable used to store input
 			currentOpenBind = "";
@@ -68,9 +73,10 @@ public class KeybindConfigurationMenu extends Menu{
 				@Override
 				public void actionPerformed(ActionEvent evt) {
 					
-					//resets the current config
+					//resets the current config and the text field associated with it
 					currentOpenBind = "";
 					am.accessConfig().clearOpenKey();
+					openKeyInputField.setText(currentOpenBind);
 					
 					//forces input into the text field
 					openKeyInputField.grabFocus();
@@ -83,8 +89,8 @@ public class KeybindConfigurationMenu extends Menu{
 							//adds plus sign for storage within file
 							currentOpenBind += KeyEvent.getKeyText(e.getExtendedKeyCode()) + "+";
 							
-							//trims ending + used to separate key binds
-							openKeyInputField.setText(currentOpenBind.substring(0,1));
+							//adds plus sign for storage within file
+							openKeyInputField.setText(currentOpenBind);
 							
 						}
 						
@@ -99,9 +105,10 @@ public class KeybindConfigurationMenu extends Menu{
 				@Override
 				public void actionPerformed(ActionEvent evt) {
 					
-					//resets the current config
+					//resets the current config and the text field associated with it
 					currentCloseBind = "";
 					am.accessConfig().clearCloseKey();
+					closeKeyInputField.setText(currentOpenBind);
 					
 					//forces input into the text field
 					closeKeyInputField.grabFocus();
@@ -109,12 +116,12 @@ public class KeybindConfigurationMenu extends Menu{
 					closeKeyInputField.addKeyListener(new KeyAdapter() {
 						
 						@Override public void keyPressed(final KeyEvent e) {
-							System.out.print("Something happened");
-							JOptionPane.showMessageDialog(noti, "Key Pressed: " + KeyEvent.getKeyText(e.getExtendedKeyCode()));
 							
+							//adds plus sign for storage within file
 							currentCloseBind += KeyEvent.getKeyText(e.getExtendedKeyCode()) + "+";
 							
-							closeKeyInputField.setText(currentCloseBind);
+							//adds plus sign for storage within file
+							closeKeyInputField.setText(currentOpenBind);
 							
 						}
 						
@@ -181,5 +188,18 @@ public class KeybindConfigurationMenu extends Menu{
 			
 			
 		}//constructor
+		
+		/**
+		 * changes sets text components to new localization settings
+		 */
+		public void updateText() {
+			
+			upOpenKeyBtn.setText(am.accessLocal().getString("upOpenKeyBtn"));
+			upCloseKeyBtn.setText(am.accessLocal().getString("upCloseKeyBtn"));
+			saveKeyBtn.setText("TEMP SAVE CLOSE BUTTON");
+			closeBtn.setText(am.accessLocal().getString("closeBtn"));
+			this.setTitle(am.accessLocal().getString("keyConfigMenuLabel"));
+			
+		}//updateText
 	
 }

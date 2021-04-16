@@ -15,10 +15,15 @@ public class ApplicationConfigurationMenu extends Menu{
 			private JTextField apps;
 			private JLabel appsLabel;
 			
+			ApplicationManager am;
+			
 			/**
 			 * constructs an EZTranslateMenu
+			 * @param the application manager object
 			 */
 			public ApplicationConfigurationMenu(ApplicationManager am) {
+				
+				this.am = am;
 				
 				Container cp = getContentPane();
 				
@@ -77,4 +82,16 @@ public class ApplicationConfigurationMenu extends Menu{
 				
 			}//constructor
 	
+			/**
+			 * changes sets text components to new localization settings
+			 */
+			public void updateText() {
+				
+				addAppBtn.setText(am.accessLocal().getString("addAppMsg"));
+				deAppBtn.setText(am.accessLocal().getString("deleAppMsg"));
+				closeBtn.setText(am.accessLocal().getString("closeBtn"));
+				appsLabel.setText(am.accessLocal().getString("appLabel"));
+				this.setTitle(am.accessLocal().getString("appConfigMenuLabel"));
+				
+			}//updateText
 }

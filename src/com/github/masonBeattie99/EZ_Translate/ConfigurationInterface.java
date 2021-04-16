@@ -18,10 +18,15 @@ public class ConfigurationInterface extends Menu{
 	private JTextField configs;
 	private JLabel configLabel;
 	
+	ApplicationManager am;
+	
 	/**
 	 * constructs an EZTranslateMenu
+	 * @param the application manager object
 	 */
 	public ConfigurationInterface(ApplicationManager am) {
+		
+		this.am = am;
 		
 		Container cp = getContentPane();
 		
@@ -92,6 +97,21 @@ public class ConfigurationInterface extends Menu{
 		
 		
 	}//constructor
+	
+	/**
+	 * changes sets text components to new localization settings
+	 */
+	public void updateText() {
+		
+		appBtn.setText(am.accessLocal().getString("configAppBtn"));
+		keyBtn.setText(am.accessLocal().getString("configKeyBndBtn"));
+		localBtn.setText(am.accessLocal().getString("configLocalBtn"));
+		closeBtn.setText(am.accessLocal().getString("closeBtn"));
+		configLabel.setText(am.accessLocal().getString("configsLabel"));
+		
+		this.setTitle(am.accessLocal().getString("configMenuLabel"));
+		
+	}//updateText
 	
 	
 }//class

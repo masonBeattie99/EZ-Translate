@@ -1,10 +1,10 @@
 /**
- * defines functionality for all menus in the application.
+ * defines functionality for all menus in the application. includes abstract method update text to 
  */
 package com.github.masonBeattie99.EZ_Translate;
 import javax.swing.*;
 @SuppressWarnings("serial")
-public class Menu extends JFrame{
+public abstract class Menu extends JFrame{
 
 	/**
 	 * default constructor for all menu
@@ -32,5 +32,7 @@ public class Menu extends JFrame{
 			setVisible(true);
 			
 		}//displayMenu
+		
+		public abstract void updateText();
 
 }

@@ -17,10 +17,14 @@ public class EZTranslateMenu extends Menu{
 	private JButton startBtn;
 	private JButton shutdownBtn;
 	
+	ApplicationManager am;
+	
 	/**
 	 * constructs an EZTranslateMenu
 	 */
 	public EZTranslateMenu(ApplicationManager am) {
+		
+		this.am = am;
 		
 		Container cp = getContentPane();
 		
@@ -70,5 +74,17 @@ public class EZTranslateMenu extends Menu{
 		
 		
 	}//constructor	
+	
+	/**
+	 * changes sets text components to new localization settings
+	 */
+	public void updateText() {
+		
+		configBtn.setText(am.accessLocal().getString("configBtn"));
+		startBtn.setText(am.accessLocal().getString("startBtn"));
+		shutdownBtn.setText(am.accessLocal().getString("closeBtn"));
+		this.setTitle(am.accessLocal().getString("mainMenuLabel"));
+		
+	}//updateText
 	
 }//class
