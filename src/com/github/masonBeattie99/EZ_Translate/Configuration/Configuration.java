@@ -5,9 +5,14 @@
 package com.github.masonBeattie99.EZ_Translate.configuration;
 
 import java.io.File;
-import java.io.FileWriter;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.io.FileOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -22,7 +27,10 @@ public class Configuration {
 	
 	//file reading objects
 	private File configFile;
-	private FileWriter configWriter;
+	private FileInputStream inputStream;
+	private InputStreamReader streamReader;
+	private BufferedReader reader;
+	private OutputStreamWriter configWriter;
 	private Scanner in;
 	
 	//configuration variables and lists
@@ -32,7 +40,7 @@ public class Configuration {
 	private String currLocal;
 
 	/**
-	 * constructor for Configuration
+	 * constructor for Configuration. initializes internal variables
 	 */
 	public Configuration(){
 		
@@ -41,6 +49,14 @@ public class Configuration {
 		currCloseKey = "";
 		currLocal = "";
 		
+		//loading in file object
+		try {
+			configFile = new File(CONFIG_FILE);
+			configFile.createNewFile();
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
 	}//constructor
 	
 //THIS PART IS MESSED UP. NOT RETAINING LOCALIZATION UPON READING OF FILE
@@ -55,9 +71,75 @@ public class Configuration {
 		String appsLine = "";
 		
 		try {
-			configFile = new File(CONFIG_FILE);
 			
-			if(configFile.exists()) {
+			inputStream = new FileInputStream(configFile);
+			
+			streamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
+			
+			reader = new BufferedReader(streamReader);
+			
+			configLine = reader.readLine();
+			
+			if(configLine == null) {
+				currLocal = NO_CONFIG;
+				currOpenKey = NO_CONFIG;
+				currCloseKey = NO_CONFIG;
+				apps.add(NO_CONFIG);
+			}
+			else {
+			
+				System.out.println(configLine);
+				
+				in = new Scanner(configLine);
+				in.useDelimiter("\\" + CONFIG_DELIM);
+				
+				if(in.hasNext()) {
+					currLocal = in.next();
+				}
+				else {
+					//default local is set to eng if nothing exists for it
+					currLocal = "eng";
+				}
+				
+				if(in.hasNext()) {
+					currOpenKey = in.next();
+				}
+				else {
+					currOpenKey = NO_CONFIG;
+				}
+				
+				if(in.hasNext()) {
+					currCloseKey = in.next();
+				}
+				else {
+					currCloseKey = NO_CONFIG;
+				}
+				
+				if(in.hasNext()) {
+					
+					appsLine = in.next();
+					Scanner appls = new Scanner(appsLine);
+					appls.useDelimiter("\\"+APPS_DELIM);
+					
+					//read input file
+					while(appls.hasNext()) {
+						
+						apps.add(appls.next());
+						
+					}
+					
+					appls.close();
+					
+				}
+				else {
+					
+					apps.add(NO_CONFIG);
+					
+				}
+			}
+			
+			/**
+			if(reader.exists()) {
 				in = new Scanner(configFile);
 			}
 			else {
@@ -116,23 +198,19 @@ public class Configuration {
 					
 				}
 				
-				
-				
-				System.out.println("FINISHED READING FILE, VALUES: " + currLocal + " " + currOpenKey + " " + currCloseKey + " " + apps.toString());
-				
 				in.close();
 				ls.close();
 				
+				
 			}
 			else {
-				
-				System.out.println("NOT EVEN READ BABY");
 				
 				apps.add(NO_CONFIG);
 				currOpenKey = NO_CONFIG;
 				currCloseKey = NO_CONFIG;
 				currLocal = "eng";//default localization is English. If no configuration is available then automatically assign English
 			}
+			*/
 			
 			return true;
 			
@@ -162,7 +240,8 @@ public class Configuration {
 		
 		
 		try {
-			configWriter = new FileWriter(configFile);
+			//created a new file writer that reads in eligible UTF-8 data (for cyrillic characters)
+			configWriter = new OutputStreamWriter(new FileOutputStream(configFile), StandardCharsets.UTF_8);
 			
 			//creates a string of apps that is formatted for storage within the configuration file. Does not add delimiter for last item
 			for(int i = 0; i < apps.size(); i++) {
@@ -181,8 +260,6 @@ public class Configuration {
 					currOpenKey + CONFIG_DELIM +
 					currCloseKey + CONFIG_DELIM +
 					appString);
-			
-			System.out.println(configString);
 			
 			configWriter.write(configString);
 			
