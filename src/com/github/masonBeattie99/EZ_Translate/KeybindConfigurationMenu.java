@@ -68,9 +68,6 @@ public class KeybindConfigurationMenu extends Menu{
 				@Override
 				public void actionPerformed(ActionEvent evt) {
 					
-					//testing message
-					System.out.println("ITS HAPPENING");
-					
 					//resets the current config
 					currentOpenBind = "";
 					am.accessConfig().clearOpenKey();
@@ -82,12 +79,12 @@ public class KeybindConfigurationMenu extends Menu{
 					openKeyInputField.addKeyListener(new KeyAdapter() {
 						
 						@Override public void keyPressed(final KeyEvent e) {
-							System.out.print("Something happened");
-							JOptionPane.showMessageDialog(noti, "Key Pressed: " + KeyEvent.getKeyText(e.getExtendedKeyCode()));
 							
+							//adds plus sign for storage within file
 							currentOpenBind += KeyEvent.getKeyText(e.getExtendedKeyCode()) + "+";
 							
-							openKeyInputField.setText(currentOpenBind + " ");
+							//trims ending + used to separate key binds
+							openKeyInputField.setText(currentOpenBind.substring(0,1));
 							
 						}
 						
@@ -101,9 +98,6 @@ public class KeybindConfigurationMenu extends Menu{
 					
 				@Override
 				public void actionPerformed(ActionEvent evt) {
-					
-					//testing message
-					System.out.println("ITS HAPPENING");
 					
 					//resets the current config
 					currentCloseBind = "";
