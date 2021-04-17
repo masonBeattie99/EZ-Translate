@@ -12,6 +12,7 @@ import java.io.FileOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -80,15 +81,17 @@ public class Configuration {
 			
 			configLine = reader.readLine();
 			
+			System.out.println(configLine);
+			
 			if(configLine == null) {
-				currLocal = NO_CONFIG;
+				currLocal = "eng";
 				currOpenKey = NO_CONFIG;
 				currCloseKey = NO_CONFIG;
 				apps.add(NO_CONFIG);
 			}
 			else {
 			
-				System.out.println(configLine);
+				System.out.println("CONTENT DETECTED");
 				
 				in = new Scanner(configLine);
 				in.useDelimiter("\\" + CONFIG_DELIM);
@@ -215,6 +218,10 @@ public class Configuration {
 			return true;
 			
 		}
+		catch(UnsupportedEncodingException u) {
+			u.printStackTrace();
+			return false;
+		}
 		catch(FileNotFoundException e) {
 			e.printStackTrace();
 			return false;
@@ -255,17 +262,25 @@ public class Configuration {
 				
 			}
 			
+			System.out.println(currLocal);
+			
 			configString=(
 					currLocal + CONFIG_DELIM + 
 					currOpenKey + CONFIG_DELIM +
 					currCloseKey + CONFIG_DELIM +
 					appString);
 			
+			System.out.println(configString);
+			
 			configWriter.write(configString);
 			
 			configWriter.flush();
 			configWriter.close();
 			
+		}
+		catch(UnsupportedEncodingException u) {
+			u.printStackTrace();
+			return false;
 		}
 		catch(FileNotFoundException e) {
 			e.printStackTrace();
@@ -342,6 +357,9 @@ public class Configuration {
 	 */
 	public boolean updateOpenKey(String newKey) {
 		
+		byte[] byteString;
+		String encodedString;
+		
 		if(verifyKeyB(newKey)) {
 			
 			//shaves off the last + if it is the last value if key bind is valid
@@ -351,7 +369,10 @@ public class Configuration {
 			
 			}
 			
-			currOpenKey = newKey;
+			byteString = newKey.getBytes();
+			encodedString = new String(byteString, StandardCharsets.UTF_8);
+			
+			currOpenKey = encodedString;
 			
 			if(this.updateFile()) {
 				return true;
@@ -377,6 +398,9 @@ public class Configuration {
 	 */
 	public boolean updateCloseKey(String newKey) {
 		
+		byte[] byteString;
+		String encodedString;
+		
 		if(verifyKeyB(newKey)) {
 			
 			//shaves off the last + if it is the last value if key bind is valid
@@ -386,7 +410,10 @@ public class Configuration {
 			
 			}
 			
-			currCloseKey = newKey;
+			byteString = newKey.getBytes();
+			encodedString = new String(byteString, StandardCharsets.UTF_8);
+			
+			currCloseKey = encodedString;
 			
 			if(this.updateFile()) {
 				return true;
@@ -434,7 +461,11 @@ public class Configuration {
 	 */
 	public void changeLocal(String newLocal) {
 		
-		currLocal = newLocal;
+		//methods to encode string
+		byte[] byteString = newLocal.getBytes();
+		String encodedString = new String(byteString, StandardCharsets.UTF_8);
+		
+		currLocal = encodedString;
 		
 		this.updateFile();
 		

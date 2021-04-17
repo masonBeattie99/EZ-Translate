@@ -4,6 +4,7 @@
 package com.github.masonBeattie99.EZ_Translate;
 import java.awt.*;
 import java.awt.event.*;
+import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
 import javax.swing.*;
@@ -53,8 +54,8 @@ public class LocalizationConfigurationMenu extends Menu{
 					
 					@Override
 					public void actionPerformed(ActionEvent evt) {
+						
 						am.changeLocal((String) locals.getSelectedItem());
-						am.accessConfig().changeLocal((String)locals.getSelectedItem());
 					}
 					
 				});
@@ -99,7 +100,6 @@ public class LocalizationConfigurationMenu extends Menu{
 						am.accessLocal().getString("localChoicesEng"), 
 						am.accessLocal().getString("localChoicesGer"),
 						am.accessLocal().getString("localChoicesRus")};
-				
 				//removes all items within dropdown box, then readds items from options string
 				locals.removeAllItems();
 				for(int i = 0; i < options.length; i++) {

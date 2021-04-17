@@ -108,7 +108,7 @@ public class KeybindConfigurationMenu extends Menu{
 					//resets the current config and the text field associated with it
 					currentCloseBind = "";
 					am.accessConfig().clearCloseKey();
-					closeKeyInputField.setText(currentOpenBind);
+					closeKeyInputField.setText(currentCloseBind);
 					
 					//forces input into the text field
 					closeKeyInputField.grabFocus();
@@ -121,7 +121,7 @@ public class KeybindConfigurationMenu extends Menu{
 							currentCloseBind += KeyEvent.getKeyText(e.getExtendedKeyCode()) + "+";
 							
 							//adds plus sign for storage within file
-							closeKeyInputField.setText(currentOpenBind);
+							closeKeyInputField.setText(currentCloseBind);
 							
 						}
 						

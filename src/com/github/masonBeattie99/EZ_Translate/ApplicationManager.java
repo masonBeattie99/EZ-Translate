@@ -255,6 +255,8 @@ public class ApplicationManager {
 	 */
 	public void changeLocal(String newLocal) {
 		
+		config.changeLocal(newLocal);
+		
 		if(newLocal.equals("eng")) {
 			localResource = ResourceBundle.getBundle("com.github.masonBeattie99.EZ_Translate.resources.Localization_us");
 		}
