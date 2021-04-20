@@ -38,7 +38,7 @@ public class Configuration {
 	private ArrayList<String> apps;
 	private String currOpenKey;
 	private String currCloseKey;
-	private String currLocal;
+	private int currLocal;
 
 	/**
 	 * constructor for Configuration. initializes internal variables
@@ -48,7 +48,7 @@ public class Configuration {
 		apps = new ArrayList<String>();
 		currOpenKey = "";
 		currCloseKey = "";
-		currLocal = "";
+		currLocal = 0;
 		
 		//loading in file object
 		try {
@@ -81,27 +81,24 @@ public class Configuration {
 			
 			configLine = reader.readLine();
 			
-			System.out.println(configLine);
-			
 			if(configLine == null) {
-				currLocal = "eng";
+				currLocal = 0;
 				currOpenKey = NO_CONFIG;
 				currCloseKey = NO_CONFIG;
 				apps.add(NO_CONFIG);
 			}
 			else {
-			
-				System.out.println("CONTENT DETECTED");
 				
 				in = new Scanner(configLine);
 				in.useDelimiter("\\" + CONFIG_DELIM);
 				
-				if(in.hasNext()) {
-					currLocal = in.next();
+				if(in.hasNextInt()) {
+					//parses value in config file to integer
+					currLocal = Integer.parseInt(in.next());
 				}
 				else {
 					//default local is set to eng if nothing exists for it
-					currLocal = "eng";
+					currLocal = 0;
 				}
 				
 				if(in.hasNext()) {
@@ -140,80 +137,6 @@ public class Configuration {
 					
 				}
 			}
-			
-			/**
-			if(reader.exists()) {
-				in = new Scanner(configFile);
-			}
-			else {
-				configFile.createNewFile();
-				in = new Scanner(configFile);
-			}
-			
-			if(in.hasNext()) {
-				
-				//setting up scanner and delimiters
-				
-				configLine = in.nextLine();
-				Scanner ls = new Scanner(configLine); 
-				ls.useDelimiter("\\"+CONFIG_DELIM);
-				
-				if(ls.hasNext()) {
-					currLocal = ls.next();
-				}
-				else {
-					currLocal = NO_CONFIG;
-				}
-				
-				if(ls.hasNext()) {
-					currOpenKey = ls.next();
-				}
-				else {
-					currOpenKey = NO_CONFIG;
-				}
-				
-				if(ls.hasNext()) {
-					currCloseKey = ls.next();
-				}
-				else {
-					currCloseKey = NO_CONFIG;
-				}
-				
-				if(ls.hasNext()) {
-					
-					appsLine = ls.next();
-					Scanner appls = new Scanner(appsLine);
-					appls.useDelimiter("\\"+APPS_DELIM);
-					
-					//read input file
-					while(appls.hasNext()) {
-						
-						apps.add(appls.next());
-						
-					}
-					
-					appls.close();
-					
-				}
-				else {
-					
-					apps.add(NO_CONFIG);
-					
-				}
-				
-				in.close();
-				ls.close();
-				
-				
-			}
-			else {
-				
-				apps.add(NO_CONFIG);
-				currOpenKey = NO_CONFIG;
-				currCloseKey = NO_CONFIG;
-				currLocal = "eng";//default localization is English. If no configuration is available then automatically assign English
-			}
-			*/
 			
 			return true;
 			
@@ -262,15 +185,11 @@ public class Configuration {
 				
 			}
 			
-			System.out.println(currLocal);
-			
 			configString=(
 					currLocal + CONFIG_DELIM + 
 					currOpenKey + CONFIG_DELIM +
 					currCloseKey + CONFIG_DELIM +
 					appString);
-			
-			System.out.println(configString);
 			
 			configWriter.write(configString);
 			
@@ -362,22 +281,28 @@ public class Configuration {
 		
 		if(verifyKeyB(newKey)) {
 			
-			//shaves off the last + if it is the last value if key bind is valid
-			if(newKey.charAt(newKey.length() - 1) == '+') {
+			//shaves off the last space if it is the last value if key bind is valid
+			if(newKey.charAt(newKey.length() - 1) == ' ') {
 				
 				newKey = newKey.substring(0, newKey.length() - 1);
 			
 			}
 			
-			byteString = newKey.getBytes();
-			encodedString = new String(byteString, StandardCharsets.UTF_8);
-			
-			currOpenKey = encodedString;
-			
-			if(this.updateFile()) {
-				return true;
-			}
-			else {
+			try {
+				
+				byteString = newKey.getBytes("UTF-8");
+				encodedString = new String(byteString, StandardCharsets.UTF_8);
+				currOpenKey = encodedString;
+				
+				if(this.updateFile()) {
+					return true;
+				}
+				else {
+					return false;
+				}
+				}
+			catch(UnsupportedEncodingException e) {
+				e.printStackTrace();
 				return false;
 			}
 		
@@ -403,22 +328,28 @@ public class Configuration {
 		
 		if(verifyKeyB(newKey)) {
 			
-			//shaves off the last + if it is the last value if key bind is valid
-			if(newKey.charAt(newKey.length() - 1) == '+') {
+			//shaves off the last space at the end if it is the last value if key bind is valid
+			if(newKey.charAt(newKey.length() - 1) == ' ') {
 				
 				newKey = newKey.substring(0, newKey.length() - 1);
 			
 			}
 			
-			byteString = newKey.getBytes();
-			encodedString = new String(byteString, StandardCharsets.UTF_8);
+			try {
+				
+				byteString = newKey.getBytes("UTF-8");
+				encodedString = new String(byteString, StandardCharsets.UTF_8);
+				currCloseKey = encodedString;
 			
-			currCloseKey = encodedString;
-			
-			if(this.updateFile()) {
-				return true;
+				if(this.updateFile()) {
+					return true;
+				}
+				else {
+					return false;
+				}
 			}
-			else {
+			catch(UnsupportedEncodingException e) {
+				e.printStackTrace();
 				return false;
 			}
 		
@@ -459,13 +390,13 @@ public class Configuration {
 	 * @param local to change to
 	 * @return true upon success, false upon failure
 	 */
-	public void changeLocal(String newLocal) {
+	public void changeLocal(int newLocal) {
 		
 		//methods to encode string
-		byte[] byteString = newLocal.getBytes();
-		String encodedString = new String(byteString, StandardCharsets.UTF_8);
+		//byte[] byteString = newLocal.getBytes();
+		//String encodedString = new String(byteString, StandardCharsets.UTF_8);
 		
-		currLocal = encodedString;
+		currLocal = newLocal;
 		
 		this.updateFile();
 		
@@ -502,7 +433,7 @@ public class Configuration {
 	 * returns the localization configuration
 	 * @return current localConfig
 	 */
-	public String getLocal() {
+	public int getLocal() {
 		
 		return currLocal;
 		
@@ -557,8 +488,28 @@ public class Configuration {
 	public String getConfig() {
 		
 		String result = "";
+		String localConver = "";
 		
-		result = String.format("Localization: %s \nOpening Keybind: %s \nClosing Keybind: %s \nApplications: %s", this.getLocal(), this.getOpenKey(), this.getCloseKey(), this.getApps());
+		if(this.getLocal() == 0) {
+			localConver = "eng";
+		}
+		else if(this.getLocal() == 1) {
+			localConver = "deu";
+		}
+		else if(this.getLocal() == 2) {
+			localConver = "рус";
+			
+			try {
+				byte[] byteString = localConver.getBytes("UTF-8");
+				String encodedString = new String(byteString, StandardCharsets.UTF_8);
+				localConver = encodedString;
+			}
+			catch(UnsupportedEncodingException e){
+				e.printStackTrace();
+			}
+		}
+		
+		result = String.format("Localization: %s \nOpening Keybind: %s \nClosing Keybind: %s \nApplications: %s", localConver, this.getOpenKey(), this.getCloseKey(), this.getApps());
 		
 		return result;
 		

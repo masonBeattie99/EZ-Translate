@@ -108,6 +108,7 @@ public class ConfigurationInterface extends Menu{
 		localBtn.setText(am.accessLocal().getString("configLocalBtn"));
 		closeBtn.setText(am.accessLocal().getString("closeBtn"));
 		configLabel.setText(am.accessLocal().getString("configsLabel"));
+		configs.setText(am.accessConfig().getConfig());
 		
 		this.setTitle(am.accessLocal().getString("configMenuLabel"));
 		

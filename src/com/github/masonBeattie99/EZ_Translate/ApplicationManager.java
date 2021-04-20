@@ -55,14 +55,14 @@ public class ApplicationManager {
 		
 		localResource = ResourceBundle.getBundle("com.github.masonBeattie99.EZ_Translate.resources.Localization");		
 		
-		//localization resource. Changes based on current local
-		if(config.getLocal().equals("eng"))	{
+		//localization resource. Changes based on current local. 0 represents english, 1 represents german, 2 represents russian
+		if(config.getLocal() == 0)	{
 			localResource = ResourceBundle.getBundle("com.github.masonBeattie99.EZ_Translate.resources.Localization_us");
 		}
-		else if(config.getLocal().equals("ger")) {
+		else if(config.getLocal() == 1) {
 			localResource = ResourceBundle.getBundle("com.github.masonBeattie99.EZ_Translate.resources.Localization_de");
 		}
-		else if(config.getLocal().equals("rus")) {
+		else if(config.getLocal() == 2) {
 			localResource = ResourceBundle.getBundle("com.github.masonBeattie99.EZ_Translate.resources.Localization_ru");
 		}
 		else {
@@ -251,19 +251,19 @@ public class ApplicationManager {
 	//the configuration handles storing and loading
 	/**
 	 * changes the current resource bundle utilized by the application
-	 * @param the local to change to
+	 * @param the value of the index of the desired local. 0 for english, 1 for german, 2 for russian
 	 */
-	public void changeLocal(String newLocal) {
+	public void changeLocal(int newLocal){
 		
 		config.changeLocal(newLocal);
 		
-		if(newLocal.equals("eng")) {
+		if(newLocal == 0) {
 			localResource = ResourceBundle.getBundle("com.github.masonBeattie99.EZ_Translate.resources.Localization_us");
 		}
-		else if(newLocal.equals("ger")) {
+		else if(newLocal == 1) {
 			localResource = ResourceBundle.getBundle("com.github.masonBeattie99.EZ_Translate.resources.Localization_de");
 		}
-		else if(newLocal.equals("rus")) {
+		else if(newLocal == 2) {
 			localResource = ResourceBundle.getBundle("com.github.masonBeattie99.EZ_Translate.resources.Localization_ru");
 		}
 		else {
@@ -279,8 +279,71 @@ public class ApplicationManager {
 		
 	}//changeLocal
 	
+	/**
+	 * changes the current key bind configuration
+	 * @param the open key bind
+	 * @param the closing key bind
+	 */
+	public void changeKeys(String newOpenKey, String newCloseKey) {
+		
+		if(!newOpenKey.isEmpty()) {
+			
+			if(!config.updateOpenKey(newOpenKey)) {
+				JOptionPane.showMessageDialog(noti,"TEMP ERROR INVALID KEY", "TEMP ERROR INVALID KEY", JOptionPane.ERROR_MESSAGE);
+			}
+			
+		}
+		if(!newCloseKey.isEmpty()) {
+			
+			if(!config.updateCloseKey(newCloseKey)) {
+				JOptionPane.showMessageDialog(noti,"TEMP ERROR INVALID KEY", "TEMP ERROR INVALID KEY", JOptionPane.ERROR_MESSAGE);
+			}
+		
+		}
+		
+		ezmenu.updateText();
+		configinter.updateText();
+		trslinter.updateText();
+		acm.updateText();
+		kcm.updateText();
+		lcm.updateText();
+		
+	}//changeKeys
+	
 	//further methods TBD
-
+	
+	/**
+	 * starts detection service to being reading key input. If no keybinds are configured display error message
+	 * @return true if able to start, false if not.
+	 */
+	public boolean startDetect() {
+		
+		//checking if keybinds are actually configured before starting
+		if((config.getOpenKey().equals("NOT_CONFIGURED") && config.getCloseKey().equals("NOT_CONFIGURED")) || (config.getCloseKey().isBlank() && config.getOpenKey().isBlank())) {
+			
+			JOptionPane.showMessageDialog(noti,"TEMP ERROR NO KEYBIND CONFIG", "TEMP ERROR NO KEYBIND CONFIG", JOptionPane.ERROR_MESSAGE);
+			
+			return false;
+			
+		}
+		else {
+			
+			ds.startup();
+			return true;
+		
+		}
+		
+	}//startDetect
+	
+	/**
+	 * stops the detection service
+	 */
+	public void stopDetect() {
+		
+		ds.shutdown();
+		
+	}//stopDetect
+	
 	//insert new methods here
 	
 }//class

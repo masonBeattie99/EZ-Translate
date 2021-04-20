@@ -41,7 +41,7 @@ public class LocalizationConfigurationMenu extends Menu{
 				locals = new JComboBox<String>(options);
 				
 				//setting the default selection to the current localization
-				locals.setSelectedItem((String) am.accessConfig().getLocal());
+				locals.setSelectedIndex(am.accessConfig().getLocal());
 				
 				//adding items to frame
 				cp.add(upLocalBtn);
@@ -55,7 +55,10 @@ public class LocalizationConfigurationMenu extends Menu{
 					@Override
 					public void actionPerformed(ActionEvent evt) {
 						
-						am.changeLocal((String) locals.getSelectedItem());
+						am.changeLocal(locals.getSelectedIndex());
+						
+						locals.setSelectedIndex(am.accessConfig().getLocal());
+						
 					}
 					
 				});

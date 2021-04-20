@@ -1,1 +1,1 @@
-eng.Ctrl+Shift+S.Ctrl+Shift+G.NOT_CONFIGURED
+0.A B C.B C A.NOT_CONFIGURED

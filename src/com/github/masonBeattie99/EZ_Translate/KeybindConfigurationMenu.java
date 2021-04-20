@@ -4,6 +4,8 @@
 package com.github.masonBeattie99.EZ_Translate;
 import java.awt.*;
 import java.awt.event.*;
+import java.nio.charset.StandardCharsets;
+
 import javax.swing.*;
 @SuppressWarnings("serial")
 public class KeybindConfigurationMenu extends Menu{
@@ -27,6 +29,10 @@ public class KeybindConfigurationMenu extends Menu{
 		private JFrame noti;
 		
 		ApplicationManager am;
+		
+		//action listeners use by buttons
+		ActionListener upKeyAL;
+		ActionListener closeKeyAL;
 		
 		
 		/**
@@ -67,8 +73,9 @@ public class KeybindConfigurationMenu extends Menu{
 			cp.add(closeBtn);
 			cp.add(saveKeyBtn);			
 			
-			//button functionality
-			upOpenKeyBtn.addActionListener(new ActionListener() {
+			
+			//opening key bind key
+			upKeyAL = new ActionListener() {
 				
 				@Override
 				public void actionPerformed(ActionEvent evt) {
@@ -86,10 +93,10 @@ public class KeybindConfigurationMenu extends Menu{
 						
 						@Override public void keyPressed(final KeyEvent e) {
 							
-							//adds plus sign for storage within file
-							currentOpenBind += KeyEvent.getKeyText(e.getExtendedKeyCode()) + "+";
+							//adds space for storage within file
+							currentOpenBind += KeyEvent.getKeyText(e.getExtendedKeyCode()) + " ";
 							
-							//adds plus sign for storage within file
+							//updates text field
 							openKeyInputField.setText(currentOpenBind);
 							
 						}
@@ -98,13 +105,16 @@ public class KeybindConfigurationMenu extends Menu{
 					
 				}
 				
-			});//update open key
+			};//update open key
 			
-			upCloseKeyBtn.addActionListener(new ActionListener() {
-					
+			upOpenKeyBtn.addActionListener(upKeyAL);
+			
+			//closing key bind key
+			closeKeyAL = new ActionListener() {
+				
 				@Override
 				public void actionPerformed(ActionEvent evt) {
-					
+				
 					//resets the current config and the text field associated with it
 					currentCloseBind = "";
 					am.accessConfig().clearCloseKey();
@@ -117,19 +127,24 @@ public class KeybindConfigurationMenu extends Menu{
 						
 						@Override public void keyPressed(final KeyEvent e) {
 							
-							//adds plus sign for storage within file
-							currentCloseBind += KeyEvent.getKeyText(e.getExtendedKeyCode()) + "+";
+							//adds space for storage within file
+							currentCloseBind += KeyEvent.getKeyText(e.getExtendedKeyCode()) + ' ';
 							
-							//adds plus sign for storage within file
+							//updates textfield
 							closeKeyInputField.setText(currentCloseBind);
 							
 						}
 						
 					});
-					
+				
 				}
-			});
 			
+			};//update close key
+				
+			upCloseKeyBtn.addActionListener(closeKeyAL);
+			
+			
+			//close button key
 			closeBtn.addActionListener(new ActionListener(){
 				
 				@Override
@@ -139,44 +154,20 @@ public class KeybindConfigurationMenu extends Menu{
 				
 			});//update close key
 			
+			
+			//save button key
 			saveKeyBtn.addActionListener(new ActionListener() {
 				
 				@Override
 				public void actionPerformed(ActionEvent evt) {
 					
-					//checking open key bind
-					if(am.accessConfig().updateOpenKey(currentOpenBind)) {
-						
-						JOptionPane.showMessageDialog(noti, "TEMP MESSAGE SUCCESS");
-						
-					}
-					else{
-						
-						//display the error
-						JOptionPane.showMessageDialog(noti, "TEMP ERR MESSAGE UPDATE FAILURE", "TEMP ERR MESSAGE UPDATE FAILURE", JOptionPane.ERROR_MESSAGE);
-						
-						//resets the current config
-						currentOpenBind = "";
-						am.accessConfig().clearOpenKey();
-						
-					}
+					upOpenKeyBtn.removeActionListener(upKeyAL);
+					upCloseKeyBtn.removeActionListener(closeKeyAL);
 					
-					//checking close key bind
-					if(am.accessConfig().updateCloseKey(currentCloseBind)){
-						
-						JOptionPane.showMessageDialog(noti, "TEMP MESSAGE SUCCESS");
-						
-					}
-					else{
-						
-						//display the error
-						JOptionPane.showMessageDialog(noti, "TEMP ERR MESSAGE UPDATE FAILURE", "TEMP ERR MESSAGE UPDATE FAILURE", JOptionPane.ERROR_MESSAGE);
-						
-						//resets the current config
-						currentCloseBind = "";
-						am.accessConfig().clearCloseKey();
-						
-					}
+					am.changeKeys(currentOpenBind, currentCloseBind);
+					
+					currentOpenBind = "";
+					currentCloseBind = "";
 					
 				}
 				
