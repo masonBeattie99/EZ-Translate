@@ -20,6 +20,11 @@ public class ConfigurationInterface extends Menu{
 	
 	ApplicationManager am;
 	
+	ActionListener appBtnAL;
+	ActionListener keyBtnAL;
+	ActionListener localBtnAL;
+	ActionListener closeBtnAL;
+	
 	/**
 	 * constructs an EZTranslateMenu
 	 * @param the application manager object
@@ -50,46 +55,48 @@ public class ConfigurationInterface extends Menu{
 		
 		configs.setText(am.accessConfig().getConfig());
 		
-		
 		//button functionality
-		appBtn.addActionListener(new ActionListener() {
+		
+		appBtnAL = new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent evt) {
 				am.displayACM();
 			}
 			
-		});
+		};
 		
-		keyBtn.addActionListener(new ActionListener() {
-				
+		keyBtnAL = new ActionListener() {
+			
 			@Override
 			public void actionPerformed(ActionEvent evt) {
 				am.displayKCM();
 			}
-				
-		});
+			
+		};
 		
-		localBtn.addActionListener(new ActionListener() {
+		localBtnAL = new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent evt) {
 				am.displayLCM();
 			}
 				
-		});
+		};
 		
-		closeBtn.addActionListener(new ActionListener(){
+		
+		closeBtnAL = new ActionListener(){
 			
 			@Override
 			public void actionPerformed(ActionEvent evt) {
+				
 				am.hideConfigMenu();
 				am.hideACM();
 				am.hideKCM();
 				am.hideLCM();
 			}
 			
-		});
+		};
 		
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setTitle(am.accessLocal().getString("configMenuLabel"));
@@ -113,6 +120,32 @@ public class ConfigurationInterface extends Menu{
 		this.setTitle(am.accessLocal().getString("configMenuLabel"));
 		
 	}//updateText
+
+	/**
+	 * adds listeners
+	 */
+	@Override
+	public void addListeners() {
+		
+		appBtn.addActionListener(appBtnAL);
+		keyBtn.addActionListener(keyBtnAL);
+		localBtn.addActionListener(localBtnAL);
+		closeBtn.addActionListener(closeBtnAL);
+		
+	}
+
+	/**
+	 * removes listeners
+	 */
+	@Override
+	public void removeListeners() {
+		
+		appBtn.removeActionListener(appBtnAL);
+		keyBtn.removeActionListener(keyBtnAL);
+		localBtn.removeActionListener(localBtnAL);
+		closeBtn.removeActionListener(closeBtnAL);
+		
+	}
 	
 	
 }//class

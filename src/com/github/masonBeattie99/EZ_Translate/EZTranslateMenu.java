@@ -19,6 +19,10 @@ public class EZTranslateMenu extends Menu{
 	
 	ApplicationManager am;
 	
+	ActionListener configBtnAL;
+	ActionListener startBtnAL;
+	ActionListener shutdownBtnAL;
+	
 	/**
 	 * constructs an EZTranslateMenu
 	 */
@@ -41,17 +45,18 @@ public class EZTranslateMenu extends Menu{
 		
 		
 		//button functionality
-		configBtn.addActionListener(new ActionListener() {
+		
+		configBtnAL = new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent evt) {
 				am.displayConfigMenu();
 			}
 			
-		});
+		};
 		
-		startBtn.addActionListener(new ActionListener() {
-				
+		startBtnAL = new ActionListener() {
+			
 			@Override
 			public void actionPerformed(ActionEvent evt) {
 				System.out.println("Starting Application");
@@ -59,17 +64,18 @@ public class EZTranslateMenu extends Menu{
 				am.startDetect();
 				
 			}
-				
-		});
+			
+		};
 		
-		shutdownBtn.addActionListener(new ActionListener() {
+		shutdownBtnAL = new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent evt) {
+							
 				am.shutdown();
 			}
 				
-		});
+		};
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle(am.accessLocal().getString("mainMenuLabel"));
@@ -89,5 +95,29 @@ public class EZTranslateMenu extends Menu{
 		this.setTitle(am.accessLocal().getString("mainMenuLabel"));
 		
 	}//updateText
+
+	/**
+	 * adds listeners
+	 */
+	@Override
+	public void addListeners() {
+		
+		configBtn.addActionListener(configBtnAL);
+		startBtn.addActionListener(startBtnAL);
+		shutdownBtn.addActionListener(shutdownBtnAL);
+		
+	}
+
+	/**
+	 * removes listeners
+	 */
+	@Override
+	public void removeListeners() {
+		
+		configBtn.removeActionListener(configBtnAL);
+		startBtn.removeActionListener(startBtnAL);
+		shutdownBtn.removeActionListener(shutdownBtnAL);
+		
+	}
 	
 }//class

@@ -20,6 +20,7 @@ public abstract class Menu extends JFrame{
 		 */
 		public void hideMenu() {
 			
+			this.removeListeners();
 			setVisible(false);
 			
 		}//hideMenu
@@ -29,10 +30,15 @@ public abstract class Menu extends JFrame{
 		 */
 		public void displayMenu() {
 			
+			this.addListeners();
 			setVisible(true);
 			
 		}//displayMenu
 		
 		public abstract void updateText();
+		
+		public abstract void addListeners();
+		
+		public abstract void removeListeners();
 
 }

@@ -48,6 +48,10 @@ public class ApplicationManager {
 	 */
 	public ApplicationManager() {
 
+		//create non dependent services
+		//ts = new TranslationService();
+		//lds = new LanguageDetectionService();
+		
 		//configuration object
 		config = new Configuration();
 		
@@ -79,8 +83,6 @@ public class ApplicationManager {
 		
 		//service objects
 		ds = new DetectionService(this);
-		ts = new TranslationService(this);
-		lds = new LanguageDetectionService(this);
 		
 		//notification frame
 		noti = new JFrame();
@@ -133,27 +135,21 @@ public class ApplicationManager {
 	 * invokes the ezmenu object to display the main menu of the application
 	 */
 	public void displayMainMenu() {
-		
 		ezmenu.displayMenu();
-		
 	}//displayMainMenu
 	
 	/**
 	 * invokes the configinter object to display the main menu of the application
 	 */
-	public void displayConfigMenu() {
-		
+	public void displayConfigMenu() {	
 		configinter.displayMenu();
-		
 	}//displayConfigMenu
 	
 	/**
 	 * invokes the trslinter object to display the main menu of the application
 	 */
 	public void displayTransMenu() {
-		
 		trslinter.displayMenu();
-		
 	}//displayTransMenu
 	
 	/**
@@ -286,31 +282,48 @@ public class ApplicationManager {
 	 */
 	public void changeKeys(String newOpenKey, String newCloseKey) {
 		
+		boolean changeOpenKeyFail = false;
+		boolean changeCloseKeyFail = false;
+		
 		if(!newOpenKey.isEmpty()) {
 			
 			if(!config.updateOpenKey(newOpenKey)) {
-				JOptionPane.showMessageDialog(noti,"TEMP ERROR INVALID KEY", "TEMP ERROR INVALID KEY", JOptionPane.ERROR_MESSAGE);
+				changeOpenKeyFail = true;
 			}
 			
 		}
 		if(!newCloseKey.isEmpty()) {
 			
 			if(!config.updateCloseKey(newCloseKey)) {
-				JOptionPane.showMessageDialog(noti,"TEMP ERROR INVALID KEY", "TEMP ERROR INVALID KEY", JOptionPane.ERROR_MESSAGE);
+				changeCloseKeyFail = true;
 			}
 		
 		}
 		
-		ezmenu.updateText();
-		configinter.updateText();
-		trslinter.updateText();
-		acm.updateText();
-		kcm.updateText();
-		lcm.updateText();
+		//checks if there was an error, if there was display appropriate menu, if not update menus text
+		if(changeOpenKeyFail && changeCloseKeyFail) {
+			JOptionPane.showMessageDialog(noti,"TEMP ERROR INVALID OPEN AND CLOSE KEY", "TEMP ERROR INVALID OPEN AND CLOSE KEY", JOptionPane.ERROR_MESSAGE);
+		}
+		else if(changeOpenKeyFail) {
+			JOptionPane.showMessageDialog(noti,"TEMP ERROR INVALID OPEN KEY", "TEMP ERROR INVALID OPEN KEY", JOptionPane.ERROR_MESSAGE);
+		}
+		else if(changeCloseKeyFail) {
+			JOptionPane.showMessageDialog(noti,"TEMP ERROR INVALID CLOSE KEY", "TEMP ERROR INVALID CLOSE KEY", JOptionPane.ERROR_MESSAGE);
+		}
+		else {
+			ezmenu.updateText();
+			configinter.updateText();
+			trslinter.updateText();
+			acm.updateText();
+			kcm.updateText();
+			lcm.updateText();
+		}
 		
 	}//changeKeys
 	
-	//further methods TBD
+	
+	//detection methodology
+	
 	
 	/**
 	 * starts detection service to being reading key input. If no keybinds are configured display error message
@@ -344,6 +357,65 @@ public class ApplicationManager {
 		
 	}//stopDetect
 	
-	//insert new methods here
+	
+	//language services methodology
+	
+	/**
+	 * Interprets information from translation interface to be used by language translation service. The goal is to format the information here since language
+	 * translation service is temporary, and not intended to be a complex system. Formatting here allows for flexibility
+	 * in the future. Additionally uses language detection services to 
+	 * @param index of language translating to
+	 * @param the phrase itself
+	 * @return the translated phrase
+	 */
+	public String translate(int index, String phrase) {
+		
+		String result = "";
+		String langTo = "";
+		String currLang = "";
+		
+		if(index == 0) {
+			langTo  = "eng";
+		}
+		else if(index == 1) {
+			langTo = "ger";
+		}
+		else if(index == 2) {
+			langTo = "rus";
+		}
+		else {
+			//insert appropriate error message box
+			System.out.println("ERROR INVALD INDEX");
+			return new String("INVALID INDEX ERROR");
+		}
+		
+		currLang = LanguageDetectionService.detectLang(phrase);
+		
+		if(currLang.equals("NOT_SUPPORTED")) {
+			//insert appropriate error message box
+			System.out.println("ERROR INVALD LANGUAGE SUPPORT");
+			return new String("INVALID LANGUAGE SUPPORT ERROR");
+		}
+		
+		result = TranslationService.translate(currLang, langTo, phrase);
+		
+		return result;
+		
+	}//translate
+	
+	/**
+	 * Utilizes Lingua open source software to detect a language
+	 * @param the input language to detect
+	 * @return the result
+	 */
+	public String detect(String input) {
+		
+		String result = "";
+		
+		result = LanguageDetectionService.detectLang(input);
+		
+		return result;
+		
+	}//detect
 	
 }//class

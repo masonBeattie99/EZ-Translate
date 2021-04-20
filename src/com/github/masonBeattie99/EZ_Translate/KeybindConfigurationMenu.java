@@ -4,9 +4,8 @@
 package com.github.masonBeattie99.EZ_Translate;
 import java.awt.*;
 import java.awt.event.*;
-import java.nio.charset.StandardCharsets;
-
 import javax.swing.*;
+import java.util.ArrayList;
 @SuppressWarnings("serial")
 public class KeybindConfigurationMenu extends Menu{
 
@@ -30,9 +29,17 @@ public class KeybindConfigurationMenu extends Menu{
 		
 		ApplicationManager am;
 		
-		//action listeners use by buttons
-		ActionListener upKeyAL;
+		//action listeners used by buttons
+		ActionListener openKeyAL;
 		ActionListener closeKeyAL;
+		ActionListener closeBtnAL;
+		ActionListener saveKeyAL;
+		
+		KeyAdapter openKeyAda;
+		KeyAdapter closeKeyAda;
+
+		//testing code, hope this works
+		ArrayList<KeyEvent> keyEventList;
 		
 		
 		/**
@@ -73,9 +80,42 @@ public class KeybindConfigurationMenu extends Menu{
 			cp.add(closeBtn);
 			cp.add(saveKeyBtn);			
 			
+			keyEventList = new ArrayList<KeyEvent>();
+			
+			openKeyAda = new KeyAdapter() {
+				
+				@Override public void keyPressed(final KeyEvent e) {
+					
+					keyEventList.add(e);
+					
+					//System.out.println(keyEventList.get(keyEventList.size() - 1).getExtendedKeyCode());
+					
+					//adds space for storage within file
+					currentOpenBind += KeyEvent.getKeyText(e.getExtendedKeyCode()) + " ";
+					
+					//updates text field
+					openKeyInputField.setText(currentOpenBind);
+					
+				}
+				
+			};
+			
+			closeKeyAda = new KeyAdapter() {
+				
+				@Override public void keyPressed(final KeyEvent e) {
+					
+					//adds space for storage within file
+					currentCloseBind += KeyEvent.getKeyText(e.getExtendedKeyCode()) + ' ';
+					
+					//updates textfield
+					closeKeyInputField.setText(currentCloseBind);
+					
+				}
+				
+			};
 			
 			//opening key bind key
-			upKeyAL = new ActionListener() {
+			openKeyAL = new ActionListener() {
 				
 				@Override
 				public void actionPerformed(ActionEvent evt) {
@@ -89,32 +129,20 @@ public class KeybindConfigurationMenu extends Menu{
 					openKeyInputField.grabFocus();
 					
 					
-					openKeyInputField.addKeyListener(new KeyAdapter() {
-						
-						@Override public void keyPressed(final KeyEvent e) {
-							
-							//adds space for storage within file
-							currentOpenBind += KeyEvent.getKeyText(e.getExtendedKeyCode()) + " ";
-							
-							//updates text field
-							openKeyInputField.setText(currentOpenBind);
-							
-						}
-						
-					});
+					openKeyInputField.addKeyListener(openKeyAda);
 					
 				}
 				
 			};//update open key
+		
 			
-			upOpenKeyBtn.addActionListener(upKeyAL);
 			
 			//closing key bind key
 			closeKeyAL = new ActionListener() {
 				
 				@Override
 				public void actionPerformed(ActionEvent evt) {
-				
+									
 					//resets the current config and the text field associated with it
 					currentCloseBind = "";
 					am.accessConfig().clearCloseKey();
@@ -123,57 +151,45 @@ public class KeybindConfigurationMenu extends Menu{
 					//forces input into the text field
 					closeKeyInputField.grabFocus();
 					
-					closeKeyInputField.addKeyListener(new KeyAdapter() {
-						
-						@Override public void keyPressed(final KeyEvent e) {
-							
-							//adds space for storage within file
-							currentCloseBind += KeyEvent.getKeyText(e.getExtendedKeyCode()) + ' ';
-							
-							//updates textfield
-							closeKeyInputField.setText(currentCloseBind);
-							
-						}
-						
-					});
+					closeKeyInputField.addKeyListener(closeKeyAda);
 				
 				}
 			
 			};//update close key
-				
-			upCloseKeyBtn.addActionListener(closeKeyAL);
 			
-			
-			//close button key
-			closeBtn.addActionListener(new ActionListener(){
-				
-				@Override
-				public void actionPerformed(ActionEvent evt) {
-					am.hideKCM();
-				}
-				
-			});//update close key
-			
-			
-			//save button key
-			saveKeyBtn.addActionListener(new ActionListener() {
+			closeBtnAL = new ActionListener(){
 				
 				@Override
 				public void actionPerformed(ActionEvent evt) {
 					
-					upOpenKeyBtn.removeActionListener(upKeyAL);
-					upCloseKeyBtn.removeActionListener(closeKeyAL);
+					am.hideKCM();
+				}
+				
+			};
+			
+			saveKeyAL = new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent evt) {
+					
+					//key listeners need to be removed when saving to prevent issues
+					openKeyInputField.removeKeyListener(openKeyAda);
+					closeKeyInputField.removeKeyListener(closeKeyAda);
 					
 					am.changeKeys(currentOpenBind, currentCloseBind);
 					
 					currentOpenBind = "";
 					currentCloseBind = "";
 					
+					//action listener has to be refreshed. Doesn't work any other way.
+					//upOpenKeyBtn.addActionListener(upKeyAL);
+					//upCloseKeyBtn.addActionListener(closeKeyAL);
+					
 				}
 				
-			});//save key btn
+			};
 			
-			setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+			setDefaultCloseOperation(HIDE_ON_CLOSE);
 			setTitle(am.accessLocal().getString("keyConfigMenuLabel"));
 			setSize(350,120);
 			
@@ -192,5 +208,37 @@ public class KeybindConfigurationMenu extends Menu{
 			this.setTitle(am.accessLocal().getString("keyConfigMenuLabel"));
 			
 		}//updateText
+		
+		/**
+		 * adds listeners
+		 */
+		@Override
+		public void addListeners() {
+			
+			upOpenKeyBtn.addActionListener(openKeyAL);
+			upCloseKeyBtn.addActionListener(closeKeyAL);
+			closeBtn.addActionListener(closeBtnAL);
+			saveKeyBtn.addActionListener(saveKeyAL);
+			
+		}//addListeners
+		
+		/**
+		 * removes listeners
+		 */
+		@Override
+		public void removeListeners() {
+			
+			System.out.println("It sent it");
+			
+			//removes listeners to prevent issues
+			openKeyInputField.removeKeyListener(openKeyAda);
+			closeKeyInputField.removeKeyListener(closeKeyAda);
+			
+			upOpenKeyBtn.removeActionListener(openKeyAL);
+			upCloseKeyBtn.removeActionListener(closeKeyAL);
+			closeBtn.removeActionListener(closeBtnAL);
+			saveKeyBtn.removeActionListener(saveKeyAL);
+			
+		}//removeListeners
 	
 }

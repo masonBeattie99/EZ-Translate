@@ -93,5 +93,21 @@ public class ApplicationConfigurationMenu extends Menu{
 				appsLabel.setText(am.accessLocal().getString("appLabel"));
 				this.setTitle(am.accessLocal().getString("appConfigMenuLabel"));
 				
+			}
+
+			@Override
+			public void addListeners() {
+				
+				
+				
 			}//updateText
+
+			@Override
+			public void removeListeners() {
+				// TODO Auto-generated method stub
+				
+			}
+
 }
+			
+			

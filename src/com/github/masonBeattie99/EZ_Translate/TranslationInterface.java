@@ -21,10 +21,13 @@ public class TranslationInterface extends Menu{
 	
 	private String[] options = new String[3];
 	
-	private JComboBox<String> transFrom;
 	private JComboBox<String> transTo;
 	
 	ApplicationManager am;
+	
+	ActionListener transBtnAL;
+	ActionListener detectBtnAL;
+	
 	
 	/**
 	 * constructs a Translation Interface menu
@@ -48,7 +51,6 @@ public class TranslationInterface extends Menu{
 				am.accessLocal().getString("localChoicesGer"),
 				am.accessLocal().getString("localChoicesRus")};
 		
-		transFrom = new JComboBox<String>(options);
 		transTo = new JComboBox<String>(options);
 		
 		transField.setEditable(true);
@@ -56,23 +58,27 @@ public class TranslationInterface extends Menu{
 		transResult.setEditable(false);
 		detectResult.setEditable(false);
 		
-		transBtn.addActionListener(new ActionListener() {
+		transBtnAL = new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent evt) {
 				
+				transResult.setText(am.translate(transTo.getSelectedIndex(), transField.getText()));
+				
 			}
 			
-		});
+		};
 		
-		detectBtn.addActionListener(new ActionListener() {
+		detectBtnAL = new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent evt) {
 				
+				detectResult.setText(am.detect(detectField.getText()));
+				
 			}
 			
-		});
+		};
 		
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setTitle("TEMP TRANSLATE INTERFACE");
@@ -86,6 +92,37 @@ public class TranslationInterface extends Menu{
 	public void updateText() {
 		
 		//I'll get here soon
+		setTitle("TEMP TRANSLATE INTERFACE");
+		
+		transBtn = new JButton ("TEMP TRANS BUTTON");
+		detectBtn = new JButton ("TEMP DETECT BUTTON");
+		
+		options = new String[] {
+				am.accessLocal().getString("localChoicesEng"),
+				am.accessLocal().getString("localChoicesGer"),
+				am.accessLocal().getString("localChoicesRus")};
+		
+		transTo = new JComboBox<String>(options);
+		
+	}//updateText
+	
+	/**
+	 * adds the action listeners
+	 */
+	public void addListeners() {
+		
+		transBtn.addActionListener(transBtnAL);
+		detectBtn.addActionListener(detectBtnAL);
+		
+	}//addListeners
+	
+	/**
+	 * removes the action listeners
+	 */
+	public void removeListeners() {
+		
+		transBtn.removeActionListener(transBtnAL);
+		detectBtn.removeActionListener(detectBtnAL);
 		
 	}
 	

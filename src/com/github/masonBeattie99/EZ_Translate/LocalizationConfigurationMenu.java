@@ -19,6 +19,9 @@ public class LocalizationConfigurationMenu extends Menu{
 			
 			ApplicationManager am;
 			
+			ActionListener upLocalBtnAL;
+			ActionListener closeBtnAL;
+			
 			/**
 			 * constructs an EZTranslateMenu
 			 * @param the application manager object
@@ -48,9 +51,7 @@ public class LocalizationConfigurationMenu extends Menu{
 				cp.add(locals);
 				cp.add(closeBtn);
 				
-				
-				//button functionality
-				upLocalBtn.addActionListener(new ActionListener() {
+				upLocalBtnAL = new ActionListener() {
 					
 					@Override
 					public void actionPerformed(ActionEvent evt) {
@@ -61,27 +62,21 @@ public class LocalizationConfigurationMenu extends Menu{
 						
 					}
 					
-				});
+				};
 				
-				locals.addActionListener(new ActionListener() {
-						
-					@Override
-					public void actionPerformed(ActionEvent evt) {
-						
-						//potentially add something here
-						
-					}
-						
-				});
 				
-				closeBtn.addActionListener(new ActionListener(){
+				
+				closeBtnAL = new ActionListener(){
 					
 					@Override
 					public void actionPerformed(ActionEvent evt) {
+						
 						am.hideLCM();
 					}
 					
-				});
+				};
+				
+				
 				
 				setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 				setTitle(am.accessLocal().getString("localConfigMenuLabel"));
@@ -114,5 +109,27 @@ public class LocalizationConfigurationMenu extends Menu{
 				this.setTitle(am.accessLocal().getString("localConfigMenuLabel"));
 				
 			}//updateText
+
+			/**
+			 * adds listeners
+			 */
+			@Override
+			public void addListeners() {
+				
+				upLocalBtn.addActionListener(upLocalBtnAL);
+				closeBtn.addActionListener(closeBtnAL);
+				
+			}
+
+			/**
+			 * removes listeners
+			 */
+			@Override
+			public void removeListeners() {
+				
+				upLocalBtn.removeActionListener(upLocalBtnAL);
+				closeBtn.removeActionListener(closeBtnAL);
+				
+			}
 	
 }
