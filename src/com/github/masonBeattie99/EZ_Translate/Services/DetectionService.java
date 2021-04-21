@@ -1,66 +1,126 @@
 /**
- * service for monitoring other application activity in terms of execution, closing, and key presses. 
+ * service for monitoring other application activity in terms of execution, closing, and key presses. Inherits from the menu class to enable keypress reading functionality
  * @author mason
  *
  */
 package com.github.masonBeattie99.EZ_Translate.services;
 import com.github.masonBeattie99.EZ_Translate.ApplicationManager;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.nio.charset.StandardCharsets;
-
+import javax.swing.*;
+import java.awt.event.*;
 import javax.swing.KeyStroke;
-public class DetectionService {
+@SuppressWarnings("serial")
+public class DetectionService extends JFrame{
 
 	//private variables
 	ApplicationManager am;
+	JFrame frame;
+	JTextField input;
 	
-	
+	/**
+	 * accepts application manager and component to attach input detection to
+	 * @param am
+	 */
 	public DetectionService(ApplicationManager am) {
 		
 		this.am = am;
 		
-		//processes the configuration to interpret key binds
+		Container cp = getContentPane();
+		
+		cp.setLayout(new FlowLayout());
+		
+		input = new JTextField();
+		
+		input.setEditable(true);
+		
+		cp.add(input);
+		
+		setSize(120,350);
+		setVisible(true);
+		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		
 	}//constructor
 	
 	/**
-	 * begins detection service
+	 * begins detection service. starts when the start method in the main menu is called
 	 */
-	public void startup() {
+	public void start() {
 		
-		String openKeyString = "alt shift D";
-		String closeKeyString = "alt shift D";
+		String openKeyString = "typed a";
+		String closeKeyString = "alt shift X";
 		
-		//byte[] byteString;
-		//String encodedString;
+		input.grabFocus();
 		
-		openKeyString = am.accessConfig().getOpenKey();
-		closeKeyString = am.accessConfig().getCloseKey();
+		//String openKeyString = "alt shift D";
+		//String closeKeyString = "alt shift D";
+	
+		KeyStroke ksO = KeyStroke.getKeyStroke(openKeyString);
+		KeyStroke ksC = KeyStroke.getKeyStroke(closeKeyString);
 		
+		input.getInputMap().put(ksO, "open");
+		input.getInputMap().put(ksC, "close");
 		
+		input.getActionMap().put("open", openAction());
+		input.getActionMap().put("close", closeAction());
 		
-		//KeyStroke.getKeyStrokeForEvent();
-		
-		//byteString = openKeyString.getBytes();
-		//encodedString = new String(byteString, StandardCharsets.UTF_8);
-		
-		
-		
-		System.out.println(openKeyString);
-		System.out.println(closeKeyString);
-		
-		System.out.println("Encoded String " + KeyStroke.getKeyStroke(openKeyString));
-		System.out.println("Not Encoded " + KeyStroke.getKeyStroke(closeKeyString));
+		//openKeyString = am.accessConfig().getOpenKey();
+		//closeKeyString = am.accessConfig().getCloseKey();
 		
 		
-	}//startup
+		
+	}//start
 	
 	/**
 	 * stops detection service
 	 */
-	public void shutdown() {
+	public void close() {
 		
-	}//shutdown
+		
+		
+	}//close
+	
+	//actionMethods
+	
+	/**
+	 * opening action
+	 * @return action to be performed
+	 */
+	public Action openAction() {
+		
+		return new AbstractAction() {
+			
+			public void actionPerformed(ActionEvent e) {
+				
+				System.out.println("Action is called");
+				
+				am.displayTransMenu();
+				
+				input.grabFocus();
+				
+			}
+			
+		};
+		
+	}//openAction
+	
+	/**
+	 * closing action
+	 * @return action to be performed
+	 */
+	public Action closeAction() {
+		
+		return new AbstractAction() {
+			
+			public void actionPerformed(ActionEvent e) {
+				
+				System.out.println("Action is called");
+				
+				am.hideTransMenu();
+				
+			}
+			
+		};
+		
+	}//closeAction
 	
 }

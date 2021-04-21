@@ -39,6 +39,8 @@ public class TranslationInterface extends Menu{
 		
 		Container cp = getContentPane();
 		
+		cp.setLayout(new FlowLayout());
+		
 		transBtn = new JButton ("TEMP TRANS BUTTON");
 		detectBtn = new JButton ("TEMP DETECT BUTTON");
 		transField = new JTextField();
@@ -58,12 +60,25 @@ public class TranslationInterface extends Menu{
 		transResult.setEditable(false);
 		detectResult.setEditable(false);
 		
+		transField.setColumns(5);
+		detectField.setColumns(5);
+		transResult.setColumns(5);
+		detectResult.setColumns(5);
+		
+		cp.add(transBtn);
+		cp.add(transTo);
+		cp.add(transField);
+		cp.add(transResult);
+		cp.add(detectBtn);
+		cp.add(detectField);
+		cp.add(detectResult);
+		
 		transBtnAL = new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent evt) {
 				
-				transResult.setText(am.translate(transTo.getSelectedIndex(), transField.getText()));
+				transResult.setText(am.translateLang(transTo.getSelectedIndex(), transField.getText()));
 				
 			}
 			
@@ -74,7 +89,7 @@ public class TranslationInterface extends Menu{
 			@Override
 			public void actionPerformed(ActionEvent evt) {
 				
-				detectResult.setText(am.detect(detectField.getText()));
+				detectResult.setText(am.detectLang(detectField.getText()));
 				
 			}
 			

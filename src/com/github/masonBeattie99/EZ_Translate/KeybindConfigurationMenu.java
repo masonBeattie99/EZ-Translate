@@ -9,6 +9,9 @@ import java.util.ArrayList;
 @SuppressWarnings("serial")
 public class KeybindConfigurationMenu extends Menu{
 
+		//content pane
+		Container cp;
+	
 		//private variables
 		private JButton upOpenKeyBtn;
 		private JButton upCloseKeyBtn;
@@ -23,10 +26,6 @@ public class KeybindConfigurationMenu extends Menu{
 		private String currentOpenBind;
 		private String currentCloseBind;
 		
-		
-		//testing code, remove when done
-		private JFrame noti;
-		
 		ApplicationManager am;
 		
 		//action listeners used by buttons
@@ -35,9 +34,13 @@ public class KeybindConfigurationMenu extends Menu{
 		ActionListener closeBtnAL;
 		ActionListener saveKeyAL;
 		
+		//key adapters used by the key listeners to observe keyboard input
 		KeyAdapter openKeyAda;
 		KeyAdapter closeKeyAda;
-
+		
+		//window adapter to detect when menu closes, to perform a custom closing operation
+		WindowAdapter wa;
+		
 		//testing code, hope this works
 		ArrayList<KeyEvent> keyEventList;
 		
@@ -52,12 +55,9 @@ public class KeybindConfigurationMenu extends Menu{
 			
 			//variable used to store input
 			currentOpenBind = "";
-			currentCloseBind = "";
+			currentCloseBind = "";			
 			
-			//testing code
-			noti = new JFrame();
-			
-			Container cp = getContentPane();
+			cp = getContentPane();
 			
 			cp.setLayout(new FlowLayout());
 			
@@ -189,7 +189,16 @@ public class KeybindConfigurationMenu extends Menu{
 				
 			};
 			
-			setDefaultCloseOperation(HIDE_ON_CLOSE);
+			wa = new WindowAdapter() {
+				
+				public void windowClosing(WindowEvent e) {
+					
+					//performs the same action as close button for consistency
+					am.hideKCM();
+				}
+			};
+			
+			setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 			setTitle(am.accessLocal().getString("keyConfigMenuLabel"));
 			setSize(350,120);
 			
@@ -219,6 +228,8 @@ public class KeybindConfigurationMenu extends Menu{
 			upCloseKeyBtn.addActionListener(closeKeyAL);
 			closeBtn.addActionListener(closeBtnAL);
 			saveKeyBtn.addActionListener(saveKeyAL);
+			//cp.addWindowListener(wa);
+			
 			
 		}//addListeners
 		
@@ -228,11 +239,10 @@ public class KeybindConfigurationMenu extends Menu{
 		@Override
 		public void removeListeners() {
 			
-			System.out.println("It sent it");
-			
 			//removes listeners to prevent issues
 			openKeyInputField.removeKeyListener(openKeyAda);
 			closeKeyInputField.removeKeyListener(closeKeyAda);
+			//cp.removeWindowListener(wa);
 			
 			upOpenKeyBtn.removeActionListener(openKeyAL);
 			upCloseKeyBtn.removeActionListener(closeKeyAL);

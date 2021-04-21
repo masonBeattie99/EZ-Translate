@@ -31,8 +31,6 @@ public class ApplicationManager {
 	
 	//service object
 	private DetectionService ds;
-	private TranslationService ts;
-	private LanguageDetectionService lds;
 	
 	//localization resource object
 	private ResourceBundle localResource;
@@ -341,7 +339,10 @@ public class ApplicationManager {
 		}
 		else {
 			
-			ds.startup();
+			JOptionPane.showMessageDialog(noti,"TEMP STARTING APPLICATION");
+			
+			ds.start();
+			
 			return true;
 		
 		}
@@ -353,7 +354,7 @@ public class ApplicationManager {
 	 */
 	public void stopDetect() {
 		
-		ds.shutdown();
+		ds.close();
 		
 	}//stopDetect
 	
@@ -368,7 +369,7 @@ public class ApplicationManager {
 	 * @param the phrase itself
 	 * @return the translated phrase
 	 */
-	public String translate(int index, String phrase) {
+	public String translateLang(int index, String phrase) {
 		
 		String result = "";
 		String langTo = "";
@@ -389,15 +390,17 @@ public class ApplicationManager {
 			return new String("INVALID INDEX ERROR");
 		}
 		
-		currLang = LanguageDetectionService.detectLang(phrase);
+		//currLang = LanguageDetectionService.detectLang(phrase);
 		
+		/**
 		if(currLang.equals("NOT_SUPPORTED")) {
 			//insert appropriate error message box
 			System.out.println("ERROR INVALD LANGUAGE SUPPORT");
 			return new String("INVALID LANGUAGE SUPPORT ERROR");
 		}
+		*/
 		
-		result = TranslationService.translate(currLang, langTo, phrase);
+		result = TranslationService.translate(langTo, phrase);
 		
 		return result;
 		
@@ -408,7 +411,7 @@ public class ApplicationManager {
 	 * @param the input language to detect
 	 * @return the result
 	 */
-	public String detect(String input) {
+	public String detectLang(String input) {
 		
 		String result = "";
 		

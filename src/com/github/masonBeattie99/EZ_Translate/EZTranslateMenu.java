@@ -59,7 +59,6 @@ public class EZTranslateMenu extends Menu{
 			
 			@Override
 			public void actionPerformed(ActionEvent evt) {
-				System.out.println("Starting Application");
 				
 				am.startDetect();
 				
