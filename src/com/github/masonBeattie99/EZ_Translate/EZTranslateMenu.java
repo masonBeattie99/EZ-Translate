@@ -23,6 +23,8 @@ public class EZTranslateMenu extends Menu{
 	ActionListener startBtnAL;
 	ActionListener shutdownBtnAL;
 	
+	WindowAdapter wa;
+	
 	/**
 	 * constructs an EZTranslateMenu
 	 */
@@ -76,7 +78,16 @@ public class EZTranslateMenu extends Menu{
 				
 		};
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		wa = new WindowAdapter() {
+			
+			public void windowClosing(WindowEvent e) {
+				//performs the same action as close button for consistency
+				am.shutdown();
+				removeListeners();
+			}
+		};
+		
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setTitle(am.accessLocal().getString("mainMenuLabel"));
 		setSize(700,240);
 		
@@ -104,6 +115,7 @@ public class EZTranslateMenu extends Menu{
 		configBtn.addActionListener(configBtnAL);
 		startBtn.addActionListener(startBtnAL);
 		shutdownBtn.addActionListener(shutdownBtnAL);
+		super.addWindowListener(wa);
 		
 	}
 
@@ -116,6 +128,7 @@ public class EZTranslateMenu extends Menu{
 		configBtn.removeActionListener(configBtnAL);
 		startBtn.removeActionListener(startBtnAL);
 		shutdownBtn.removeActionListener(shutdownBtnAL);
+		super.removeWindowListener(wa);
 		
 	}
 	

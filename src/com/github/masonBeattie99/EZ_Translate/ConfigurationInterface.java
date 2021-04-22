@@ -25,6 +25,8 @@ public class ConfigurationInterface extends Menu{
 	ActionListener localBtnAL;
 	ActionListener closeBtnAL;
 	
+	WindowAdapter wa;
+	
 	/**
 	 * constructs an EZTranslateMenu
 	 * @param the application manager object
@@ -98,7 +100,15 @@ public class ConfigurationInterface extends Menu{
 			
 		};
 		
-		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		wa = new WindowAdapter() {
+			
+			public void windowClosing(WindowEvent e) {
+				//performs the same action as close button for consistency
+				am.hideConfigMenu();
+			}
+		};
+		
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setTitle(am.accessLocal().getString("configMenuLabel"));
 		setSize(700,240);
 		
@@ -131,6 +141,7 @@ public class ConfigurationInterface extends Menu{
 		keyBtn.addActionListener(keyBtnAL);
 		localBtn.addActionListener(localBtnAL);
 		closeBtn.addActionListener(closeBtnAL);
+		super.addWindowListener(wa);
 		
 	}
 
@@ -144,6 +155,7 @@ public class ConfigurationInterface extends Menu{
 		keyBtn.removeActionListener(keyBtnAL);
 		localBtn.removeActionListener(localBtnAL);
 		closeBtn.removeActionListener(closeBtnAL);
+		super.removeWindowListener(wa);
 		
 	}
 	

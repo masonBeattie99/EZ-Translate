@@ -192,7 +192,6 @@ public class KeybindConfigurationMenu extends Menu{
 			wa = new WindowAdapter() {
 				
 				public void windowClosing(WindowEvent e) {
-					
 					//performs the same action as close button for consistency
 					am.hideKCM();
 				}
@@ -228,7 +227,7 @@ public class KeybindConfigurationMenu extends Menu{
 			upCloseKeyBtn.addActionListener(closeKeyAL);
 			closeBtn.addActionListener(closeBtnAL);
 			saveKeyBtn.addActionListener(saveKeyAL);
-			//cp.addWindowListener(wa);
+			super.addWindowListener(wa);
 			
 			
 		}//addListeners
@@ -242,7 +241,7 @@ public class KeybindConfigurationMenu extends Menu{
 			//removes listeners to prevent issues
 			openKeyInputField.removeKeyListener(openKeyAda);
 			closeKeyInputField.removeKeyListener(closeKeyAda);
-			//cp.removeWindowListener(wa);
+			super.removeWindowListener(wa);
 			
 			upOpenKeyBtn.removeActionListener(openKeyAL);
 			upCloseKeyBtn.removeActionListener(closeKeyAL);

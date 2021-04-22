@@ -28,6 +28,8 @@ public class TranslationInterface extends Menu{
 	ActionListener transBtnAL;
 	ActionListener detectBtnAL;
 	
+	WindowAdapter wa;
+	
 	
 	/**
 	 * constructs a Translation Interface menu
@@ -95,7 +97,15 @@ public class TranslationInterface extends Menu{
 			
 		};
 		
-		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		wa = new WindowAdapter() {
+			
+			public void windowClosing(WindowEvent e) {
+				//performs the same action as close button for consistency
+				am.hideTransMenu();
+			}
+		};
+		
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setTitle("TEMP TRANSLATE INTERFACE");
 		setSize(350,120);
 		
@@ -128,6 +138,7 @@ public class TranslationInterface extends Menu{
 		
 		transBtn.addActionListener(transBtnAL);
 		detectBtn.addActionListener(detectBtnAL);
+		super.addWindowListener(wa);
 		
 	}//addListeners
 	
@@ -136,6 +147,7 @@ public class TranslationInterface extends Menu{
 	 */
 	public void removeListeners() {
 		
+		super.removeWindowListener(wa);
 		transBtn.removeActionListener(transBtnAL);
 		detectBtn.removeActionListener(detectBtnAL);
 		

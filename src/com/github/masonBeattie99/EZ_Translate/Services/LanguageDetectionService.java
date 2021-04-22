@@ -2,7 +2,9 @@
  * interacts with Peter M. Stahl's Lingua Open Source Software for language detection services
  */
 package com.github.masonBeattie99.EZ_Translate.services;
-
+//add these lines back when lingua is fixed
+//import com.github.pemistahl.lingua.api.*;
+//import com.github.pemistahl.lingua.api.Language.*;
 public class LanguageDetectionService {
 	
 	//LanguageDetector detector = LanguageDetectorBuilder.fromLanguages(ENGLISH, GERMAN, RUSSIAN).build();

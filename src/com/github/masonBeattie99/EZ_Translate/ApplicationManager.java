@@ -115,8 +115,11 @@ public class ApplicationManager {
 	public void shutdown() {
 		
 		if(config.updateFile()) {
+			
 			JOptionPane.showMessageDialog(noti, localResource.getString("shutdownNoti"));
-			ezmenu.dispatchEvent(new WindowEvent(ezmenu, WindowEvent.WINDOW_CLOSING));
+			ezmenu.dispose();
+			System.exit(0);
+			
 		}
 		else {
 			JOptionPane.showMessageDialog(noti, localResource.getString("errFileNotFoundMsg"), localResource.getString("fileNotFoundMsg"), JOptionPane.ERROR_MESSAGE);

@@ -22,6 +22,8 @@ public class LocalizationConfigurationMenu extends Menu{
 			ActionListener upLocalBtnAL;
 			ActionListener closeBtnAL;
 			
+			WindowAdapter wa;
+			
 			/**
 			 * constructs an EZTranslateMenu
 			 * @param the application manager object
@@ -76,9 +78,15 @@ public class LocalizationConfigurationMenu extends Menu{
 					
 				};
 				
+				wa = new WindowAdapter() {
+					
+					public void windowClosing(WindowEvent e) {
+						//performs the same action as close button for consistency
+						am.hideLCM();
+					}
+				};
 				
-				
-				setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+				setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 				setTitle(am.accessLocal().getString("localConfigMenuLabel"));
 				setSize(350,120);
 				
@@ -118,6 +126,7 @@ public class LocalizationConfigurationMenu extends Menu{
 				
 				upLocalBtn.addActionListener(upLocalBtnAL);
 				closeBtn.addActionListener(closeBtnAL);
+				super.addWindowListener(wa);
 				
 			}
 
@@ -129,6 +138,7 @@ public class LocalizationConfigurationMenu extends Menu{
 				
 				upLocalBtn.removeActionListener(upLocalBtnAL);
 				closeBtn.removeActionListener(closeBtnAL);
+				super.removeWindowListener(wa);
 				
 			}
 	
