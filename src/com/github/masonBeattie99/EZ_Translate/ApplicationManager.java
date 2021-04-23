@@ -9,13 +9,13 @@
  */
 package com.github.masonBeattie99.EZ_Translate;
 
-import java.awt.event.WindowEvent;
 import javax.swing.JOptionPane;
 import javax.swing.*;
 import com.github.masonBeattie99.EZ_Translate.services.*;
 import com.github.masonBeattie99.EZ_Translate.configuration.Configuration;
 import com.github.masonBeattie99.EZ_Translate.resources.*;
 import java.util.ResourceBundle;
+
 public class ApplicationManager {
 	
 	//interface object
@@ -373,6 +373,8 @@ public class ApplicationManager {
 	 * @return the translated phrase
 	 */
 	public String translateLang(int index, String phrase) {
+		
+		System.out.println("Beginning Translation");
 		
 		String result = "";
 		String langTo = "";

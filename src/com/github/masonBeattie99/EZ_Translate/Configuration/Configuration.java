@@ -497,7 +497,7 @@ public class Configuration {
 			localConver = "deu";
 		}
 		else if(this.getLocal() == 2) {
-			localConver = "рус";
+			localConver = "ру�?";
 			
 			try {
 				byte[] byteString = localConver.getBytes("UTF-8");

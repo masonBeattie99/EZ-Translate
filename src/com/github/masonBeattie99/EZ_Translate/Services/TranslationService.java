@@ -4,6 +4,10 @@
  *
  */
 package com.github.masonBeattie99.EZ_Translate.services;
+
+import java.nio.charset.StandardCharsets;
+import java.io.UnsupportedEncodingException;
+
 public class TranslationService {
 	
 	public TranslationService() {
@@ -16,11 +20,12 @@ public class TranslationService {
 		
 		String[] engList = {"Hello", "How are you?", "Good morning", "Good day", "Good night", "Goodbye"};
 		String[] gerList = {"Hallo", "Wie gehts?", "Guten Morgen", "Guten Tag", "Guten Nacht", "Tschüss"};
-		String[] rusList = {"Привет", "Как дела?", "Доброе утро", "Добрый день", "Добрый вечер","до свидания"};
+		String[] rusList = {"Привет", "Как дела?", "Доброе утро", "Добрый день", "Добрый вечер","до �?видани�?"};
 		
 		String[] transToList = new String[6];
 		
-		String result = "";
+		//set result to deaful to no support
+		String result = NO_SUPP;
 		
 		
 		if(transTo.equals("eng")) {
@@ -47,7 +52,7 @@ public class TranslationService {
 		else if(transTo.equals("нем")) {
 			transToList = gerList.clone();
 		}
-		else if(transTo.equals("рус")) {
+		else if(transTo.equals("ру�?")) {
 			transToList = rusList.clone();
 		}
 		
@@ -59,19 +64,19 @@ public class TranslationService {
 		
 		for(int i = 0; i < engList.length && i < gerList.length && i < rusList.length; i++) {
 			
-			if(phrase.equals(engList[i])) {
+			if(phrase.equalsIgnoreCase(engList[i])) {
 				
 				result = transToList[i];
 				break;
 				
 			}
-			if(phrase.equals(gerList[i])) {
+			if(phrase.equalsIgnoreCase(gerList[i])) {
 				
 				result = transToList[i];
 				break;
 				
 			}
-			if(phrase.equals(rusList[i])) {
+			if(phrase.equalsIgnoreCase(rusList[i])) {
 				
 				result = transToList[i];
 				break;
@@ -80,7 +85,15 @@ public class TranslationService {
 			
 		}
 		
-		return result;
+		try {
+			byte[] byteString = result.getBytes("UTF-8");
+			return new String (byteString, StandardCharsets.UTF_8);
+		}
+		catch(UnsupportedEncodingException e) {
+			return NO_SUPP;
+		}
+		
+		
 		
 	}//translate
 	
