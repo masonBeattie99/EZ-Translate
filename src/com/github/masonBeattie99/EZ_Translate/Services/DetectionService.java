@@ -1,5 +1,5 @@
 /**
- * service for monitoring other application activity in terms of execution, closing, and key presses. Inherits from the menu class to enable keypress reading functionality
+ * service for monitoring other application activity in terms of execution, closing, and key presses. Monitors keypressed through Jnativehook local library
  * @author mason
  *
  */
@@ -9,13 +9,16 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 import javax.swing.KeyStroke;
+
+import org.jnativehook.GlobalScreen;
+import org.jnativehook.NativeHookException;
+import org.jnativehook.keyboard.NativeKeyEvent;
+import org.jnativehook.keyboard.NativeKeyListener;
 @SuppressWarnings("serial")
-public class DetectionService extends JFrame{
+public class DetectionService implements NativeKeyListener{
 
 	//private variables
 	ApplicationManager am;
-	JFrame frame;
-	JTextField input;
 	
 	/**
 	 * accepts application manager and component to attach input detection to
@@ -25,19 +28,6 @@ public class DetectionService extends JFrame{
 		
 		this.am = am;
 		
-		Container cp = getContentPane();
-		
-		cp.setLayout(new FlowLayout());
-		
-		input = new JTextField();
-		
-		input.setEditable(true);
-		
-		cp.add(input);
-		
-		setSize(120,350);
-		setVisible(true);
-		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		
 	}//constructor
 	
@@ -49,7 +39,6 @@ public class DetectionService extends JFrame{
 		String openKeyString = "typed a";
 		String closeKeyString = "alt shift X";
 		
-		input.grabFocus();
 		
 		//String openKeyString = "alt shift D";
 		//String closeKeyString = "alt shift D";
@@ -57,11 +46,11 @@ public class DetectionService extends JFrame{
 		KeyStroke ksO = KeyStroke.getKeyStroke(openKeyString);
 		KeyStroke ksC = KeyStroke.getKeyStroke(closeKeyString);
 		
-		input.getInputMap().put(ksO, "open");
-		input.getInputMap().put(ksC, "close");
+		//input.getInputMap().put(ksO, "open");
+		//input.getInputMap().put(ksC, "close");
 		
-		input.getActionMap().put("open", openAction());
-		input.getActionMap().put("close", closeAction());
+		//input.getActionMap().put("open", openAction());
+		//input.getActionMap().put("close", closeAction());
 		
 		//openKeyString = am.accessConfig().getOpenKey();
 		//closeKeyString = am.accessConfig().getCloseKey();
@@ -95,7 +84,6 @@ public class DetectionService extends JFrame{
 				
 				am.displayTransMenu();
 				
-				input.grabFocus();
 				
 			}
 			
@@ -122,5 +110,30 @@ public class DetectionService extends JFrame{
 		};
 		
 	}//closeAction
+
+	@Override
+	public void nativeKeyPressed(NativeKeyEvent e) {
+		// TODO Auto-generated method stub
+		
+		System.out.println("Key Pressed: " + NativeKeyEvent.getKeyText(e.getKeyCode()));
+		
+	}
+
+	@Override
+	public void nativeKeyReleased(NativeKeyEvent e) {
+		// TODO Auto-generated method stub
+		
+		System.out.println("Key Released: " + NativeKeyEvent.getKeyText(e.getKeyCode()));
+		
+	}
+
+	@Override
+	public void nativeKeyTyped(NativeKeyEvent e) {
+		// TODO Auto-generated method stub
+		
+		System.out.println("Key Typed: " + e.getKeyText(e.getKeyCode()));
+		
+		
+	}
 	
 }
