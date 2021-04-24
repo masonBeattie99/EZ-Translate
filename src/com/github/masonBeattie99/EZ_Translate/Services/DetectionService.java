@@ -1,24 +1,34 @@
 /**
- * service for monitoring other application activity in terms of execution, closing, and key presses. Monitors keypressed through Jnativehook local library
+ * service for monitoring other application activity in terms of execution, closing, and key presses. Monitors keypressed through JNativeHook local library
  * @author mason
  *
  */
 package com.github.masonBeattie99.EZ_Translate.services;
 import com.github.masonBeattie99.EZ_Translate.ApplicationManager;
-import java.awt.*;
-import javax.swing.*;
-import java.awt.event.*;
-import javax.swing.KeyStroke;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.Scanner;
 
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
 @SuppressWarnings("serial")
-public class DetectionService implements NativeKeyListener{
+public class DetectionService{
 
 	//private variables
 	ApplicationManager am;
+	
+	private String openKeyString;
+	private String closeKeyString;
+	
+	private String inputString;
+	
+	private Scanner ls;
+	
+	//JNativeHook registers ctrl input unnecessarily, this value is used to work around it.
+	private int ctrlBuff;
 	
 	/**
 	 * accepts application manager and component to attach input detection to
@@ -28,6 +38,13 @@ public class DetectionService implements NativeKeyListener{
 		
 		this.am = am;
 		
+		openKeyString = "";
+		closeKeyString = "";
+		inputString = "";
+		
+		ctrlBuff = 0;
+		
+		ls = new Scanner(inputString);
 		
 	}//constructor
 	
@@ -36,25 +53,28 @@ public class DetectionService implements NativeKeyListener{
 	 */
 	public void start() {
 		
-		String openKeyString = "typed a";
-		String closeKeyString = "alt shift X";
+		openKeyString = am.accessConfig().getOpenKey();
+		closeKeyString = am.accessConfig().getCloseKey();
 		
+		System.out.println(openKeyString);
+		System.out.println(closeKeyString);
 		
-		//String openKeyString = "alt shift D";
-		//String closeKeyString = "alt shift D";
-	
-		KeyStroke ksO = KeyStroke.getKeyStroke(openKeyString);
-		KeyStroke ksC = KeyStroke.getKeyStroke(closeKeyString);
+		//code to disable console output
+		Logger log = Logger.getLogger(GlobalScreen.class.getPackage().getName());
+		log.setLevel(Level.OFF);
+		log.setUseParentHandlers(false);
 		
-		//input.getInputMap().put(ksO, "open");
-		//input.getInputMap().put(ksC, "close");
+		try {
+			GlobalScreen.registerNativeHook();
+		}
+		catch (NativeHookException e) {
+			
+			System.out.println("Issue registering native hooks");
+			am.stopDetect();
+			
+		}		
 		
-		//input.getActionMap().put("open", openAction());
-		//input.getActionMap().put("close", closeAction());
-		
-		//openKeyString = am.accessConfig().getOpenKey();
-		//closeKeyString = am.accessConfig().getCloseKey();
-		
+		GlobalScreen.addNativeKeyListener(new GlobalKeyListener());
 		
 		
 	}//start
@@ -64,7 +84,12 @@ public class DetectionService implements NativeKeyListener{
 	 */
 	public void close() {
 		
-		
+		try {
+			GlobalScreen.unregisterNativeHook();
+		}
+		catch(NativeHookException e){
+			e.printStackTrace();			
+		}
 		
 	}//close
 	
@@ -74,20 +99,10 @@ public class DetectionService implements NativeKeyListener{
 	 * opening action
 	 * @return action to be performed
 	 */
-	public Action openAction() {
+	public void openAction() {
 		
-		return new AbstractAction() {
-			
-			public void actionPerformed(ActionEvent e) {
+		am.displayTransMenu();
 				
-				System.out.println("Action is called");
-				
-				am.displayTransMenu();
-				
-				
-			}
-			
-		};
 		
 	}//openAction
 	
@@ -95,44 +110,64 @@ public class DetectionService implements NativeKeyListener{
 	 * closing action
 	 * @return action to be performed
 	 */
-	public Action closeAction() {
+	public void closeAction() {
 		
-		return new AbstractAction() {
-			
-			public void actionPerformed(ActionEvent e) {
+		am.hideTransMenu();
 				
-				System.out.println("Action is called");
-				
-				am.hideTransMenu();
-				
-			}
-			
-		};
 		
 	}//closeAction
 
-	@Override
-	public void nativeKeyPressed(NativeKeyEvent e) {
-		// TODO Auto-generated method stub
+	/**
+	 * handles the input received by the GlobalKeyListener subclass
+	 */
+	public void handleInput(String input) {
 		
-		System.out.println("Key Pressed: " + NativeKeyEvent.getKeyText(e.getKeyCode()));
+		inputString += input + " ";
 		
-	}
+		//method to trim excessive Ctrl values
+		
+		System.out.println("Current Input String: " + inputString);
+		
+	}//handleInput
+	
+	
+	/**
+	 * key listener subclass that implements JNativeHook NativeKeyListener interface
+	 * @author mason
+	 *
+	 */
+	public class GlobalKeyListener implements NativeKeyListener{
+		
+		/**
+		 * constructor
+		 */
+		public GlobalKeyListener(){
+			
+		}
+		
+		@Override
+		public void nativeKeyPressed(NativeKeyEvent e) {
+			
+			//System.out.println("Key Pressed: " + NativeKeyEvent.getKeyText(e.getKeyCode()));
+			
+		}
 
-	@Override
-	public void nativeKeyReleased(NativeKeyEvent e) {
-		// TODO Auto-generated method stub
-		
-		System.out.println("Key Released: " + NativeKeyEvent.getKeyText(e.getKeyCode()));
-		
-	}
+		@Override
+		public void nativeKeyReleased(NativeKeyEvent e) {
+			
+			System.out.println("Key Released: " + NativeKeyEvent.getKeyText(e.getKeyCode()));
+			
+			handleInput(NativeKeyEvent.getKeyText(e.getKeyCode()));
+			
+		}
 
-	@Override
-	public void nativeKeyTyped(NativeKeyEvent e) {
-		// TODO Auto-generated method stub
-		
-		System.out.println("Key Typed: " + e.getKeyText(e.getKeyCode()));
-		
+		@Override
+		public void nativeKeyTyped(NativeKeyEvent e) {
+			
+			//System.out.println("Key Typed: " + NativeKeyEvent.getKeyText(e.getKeyCode()));
+			
+			
+		}
 		
 	}
 	

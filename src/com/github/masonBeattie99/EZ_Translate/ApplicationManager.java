@@ -333,7 +333,7 @@ public class ApplicationManager {
 	public boolean startDetect() {
 		
 		//checking if keybinds are actually configured before starting
-		if((config.getOpenKey().equals("NOT_CONFIGURED") && config.getCloseKey().equals("NOT_CONFIGURED")) || (config.getCloseKey().isBlank() && config.getOpenKey().isBlank())) {
+		if((config.getOpenKey().equals("NOT_CONFIGURED") || config.getCloseKey().equals("NOT_CONFIGURED")) || (config.getCloseKey().isBlank() || config.getOpenKey().isBlank())) {
 			
 			JOptionPane.showMessageDialog(noti,"TEMP ERROR NO KEYBIND CONFIG", "TEMP ERROR NO KEYBIND CONFIG", JOptionPane.ERROR_MESSAGE);
 			

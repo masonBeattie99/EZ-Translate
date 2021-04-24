@@ -48,7 +48,9 @@ public class ConfigurationInterface extends Menu{
 		configs.setEditable(false);
 		
 		//adding items to frame
-		cp.add(appBtn);
+		
+		//application button not being added
+		//cp.add(appBtn);
 		cp.add(keyBtn);
 		cp.add(localBtn);
 		cp.add(configLabel);

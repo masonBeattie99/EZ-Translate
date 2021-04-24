@@ -16,12 +16,14 @@ public class EZTranslateMenu extends Menu{
 	private JButton configBtn;
 	private JButton startBtn;
 	private JButton shutdownBtn;
+	private JButton closeBtn;
 	
 	ApplicationManager am;
 	
 	ActionListener configBtnAL;
 	ActionListener startBtnAL;
 	ActionListener shutdownBtnAL;
+	ActionListener closeBtnAL;
 	
 	WindowAdapter wa;
 	
@@ -38,12 +40,17 @@ public class EZTranslateMenu extends Menu{
 		
 		configBtn = new JButton(am.accessLocal().getString("configBtn"));
 		startBtn = new JButton(am.accessLocal().getString("startBtn"));
-		shutdownBtn = new JButton (am.accessLocal().getString("closeBtn"));
+		shutdownBtn = new JButton ("TEMP SHUTDOWN BTN");
+		closeBtn = new JButton(am.accessLocal().getString("closeBtn"));
+		
+		//sets the shutdown button to invisible
+		shutdownBtn.setVisible(false);
 		
 		//adding items to frame
 		cp.add(configBtn);
 		cp.add(startBtn);
 		cp.add(shutdownBtn);
+		cp.add(closeBtn);
 		
 		
 		//button functionality
@@ -64,6 +71,14 @@ public class EZTranslateMenu extends Menu{
 				
 				am.startDetect();
 				
+				startBtn.setEnabled(false);
+				configBtn.setEnabled(false);
+				
+				startBtn.setVisible(false);
+				shutdownBtn.setVisible(true);
+				
+				
+				
 			}
 			
 		};
@@ -73,9 +88,27 @@ public class EZTranslateMenu extends Menu{
 			@Override
 			public void actionPerformed(ActionEvent evt) {
 							
-				am.shutdown();
+				am.stopDetect();
+				
+				startBtn.setEnabled(true);
+				configBtn.setEnabled(true);
+				
+				startBtn.setVisible(true);
+				shutdownBtn.setVisible(false);
+				
 			}
 				
+		};
+		
+		closeBtnAL = new ActionListener(){
+			
+			@Override
+			public void actionPerformed(ActionEvent evt) {
+				
+				am.shutdown();
+				
+			}
+			
 		};
 		
 		wa = new WindowAdapter() {
@@ -101,7 +134,8 @@ public class EZTranslateMenu extends Menu{
 		
 		configBtn.setText(am.accessLocal().getString("configBtn"));
 		startBtn.setText(am.accessLocal().getString("startBtn"));
-		shutdownBtn.setText(am.accessLocal().getString("closeBtn"));
+		shutdownBtn.setText(am.accessLocal().getString("TEMP SHUTDOWN BTN"));
+		closeBtn.setText(am.accessLocal().getString("closeBtn"));
 		this.setTitle(am.accessLocal().getString("mainMenuLabel"));
 		
 	}//updateText
@@ -115,6 +149,7 @@ public class EZTranslateMenu extends Menu{
 		configBtn.addActionListener(configBtnAL);
 		startBtn.addActionListener(startBtnAL);
 		shutdownBtn.addActionListener(shutdownBtnAL);
+		closeBtn.addActionListener(closeBtnAL);
 		super.addWindowListener(wa);
 		
 	}
@@ -128,6 +163,7 @@ public class EZTranslateMenu extends Menu{
 		configBtn.removeActionListener(configBtnAL);
 		startBtn.removeActionListener(startBtnAL);
 		shutdownBtn.removeActionListener(shutdownBtnAL);
+		closeBtn.removeActionListener(closeBtnAL);
 		super.removeWindowListener(wa);
 		
 	}

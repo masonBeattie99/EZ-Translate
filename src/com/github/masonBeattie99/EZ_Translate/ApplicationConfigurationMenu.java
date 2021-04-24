@@ -1,5 +1,6 @@
 /**
- * menu for configuring applications
+ * menu for configuring applications. Functionality not implemented due to requirements change in project.
+ * NON FUNCTIONING APPLICATION
  */
 package com.github.masonBeattie99.EZ_Translate;
 import java.awt.*;
