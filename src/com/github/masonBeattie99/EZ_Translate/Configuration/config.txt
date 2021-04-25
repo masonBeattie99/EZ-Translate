@@ -1,1 +1,1 @@
-0.Ctrl Shift D.Ctrl Shift Q.NOT_CONFIGURED
+0.Ctrl Shift 3.Ctrl Shift 5.NOT_CONFIGURED

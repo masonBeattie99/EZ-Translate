@@ -69,15 +69,13 @@ public class EZTranslateMenu extends Menu{
 			@Override
 			public void actionPerformed(ActionEvent evt) {
 				
-				am.startDetect();
-				
-				startBtn.setEnabled(false);
-				configBtn.setEnabled(false);
-				
-				startBtn.setVisible(false);
-				shutdownBtn.setVisible(true);
-				
-				
+				if(am.startDetect()) {
+					startBtn.setEnabled(false);
+					configBtn.setEnabled(false);
+					
+					startBtn.setVisible(false);
+					shutdownBtn.setVisible(true);
+				}
 				
 			}
 			
@@ -134,7 +132,7 @@ public class EZTranslateMenu extends Menu{
 		
 		configBtn.setText(am.accessLocal().getString("configBtn"));
 		startBtn.setText(am.accessLocal().getString("startBtn"));
-		shutdownBtn.setText(am.accessLocal().getString("TEMP SHUTDOWN BTN"));
+		shutdownBtn.setText(("TEMP SHUTDOWN BTN"));
 		closeBtn.setText(am.accessLocal().getString("closeBtn"));
 		this.setTitle(am.accessLocal().getString("mainMenuLabel"));
 		

@@ -19,8 +19,8 @@ public class TranslationService {
 		final String NO_SUPP = "Error: Language Not Supported!";
 		
 		String[] engList = {"Hello", "How are you?", "Good morning", "Good day", "Good night", "Goodbye"};
-		String[] gerList = {"Hallo", "Wie gehts?", "Guten Morgen", "Guten Tag", "Guten Nacht", "Tschüss"};
-		String[] rusList = {"Привет", "Как дела?", "Доброе утро", "Добрый день", "Добрый вечер","до �?видани�?"};
+		String[] gerList = {"Hallo", "Wie gehts?", "Guten Morgen", "Guten Tag", "Guten Nacht", "Auf Wiedersehen"};
+		String[] rusList = {"Привет", "Как дела?", "Доброе утро", "Добрый день", "Спокойной ночи","До свидания"};
 		
 		String[] transToList = new String[6];
 		
@@ -52,7 +52,7 @@ public class TranslationService {
 		else if(transTo.equals("нем")) {
 			transToList = gerList.clone();
 		}
-		else if(transTo.equals("ру�?")) {
+		else if(transTo.equals("рус")) {
 			transToList = rusList.clone();
 		}
 		

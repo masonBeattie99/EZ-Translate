@@ -405,7 +405,7 @@ public class Configuration {
 //methods that allow for key binds to be verified
 	
 	/**
-	 * verifies that the key bind is supported in this system.
+	 * verifies that the key bind is not already used by this system.
 	 * @param key bind to be verified
 	 * @return true if valid, false if invalid
 	 */
@@ -416,6 +416,47 @@ public class Configuration {
 			
 			//add further validation code here
 			
+			switch(keyBind) {
+			
+			case "Ctrl X ":
+				return false;
+			case "Ctrl C ":
+				return false;
+			case "Ctrl V ":
+				return false;
+			case "Ctrl Z ":
+				return false;
+			case "Alt Tab ":
+				return false;
+			case "Alt F4 ":
+				return false;
+			case "F1 ":
+				return false;
+			case "F2 ":
+				return false;
+			case "F3 ":
+				return false;
+			case "F4 ":
+				return false;
+			case "F5 ":
+				return false;
+			case "F6 ":
+				return false;
+			case "F7 ":
+				return false;
+			case "F8 ":
+				return false;
+			case "F9 ":
+				return false;
+			case "F10 ":
+				return false;
+			case "F11 ":
+				return false;
+			case "F12 ":
+				return false;
+			case "Ctrl Alt Delete ":
+				return false;
+			}
 			
 			return true;
 		}
@@ -497,7 +538,7 @@ public class Configuration {
 			localConver = "deu";
 		}
 		else if(this.getLocal() == 2) {
-			localConver = "ру�?";
+			localConver = "рус";
 			
 			try {
 				byte[] byteString = localConver.getBytes("UTF-8");

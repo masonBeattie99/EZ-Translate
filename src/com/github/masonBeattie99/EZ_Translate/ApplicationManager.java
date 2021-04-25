@@ -267,12 +267,7 @@ public class ApplicationManager {
 			localResource = ResourceBundle.getBundle("com.github.masonBeattie99.EZ_Translate.resources.Localization");
 		}
 		
-		ezmenu.updateText();
-		configinter.updateText();
-		trslinter.updateText();
-		acm.updateText();
-		kcm.updateText();
-		lcm.updateText();
+		callTextUpdates();
 		
 	}//changeLocal
 	
@@ -312,16 +307,28 @@ public class ApplicationManager {
 			JOptionPane.showMessageDialog(noti,"TEMP ERROR INVALID CLOSE KEY", "TEMP ERROR INVALID CLOSE KEY", JOptionPane.ERROR_MESSAGE);
 		}
 		else {
-			ezmenu.updateText();
-			configinter.updateText();
-			trslinter.updateText();
-			acm.updateText();
-			kcm.updateText();
-			lcm.updateText();
+			
+			callTextUpdates();
+			
 		}
 		
 	}//changeKeys
 	
+	//method to update text in the application upon change in configuration
+	
+	/**
+	 * calls the updateText methods in all menu items.
+	 */
+	public void callTextUpdates() {
+		
+		ezmenu.updateText();
+		configinter.updateText();
+		trslinter.updateText();
+		acm.updateText();
+		kcm.updateText();
+		lcm.updateText();
+		
+	}//callUpdates
 	
 	//detection methodology
 	
@@ -374,11 +381,8 @@ public class ApplicationManager {
 	 */
 	public String translateLang(int index, String phrase) {
 		
-		System.out.println("Beginning Translation");
-		
 		String result = "";
 		String langTo = "";
-		String currLang = "";
 		
 		if(index == 0) {
 			langTo  = "eng";

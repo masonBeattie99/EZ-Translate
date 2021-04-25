@@ -20,12 +20,19 @@ public class DetectionService{
 	//private variables
 	ApplicationManager am;
 	
+	GlobalKeyListener gkl;
+	
 	private String openKeyString;
 	private String closeKeyString;
-	
 	private String inputString;
+	private int currIndex;
+	private int iteration;
 	
-	private Scanner ls;
+	private ArrayList<String> openKeyList;
+	private ArrayList<String> closeKeyList;
+	
+	private Scanner openLs;
+	private Scanner closeLs;
 	
 	//JNativeHook registers ctrl input unnecessarily, this value is used to work around it.
 	private int ctrlBuff;
@@ -38,13 +45,17 @@ public class DetectionService{
 		
 		this.am = am;
 		
+		iteration = 0;
+		currIndex = 0;
+		
 		openKeyString = "";
 		closeKeyString = "";
 		inputString = "";
 		
 		ctrlBuff = 0;
 		
-		ls = new Scanner(inputString);
+		openKeyList = new ArrayList<String>();
+		closeKeyList = new ArrayList<String>();
 		
 	}//constructor
 	
@@ -53,17 +64,20 @@ public class DetectionService{
 	 */
 	public void start() {
 		
-		openKeyString = am.accessConfig().getOpenKey();
-		closeKeyString = am.accessConfig().getCloseKey();
+		openKeyString = am.accessConfig().getOpenKey() + " ";
+		closeKeyString = am.accessConfig().getCloseKey() + " ";
 		
 		System.out.println(openKeyString);
 		System.out.println(closeKeyString);
+		
+		processKeys();
 		
 		//code to disable console output
 		Logger log = Logger.getLogger(GlobalScreen.class.getPackage().getName());
 		log.setLevel(Level.OFF);
 		log.setUseParentHandlers(false);
 		
+		//starting the detection services
 		try {
 			GlobalScreen.registerNativeHook();
 		}
@@ -74,7 +88,8 @@ public class DetectionService{
 			
 		}		
 		
-		GlobalScreen.addNativeKeyListener(new GlobalKeyListener());
+		gkl = new GlobalKeyListener();
+		GlobalScreen.addNativeKeyListener(gkl);
 		
 		
 	}//start
@@ -85,9 +100,11 @@ public class DetectionService{
 	public void close() {
 		
 		try {
+			GlobalScreen.removeNativeKeyListener(gkl);
 			GlobalScreen.unregisterNativeHook();
 		}
 		catch(NativeHookException e){
+			System.out.println("Issue unregistering native hooks");
 			e.printStackTrace();			
 		}
 		
@@ -118,19 +135,58 @@ public class DetectionService{
 	}//closeAction
 
 	/**
+	 * method for processing keybinds to receive the maximum length needed to be processed
+	 */
+	public void processKeys() {
+		
+		int openMax = 0;
+		int closeMax = 0;
+		
+		openLs = new Scanner(openKeyString);
+		closeLs = new Scanner(closeKeyString);
+		
+		while(openLs.hasNext()) {
+			openKeyList.add(openLs.next());
+		}
+		
+		while(closeLs.hasNext()) {
+			closeKeyList.add(closeLs.next());
+		}
+		
+	}
+	
+	/**
 	 * handles the input received by the GlobalKeyListener subclass
 	 */
 	public void handleInput(String input) {
 		
 		inputString += input + " ";
 		
-		//method to trim excessive Ctrl values
-		
-		System.out.println("Current Input String: " + inputString);
+		//if the input is not contained within the strings, clear the input stream
+		if(!openKeyString.contains(input) && !closeKeyString.contains(input)) {
+			
+			//clears input string if not values are present in keybind list
+			inputString = "";
+			
+		}
+		else {
+			
+			
+			if(inputString.contains(openKeyString)){
+				openAction();
+				inputString = "";
+				currIndex = 0;
+			}
+			if(inputString.contains(closeKeyString)) {
+				closeAction();
+				currIndex = 0;
+				inputString = "";
+			}
+			
+		}
 		
 	}//handleInput
-	
-	
+		
 	/**
 	 * key listener subclass that implements JNativeHook NativeKeyListener interface
 	 * @author mason
@@ -148,24 +204,17 @@ public class DetectionService{
 		@Override
 		public void nativeKeyPressed(NativeKeyEvent e) {
 			
-			//System.out.println("Key Pressed: " + NativeKeyEvent.getKeyText(e.getKeyCode()));
+			handleInput(NativeKeyEvent.getKeyText(e.getKeyCode()));
 			
 		}
 
 		@Override
 		public void nativeKeyReleased(NativeKeyEvent e) {
 			
-			System.out.println("Key Released: " + NativeKeyEvent.getKeyText(e.getKeyCode()));
-			
-			handleInput(NativeKeyEvent.getKeyText(e.getKeyCode()));
-			
 		}
 
 		@Override
 		public void nativeKeyTyped(NativeKeyEvent e) {
-			
-			//System.out.println("Key Typed: " + NativeKeyEvent.getKeyText(e.getKeyCode()));
-			
 			
 		}
 		
