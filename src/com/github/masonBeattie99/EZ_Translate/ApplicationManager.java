@@ -13,7 +13,6 @@ import javax.swing.JOptionPane;
 import javax.swing.*;
 import com.github.masonBeattie99.EZ_Translate.services.*;
 import com.github.masonBeattie99.EZ_Translate.configuration.Configuration;
-import com.github.masonBeattie99.EZ_Translate.resources.*;
 import java.util.ResourceBundle;
 
 public class ApplicationManager {
@@ -98,7 +97,9 @@ public class ApplicationManager {
 		}
 		else {
 			JOptionPane.showMessageDialog(noti, localResource.getString("errFileNotFoundMsg"), localResource.getString("fileNotFoundMsg"), JOptionPane.ERROR_MESSAGE);
-			this.shutdown();
+			
+			System.exit(1);
+
 		}
 		
 	}//startup
@@ -117,7 +118,9 @@ public class ApplicationManager {
 		}
 		else {
 			JOptionPane.showMessageDialog(noti, localResource.getString("errFileNotFoundMsg"), localResource.getString("fileNotFoundMsg"), JOptionPane.ERROR_MESSAGE);
+			System.exit(1);
 		}
+		
 		
 		
 	}//shutdown
