@@ -23,7 +23,8 @@ public class Configuration {
 	private static String CONFIG_DELIM = ".";
 	//private static String APPS_DELIM = "#";
 	private static String NO_CONFIG = "NOT_CONFIGURED";
-	private static String CONFIG_FILE = "src/com/github/masonBeattie99/EZ_Translate/configuration/config.txt";
+	//private static String CONFIG_FILE = "src/com/github/masonBeattie99/EZ_Translate/configuration/config.txt";
+	private static String CONFIG_FILE = "config.txt";
 	//private static int APP_LIMIT = 10;
 	
 	//file reading objects
