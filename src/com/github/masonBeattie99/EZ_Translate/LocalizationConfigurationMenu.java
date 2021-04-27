@@ -4,8 +4,6 @@
 package com.github.masonBeattie99.EZ_Translate;
 import java.awt.*;
 import java.awt.event.*;
-import java.nio.charset.StandardCharsets;
-import java.util.Locale;
 
 import javax.swing.*;
 @SuppressWarnings("serial")
