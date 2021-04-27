@@ -13,11 +13,11 @@ public class TranslationInterface extends Menu{
 
 	//private variables
 	private JButton transBtn;
-	private JButton detectBtn;
+	//private JButton detectBtn;
 	private JTextField transField;
-	private JTextField detectField;
+	//private JTextField detectField;
 	private JTextField transResult;
-	private JTextField detectResult;
+	//private JTextField detectResult;
 	
 	private String[] options = new String[3];
 	
@@ -26,7 +26,7 @@ public class TranslationInterface extends Menu{
 	ApplicationManager am;
 	
 	ActionListener transBtnAL;
-	ActionListener detectBtnAL;
+	//ActionListener detectBtnAL;
 	
 	WindowAdapter wa;
 	
@@ -44,11 +44,11 @@ public class TranslationInterface extends Menu{
 		cp.setLayout(new FlowLayout());
 		
 		transBtn = new JButton ("TEMP TRANS BUTTON");
-		detectBtn = new JButton ("TEMP DETECT BUTTON");
+		//detectBtn = new JButton ("TEMP DETECT BUTTON");
 		transField = new JTextField();
-		detectField = new JTextField();
+		//detectField = new JTextField();
 		transResult = new JTextField();
-		detectResult = new JTextField();
+		//detectResult = new JTextField();
 		
 		options = new String[] {
 				am.accessLocal().getString("localChoicesEng"),
@@ -58,22 +58,22 @@ public class TranslationInterface extends Menu{
 		transTo = new JComboBox<String>(options);
 		
 		transField.setEditable(true);
-		detectField.setEditable(true);
+		//detectField.setEditable(true);
 		transResult.setEditable(false);
-		detectResult.setEditable(false);
+		//detectResult.setEditable(false);
 		
 		transField.setColumns(5);
-		detectField.setColumns(5);
+		//detectField.setColumns(5);
 		transResult.setColumns(5);
-		detectResult.setColumns(5);
+		//detectResult.setColumns(5);
 		
 		cp.add(transBtn);
 		cp.add(transTo);
 		cp.add(transField);
 		cp.add(transResult);
-		cp.add(detectBtn);
-		cp.add(detectField);
-		cp.add(detectResult);
+		//cp.add(detectBtn);
+		//cp.add(detectField);
+		//cp.add(detectResult);
 		
 		transBtnAL = new ActionListener() {
 			
@@ -86,6 +86,7 @@ public class TranslationInterface extends Menu{
 			
 		};
 		
+		/**
 		detectBtnAL = new ActionListener() {
 			
 			@Override
@@ -96,6 +97,7 @@ public class TranslationInterface extends Menu{
 			}
 			
 		};
+		*/
 		
 		wa = new WindowAdapter() {
 			
@@ -120,7 +122,7 @@ public class TranslationInterface extends Menu{
 		setTitle("TEMP TRANSLATE INTERFACE");
 		
 		transBtn = new JButton ("TEMP TRANS BUTTON");
-		detectBtn = new JButton ("TEMP DETECT BUTTON");
+		//detectBtn = new JButton ("TEMP DETECT BUTTON");
 		
 		options = new String[] {
 				am.accessLocal().getString("localChoicesEng"),
@@ -137,7 +139,7 @@ public class TranslationInterface extends Menu{
 	public void addListeners() {
 		
 		transBtn.addActionListener(transBtnAL);
-		detectBtn.addActionListener(detectBtnAL);
+		//detectBtn.addActionListener(detectBtnAL);
 		super.addWindowListener(wa);
 		
 	}//addListeners
@@ -149,7 +151,17 @@ public class TranslationInterface extends Menu{
 		
 		super.removeWindowListener(wa);
 		transBtn.removeActionListener(transBtnAL);
-		detectBtn.removeActionListener(detectBtnAL);
+		//detectBtn.removeActionListener(detectBtnAL);
+		
+	}
+	
+	@Override
+	public void displayMenu() {
+		
+		this.addListeners();
+		setVisible(true);
+		requestFocusInWindow();
+		transField.grabFocus();
 		
 	}
 	
