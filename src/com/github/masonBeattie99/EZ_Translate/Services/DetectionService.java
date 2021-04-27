@@ -14,7 +14,7 @@ import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
-@SuppressWarnings("serial")
+
 public class DetectionService{
 
 	//private variables
@@ -126,9 +126,6 @@ public class DetectionService{
 	 * method for processing keybinds to receive the maximum length needed to be processed
 	 */
 	public void processKeys() {
-		
-		int openMax = 0;
-		int closeMax = 0;
 		
 		openLs = new Scanner(openKeyString);
 		closeLs = new Scanner(closeKeyString);
