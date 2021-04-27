@@ -88,7 +88,6 @@ public class KeybindConfigurationMenu extends Menu{
 					
 					keyEventList.add(e);
 					
-					//System.out.println(keyEventList.get(keyEventList.size() - 1).getExtendedKeyCode());
 					
 					//adds space for storage within file
 					currentOpenBind += KeyEvent.getKeyText(e.getExtendedKeyCode()) + " ";

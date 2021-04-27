@@ -22,7 +22,7 @@ public class ApplicationManager {
 	private EZTranslateMenu ezmenu;
 	private ConfigurationInterface configinter;
 	private TranslationInterface trslinter;
-	private ApplicationConfigurationMenu acm;
+	//private ApplicationConfigurationMenu acm;
 	private KeybindConfigurationMenu kcm;
 	private LocalizationConfigurationMenu lcm;
 	
@@ -45,10 +45,6 @@ public class ApplicationManager {
 	 * default constructor for ApplicationManager. Initializes all objects used by the application initially for faster run time during appliaction
 	 */
 	public ApplicationManager() {
-
-		//create non dependent services
-		//ts = new TranslationService();
-		//lds = new LanguageDetectionService();
 		
 		//configuration object
 		config = new Configuration();
@@ -75,7 +71,7 @@ public class ApplicationManager {
 		ezmenu = new EZTranslateMenu(this);
 		configinter = new ConfigurationInterface(this);
 		trslinter = new TranslationInterface(this);
-		acm = new ApplicationConfigurationMenu(this);
+		//acm = new ApplicationConfigurationMenu(this);
 		kcm = new KeybindConfigurationMenu(this);
 		lcm = new LocalizationConfigurationMenu(this);
 		
@@ -85,8 +81,6 @@ public class ApplicationManager {
 		//notification frame
 		noti = new JFrame();
 		
-		//file objects
-		this.startup();
 		
 	}//default constructor
 
@@ -155,9 +149,11 @@ public class ApplicationManager {
 	
 	/**
 	 * invokes acm object to display the application configuration menu
+	 * 
+	 * FUNCTION REMOVED FROM REQUIREMENTS
 	 */
 	public void displayACM() {
-		acm.displayMenu();
+		//acm.displayMenu();
 	}//displayACM
 	
 	/**
@@ -207,9 +203,11 @@ public class ApplicationManager {
 	
 	/**
 	 * invokes acm object to display the application configuration menu
+	 * 
+	 * FUNCTION REMOVED FROM REQUIREMENTS
 	 */
 	public void hideACM() {
-		acm.hideMenu();
+		//acm.hideMenu();
 	}//hideACM
 	
 	/**
@@ -324,7 +322,7 @@ public class ApplicationManager {
 		ezmenu.updateText();
 		configinter.updateText();
 		trslinter.updateText();
-		acm.updateText();
+		//acm.updateText();
 		kcm.updateText();
 		lcm.updateText();
 		
@@ -417,9 +415,12 @@ public class ApplicationManager {
 	
 	/**
 	 * Utilizes Lingua open source software to detect a language
+	 * 
+	 * FUNCTION REMOVED FROM REQUIREMENTS
 	 * @param the input language to detect
 	 * @return the result
 	 */
+	/**
 	public String detectLang(String input) {
 		
 		String result = "";
@@ -429,5 +430,6 @@ public class ApplicationManager {
 		return result;
 		
 	}//detect
+	*/
 	
 }//class

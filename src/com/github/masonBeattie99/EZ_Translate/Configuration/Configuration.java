@@ -14,17 +14,17 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
+//import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Configuration {
 
 	//static variables for configuration file
 	private static String CONFIG_DELIM = ".";
-	private static String APPS_DELIM = "#";
+	//private static String APPS_DELIM = "#";
 	private static String NO_CONFIG = "NOT_CONFIGURED";
 	private static String CONFIG_FILE = "src/com/github/masonBeattie99/EZ_Translate/configuration/config.txt";
-	private static int APP_LIMIT = 10;
+	//private static int APP_LIMIT = 10;
 	
 	//file reading objects
 	private File configFile;
@@ -35,7 +35,7 @@ public class Configuration {
 	private Scanner in;
 	
 	//configuration variables and lists
-	private ArrayList<String> apps;
+	//private ArrayList<String> apps;
 	private String currOpenKey;
 	private String currCloseKey;
 	private int currLocal;
@@ -45,7 +45,7 @@ public class Configuration {
 	 */
 	public Configuration(){
 		
-		apps = new ArrayList<String>();
+		//apps = new ArrayList<String>();
 		currOpenKey = "";
 		currCloseKey = "";
 		currLocal = 0;
@@ -69,7 +69,7 @@ public class Configuration {
 	public boolean readFile() {
 		
 		String configLine = "";
-		String appsLine = "";
+		//String appsLine = "";
 		
 		try {
 			
@@ -85,7 +85,7 @@ public class Configuration {
 				currLocal = 0;
 				currOpenKey = NO_CONFIG;
 				currCloseKey = NO_CONFIG;
-				apps.add(NO_CONFIG);
+				//apps.add(NO_CONFIG);
 			}
 			else {
 				
@@ -115,6 +115,7 @@ public class Configuration {
 					currCloseKey = NO_CONFIG;
 				}
 				
+				/**
 				if(in.hasNext()) {
 					
 					appsLine = in.next();
@@ -136,6 +137,7 @@ public class Configuration {
 					apps.add(NO_CONFIG);
 					
 				}
+				*/
 			}
 			
 			return true;
@@ -164,7 +166,7 @@ public class Configuration {
 	 */
 	public boolean updateFile() {
 		
-		String appString = "";
+		//String appString = "";
 		String configString = "";
 		
 		
@@ -174,6 +176,7 @@ public class Configuration {
 			configWriter = new OutputStreamWriter(new FileOutputStream(configFile), StandardCharsets.UTF_8);
 			
 			//creates a string of apps that is formatted for storage within the configuration file. Does not add delimiter for last item
+			/**
 			for(int i = 0; i < apps.size(); i++) {
 				
 				if(i != apps.size() - 1) {
@@ -184,12 +187,12 @@ public class Configuration {
 				}
 				
 			}
+			*/
 			
 			configString=(
 					currLocal + CONFIG_DELIM + 
 					currOpenKey + CONFIG_DELIM +
-					currCloseKey + CONFIG_DELIM +
-					appString);
+					currCloseKey + CONFIG_DELIM);
 			
 			configWriter.write(configString);
 			
@@ -198,15 +201,12 @@ public class Configuration {
 			
 		}
 		catch(UnsupportedEncodingException u) {
-			u.printStackTrace();
 			return false;
 		}
 		catch(FileNotFoundException e) {
-			e.printStackTrace();
 			return false;
 		}
 		catch(IOException i) {
-			i.printStackTrace();
 			return false;
 		}
 		
@@ -214,14 +214,16 @@ public class Configuration {
 		
 	}//updateFile
 	
-//methods for handling application configurations
+//methods for handling application configurations FUNCTION REMOVED FROM REQUIREMENTS
 	
 	/**
 	 * updates the application string
+	 * FUNCTION REMOVED FROM REQUIREMENTS
 	 * @param application directory being added
 	 * @param data to change
 	 * @return true upon success, false upon failure
 	 */
+	/**
 	public boolean updateApp(String app) {
 		
 		//if no app is configured, removes no configuraion message and adds an app in its place
@@ -243,12 +245,15 @@ public class Configuration {
 		}
 		
 	}//updateFile
+	*/
 	
 	/**
 	 * removes an application from the list
+	 * FUNCTION REMOVED FROM REQUIREMENTS
 	 * @param application to be removed
 	 * @return true upon success, false upon failure
 	 */
+	/**
 	public boolean removeApp(String app) {
 		
 		for(int i = 0; i < apps.size(); i++) {
@@ -266,6 +271,7 @@ public class Configuration {
 		}
 		
 	}//removeapp
+	*/
 	
 //methods for handling keybind configurations
 	
@@ -302,7 +308,6 @@ public class Configuration {
 				}
 				}
 			catch(UnsupportedEncodingException e) {
-				e.printStackTrace();
 				return false;
 			}
 		
@@ -349,7 +354,6 @@ public class Configuration {
 				}
 			}
 			catch(UnsupportedEncodingException e) {
-				e.printStackTrace();
 				return false;
 			}
 		
@@ -502,8 +506,10 @@ public class Configuration {
 	
 	/**
 	 * returns the applications in a user readable string that does not include delimiters
+	 * NOT UTILIZED BY APPLICATION
 	 * @return apps formatted into a string
 	 */
+	/*
 	public String getApps() {
 		String appString = "";
 		
@@ -521,6 +527,7 @@ public class Configuration {
 		return appString;
 		
 	}//getApps
+	*/
 	
 	/**
 	 * returns all configurations as a string through get methods provided and labeling corresponding configurations
@@ -546,11 +553,14 @@ public class Configuration {
 				localConver = encodedString;
 			}
 			catch(UnsupportedEncodingException e){
-				e.printStackTrace();
+				
+				
+				
 			}
 		}
 		
-		result = String.format("Localization: %s \nOpening Keybind: %s \nClosing Keybind: %s \nApplications: %s", localConver, this.getOpenKey(), this.getCloseKey(), this.getApps());
+		//result = String.format("Localization: %s \nOpening Keybind: %s \nClosing Keybind: %s \nApplications: %s", localConver, this.getOpenKey(), this.getCloseKey(), this.getApps());
+		result = String.format("Localization: %s \nOpening Keybind: %s \nClosing Keybind: %s ", localConver, this.getOpenKey(), this.getCloseKey());
 		
 		return result;
 		

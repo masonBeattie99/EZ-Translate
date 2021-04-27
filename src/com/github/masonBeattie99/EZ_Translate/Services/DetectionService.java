@@ -25,8 +25,6 @@ public class DetectionService{
 	private String openKeyString;
 	private String closeKeyString;
 	private String inputString;
-	private int currIndex;
-	private int iteration;
 	
 	private ArrayList<String> openKeyList;
 	private ArrayList<String> closeKeyList;
@@ -34,8 +32,6 @@ public class DetectionService{
 	private Scanner openLs;
 	private Scanner closeLs;
 	
-	//JNativeHook registers ctrl input unnecessarily, this value is used to work around it.
-	private int ctrlBuff;
 	
 	/**
 	 * accepts application manager and component to attach input detection to
@@ -45,14 +41,9 @@ public class DetectionService{
 		
 		this.am = am;
 		
-		iteration = 0;
-		currIndex = 0;
-		
 		openKeyString = "";
 		closeKeyString = "";
 		inputString = "";
-		
-		ctrlBuff = 0;
 		
 		openKeyList = new ArrayList<String>();
 		closeKeyList = new ArrayList<String>();
@@ -66,9 +57,6 @@ public class DetectionService{
 		
 		openKeyString = am.accessConfig().getOpenKey() + " ";
 		closeKeyString = am.accessConfig().getCloseKey() + " ";
-		
-		System.out.println(openKeyString);
-		System.out.println(closeKeyString);
 		
 		processKeys();
 		
@@ -175,11 +163,9 @@ public class DetectionService{
 			if(inputString.contains(openKeyString)){
 				openAction();
 				inputString = "";
-				currIndex = 0;
 			}
 			if(inputString.contains(closeKeyString)) {
 				closeAction();
-				currIndex = 0;
 				inputString = "";
 			}
 			
