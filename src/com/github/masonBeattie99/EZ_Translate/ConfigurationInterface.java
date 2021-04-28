@@ -18,14 +18,14 @@ public class ConfigurationInterface extends Menu{
 	private JTextField configs;
 	private JLabel configLabel;
 	
-	ApplicationManager am;
+	private ApplicationManager am;
 	
-	ActionListener appBtnAL;
-	ActionListener keyBtnAL;
-	ActionListener localBtnAL;
-	ActionListener closeBtnAL;
+	private ActionListener appBtnAL;
+	private ActionListener keyBtnAL;
+	private ActionListener localBtnAL;
+	private ActionListener closeBtnAL;
 	
-	WindowAdapter wa;
+	private WindowAdapter wa;
 	
 	/**
 	 * constructs an EZTranslateMenu
@@ -104,6 +104,7 @@ public class ConfigurationInterface extends Menu{
 		
 		wa = new WindowAdapter() {
 			
+			@Override
 			public void windowClosing(WindowEvent e) {
 				//performs the same action as close button for consistency
 				am.hideConfigMenu();

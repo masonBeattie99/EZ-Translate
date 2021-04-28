@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class KeybindConfigurationMenu extends Menu{
 
 		//content pane
-		Container cp;
+		private Container cp;
 	
 		//private variables
 		private JButton upOpenKeyBtn;
@@ -26,24 +26,20 @@ public class KeybindConfigurationMenu extends Menu{
 		private String currentOpenBind;
 		private String currentCloseBind;
 		
-		ApplicationManager am;
+		private ApplicationManager am;
 		
 		//action listeners used by buttons
-		ActionListener openKeyAL;
-		ActionListener closeKeyAL;
-		ActionListener closeBtnAL;
-		ActionListener saveKeyAL;
+		private ActionListener openKeyAL;
+		private ActionListener closeKeyAL;
+		private ActionListener closeBtnAL;
+		private ActionListener saveKeyAL;
 		
 		//key adapters used by the key listeners to observe keyboard input
-		KeyAdapter openKeyAda;
-		KeyAdapter closeKeyAda;
+		private KeyAdapter openKeyAda;
+		private KeyAdapter closeKeyAda;
 		
 		//window adapter to detect when menu closes, to perform a custom closing operation
-		WindowAdapter wa;
-		
-		//testing code, hope this works
-		ArrayList<KeyEvent> keyEventList;
-		
+		private WindowAdapter wa;		
 		
 		/**
 		 * constructs an EZTranslateMenu
@@ -80,14 +76,9 @@ public class KeybindConfigurationMenu extends Menu{
 			cp.add(closeBtn);
 			cp.add(saveKeyBtn);			
 			
-			keyEventList = new ArrayList<KeyEvent>();
-			
 			openKeyAda = new KeyAdapter() {
 				
 				@Override public void keyPressed(final KeyEvent e) {
-					
-					keyEventList.add(e);
-					
 					
 					//adds space for storage within file
 					currentOpenBind += KeyEvent.getKeyText(e.getExtendedKeyCode()) + " ";
@@ -190,6 +181,7 @@ public class KeybindConfigurationMenu extends Menu{
 			
 			wa = new WindowAdapter() {
 				
+				@Override
 				public void windowClosing(WindowEvent e) {
 					//performs the same action as close button for consistency
 					am.hideKCM();

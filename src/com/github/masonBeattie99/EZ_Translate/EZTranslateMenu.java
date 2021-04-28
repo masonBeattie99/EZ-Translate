@@ -18,14 +18,14 @@ public class EZTranslateMenu extends Menu{
 	private JButton shutdownBtn;
 	private JButton closeBtn;
 	
-	ApplicationManager am;
+	private ApplicationManager am;
 	
-	ActionListener configBtnAL;
-	ActionListener startBtnAL;
-	ActionListener shutdownBtnAL;
-	ActionListener closeBtnAL;
+	private ActionListener configBtnAL;
+	private ActionListener startBtnAL;
+	private ActionListener shutdownBtnAL;
+	private ActionListener closeBtnAL;
 	
-	WindowAdapter wa;
+	private WindowAdapter wa;
 	
 	/**
 	 * constructs an EZTranslateMenu
@@ -111,6 +111,7 @@ public class EZTranslateMenu extends Menu{
 		
 		wa = new WindowAdapter() {
 			
+			@Override
 			public void windowClosing(WindowEvent e) {
 				//performs the same action as close button for consistency
 				am.shutdown();

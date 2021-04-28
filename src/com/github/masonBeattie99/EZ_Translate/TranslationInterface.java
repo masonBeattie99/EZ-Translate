@@ -23,12 +23,12 @@ public class TranslationInterface extends Menu{
 	
 	private JComboBox<String> transTo;
 	
-	ApplicationManager am;
+	private ApplicationManager am;
 	
-	ActionListener transBtnAL;
+	private ActionListener transBtnAL;
 	//ActionListener detectBtnAL;
 	
-	WindowAdapter wa;
+	private WindowAdapter wa;
 	
 	
 	/**
@@ -101,6 +101,7 @@ public class TranslationInterface extends Menu{
 		
 		wa = new WindowAdapter() {
 			
+			@Override
 			public void windowClosing(WindowEvent e) {
 				//performs the same action as close button for consistency
 				am.hideTransMenu();
@@ -164,7 +165,6 @@ public class TranslationInterface extends Menu{
 		this.addListeners();
 		setVisible(true);
 		requestFocusInWindow();
-		transField.grabFocus();
 		
 	}
 	

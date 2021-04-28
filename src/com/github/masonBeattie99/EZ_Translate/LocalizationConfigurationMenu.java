@@ -15,12 +15,12 @@ public class LocalizationConfigurationMenu extends Menu{
 			private JComboBox<String> locals;
 			private String[] options = new String[3];
 			
-			ApplicationManager am;
+			private ApplicationManager am;
 			
-			ActionListener upLocalBtnAL;
-			ActionListener closeBtnAL;
+			private ActionListener upLocalBtnAL;
+			private ActionListener closeBtnAL;
 			
-			WindowAdapter wa;
+			private WindowAdapter wa;
 			
 			/**
 			 * constructs an EZTranslateMenu
@@ -78,6 +78,7 @@ public class LocalizationConfigurationMenu extends Menu{
 				
 				wa = new WindowAdapter() {
 					
+					@Override
 					public void windowClosing(WindowEvent e) {
 						//performs the same action as close button for consistency
 						am.hideLCM();

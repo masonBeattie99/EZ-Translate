@@ -5,10 +5,8 @@
  */
 package com.github.masonBeattie99.EZ_Translate.services;
 import com.github.masonBeattie99.EZ_Translate.ApplicationManager;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.Scanner;
 
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
@@ -18,20 +16,16 @@ import org.jnativehook.keyboard.NativeKeyListener;
 public class DetectionService{
 
 	//private variables
-	ApplicationManager am;
+	private ApplicationManager am;
 	
-	GlobalKeyListener gkl;
+	private GlobalKeyListener gkl;
 	
 	private String openKeyString;
 	private String closeKeyString;
 	private String inputString;
 	
-	private ArrayList<String> openKeyList;
-	private ArrayList<String> closeKeyList;
-	
-	private Scanner openLs;
-	private Scanner closeLs;
-	
+	private boolean same;
+	private boolean open;
 	
 	/**
 	 * accepts application manager and component to attach input detection to
@@ -41,12 +35,11 @@ public class DetectionService{
 		
 		this.am = am;
 		
+		open = false;
+		
 		openKeyString = "";
 		closeKeyString = "";
 		inputString = "";
-		
-		openKeyList = new ArrayList<String>();
-		closeKeyList = new ArrayList<String>();
 		
 	}//constructor
 	
@@ -55,10 +48,16 @@ public class DetectionService{
 	 */
 	public void start() {
 		
-		openKeyString = am.accessConfig().getOpenKey() + " ";
-		closeKeyString = am.accessConfig().getCloseKey() + " ";
+		//removes all white spaces
+		openKeyString = (am.accessConfig().getOpenKey()).replaceAll(" ","");
+		closeKeyString = (am.accessConfig().getCloseKey()).replaceAll(" ","");
 		
-		processKeys();
+		if(openKeyString.equals(closeKeyString)) {
+			same = true;
+		}
+		else {
+			same = false;
+		}
 		
 		//code to disable console output
 		Logger log = Logger.getLogger(GlobalScreen.class.getPackage().getName());
@@ -121,31 +120,13 @@ public class DetectionService{
 				
 		
 	}//closeAction
-
-	/**
-	 * method for processing keybinds to receive the maximum length needed to be processed
-	 */
-	public void processKeys() {
-		
-		openLs = new Scanner(openKeyString);
-		closeLs = new Scanner(closeKeyString);
-		
-		while(openLs.hasNext()) {
-			openKeyList.add(openLs.next());
-		}
-		
-		while(closeLs.hasNext()) {
-			closeKeyList.add(closeLs.next());
-		}
-		
-	}
 	
 	/**
 	 * handles the input received by the GlobalKeyListener subclass
 	 */
 	public void handleInput(String input) {
 		
-		inputString += input + " ";
+		inputString += input;
 		
 		//if the input is not contained within the strings, clear the input stream
 		if(!openKeyString.contains(input) && !closeKeyString.contains(input)) {
@@ -156,14 +137,46 @@ public class DetectionService{
 		}
 		else {
 			
-			
-			if(inputString.contains(openKeyString)){
-				openAction();
-				inputString = "";
+			if(same) {
+				
+				if(inputString.contains(openKeyString) && !open) {
+					closeAction();
+					
+					//declares the menu opened
+					open = true;
+					
+					//clears input string
+					inputString = "";
+				}
+				else if(inputString.contains(closeKeyString) && open){
+					openAction();
+					
+					//declares the menu closed
+					open = false;
+					
+					//clears input string
+					inputString = "";
+				}
+				else {
+					
+					//do nothing
+					
+				}
+				
 			}
-			if(inputString.contains(closeKeyString)) {
-				closeAction();
-				inputString = "";
+			else {
+				if(inputString.contains(openKeyString)){
+					openAction();
+					
+					//clears input string
+					inputString = "";
+				}
+				if(inputString.contains(closeKeyString)) {
+					closeAction();
+					
+					//clears input string
+					inputString = "";
+				}
 			}
 			
 		}
