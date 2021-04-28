@@ -364,7 +364,7 @@ public class ApplicationManager {
 	 * stops the detection service
 	 */
 	public void stopDetect() {
-		
+		trslinter.hideMenu();
 		ds.close();
 		
 	}//stopDetect

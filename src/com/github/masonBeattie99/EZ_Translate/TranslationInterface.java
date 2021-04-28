@@ -118,10 +118,8 @@ public class TranslationInterface extends Menu{
 	 */
 	public void updateText() {
 		
-		//I'll get here soon
 		setTitle("TEMP TRANSLATE INTERFACE");
-		
-		transBtn = new JButton ("TEMP TRANS BUTTON");
+		transBtn.setText(am.accessLocal().getString("localChoicesGer"));
 		//detectBtn = new JButton ("TEMP DETECT BUTTON");
 		
 		options = new String[] {
@@ -129,7 +127,12 @@ public class TranslationInterface extends Menu{
 				am.accessLocal().getString("localChoicesGer"),
 				am.accessLocal().getString("localChoicesRus")};
 		
-		transTo = new JComboBox<String>(options);
+		transTo.removeAllItems();
+		for(int i = 0; i < options.length; i++) {
+			
+			transTo.addItem(options[i]);
+			
+		}
 		
 	}//updateText
 	
@@ -149,8 +152,8 @@ public class TranslationInterface extends Menu{
 	 */
 	public void removeListeners() {
 		
-		super.removeWindowListener(wa);
 		transBtn.removeActionListener(transBtnAL);
+		super.removeWindowListener(wa);
 		//detectBtn.removeActionListener(detectBtnAL);
 		
 	}
