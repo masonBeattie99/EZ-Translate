@@ -14,7 +14,7 @@ public class TranslationService {
 		
 	}//constructor
 	
-	public static String translate(String transTo, String phrase) {
+	public static String translate(int index, String phrase) {
 		
 		final String NO_SUPP = "Error: Language Not Supported!";
 		
@@ -27,40 +27,18 @@ public class TranslationService {
 		//set result to deaful to no support
 		String result = NO_SUPP;
 		
-		
-		if(transTo.equals("eng")) {
+		if(index == 0) {
 			transToList = engList.clone();
 		}
-		else if(transTo.equals("ger")) {
+		else if(index == 1) {
 			transToList = gerList.clone();
 		}
-		else if(transTo.equals("rus")) {
+		else if(index == 2) {
 			transToList = rusList.clone();
 		}
-		
-		//german based transTo. Only ger is replaced with deu
-		
-		else if(transTo.equals("deu")) {
-			transToList = gerList.clone();
-		}
-		
-		//russian based transTo
-		
-		else if(transTo.equals("анг")) {
-			transToList = engList.clone();
-		}
-		else if(transTo.equals("нем")) {
-			transToList = gerList.clone();
-		}
-		else if(transTo.equals("рус")) {
-			transToList = rusList.clone();
-		}
-		
-		//if nothing else
 		else {
 			result = NO_SUPP;
 		}
-		
 		
 		for(int i = 0; i < engList.length && i < gerList.length && i < rusList.length; i++) {
 			

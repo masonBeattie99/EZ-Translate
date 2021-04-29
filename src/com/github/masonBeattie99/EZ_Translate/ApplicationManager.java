@@ -396,7 +396,9 @@ public class ApplicationManager {
 		}
 		else {
 			//insert appropriate error message box
-			System.out.println("ERROR INVALD INDEX");
+
+			JOptionPane.showMessageDialog(noti,"TEMP ERROR INVALID INDEX", "TEMP ERROR INVALID INDEX", JOptionPane.ERROR_MESSAGE);
+			
 			return new String("INVALID INDEX ERROR");
 		}
 		
@@ -410,7 +412,7 @@ public class ApplicationManager {
 		}
 		*/
 		
-		result = TranslationService.translate(langTo, phrase);
+		result = TranslationService.translate(index, phrase);
 		
 		return result;
 		
