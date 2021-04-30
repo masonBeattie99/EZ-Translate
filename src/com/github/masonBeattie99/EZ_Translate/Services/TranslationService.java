@@ -6,7 +6,6 @@
 package com.github.masonBeattie99.EZ_Translate.services;
 
 import java.nio.charset.StandardCharsets;
-import java.io.UnsupportedEncodingException;
 
 public class TranslationService {
 	
