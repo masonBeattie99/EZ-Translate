@@ -1,6 +1,5 @@
 /**
  * Resource bundle for the German language from the Country of the Federal Republic of Germany that is utilized by the application.
- * Utilizes Alpha-2 of the ISO-3166 for country codes and ISO-639-2 for the language codes
  */
 package com.github.masonBeattie99.EZ_Translate.resources;
 
@@ -38,6 +37,17 @@ public class Localization_de extends Localization{
 		if(key.equals("localChoicesGer")) return "deu";
 		if(key.equals("localChoicesRus")) return "rus";
 		if(key.equals("localConfigMenuLabel")) return "Konfigurationsmenü für die Lokalisierung";
+		if(key.equals("errOpenKey")) return "Fehler: Ungültiger offener Schlüssel";
+		if(key.equals("errCloseKey")) return "Fehler: Ungültiger Schließschlüssel";
+		if(key.equals("errCloseOpenKey")) return "Fehler: Ungültiger Öffnungs- und Schließschlüssel";
+		if(key.equals("errNoKeys")) return "Fehler: Keine Schlüsselbindungen konfiguriert";
+		if(key.equals("startDetectBtn")) return "Starten der Tastatureingabe";
+		if(key.equals("stopDetectBtn")) return "Lesen der Tastatureingabe gestoppt";
+		if(key.equals("errIndex")) return "Fehler: Indexfehler";
+		if(key.equals("stopBtn")) return "Halt";
+		if(key.equals("saveKeys")) return "Keybinds speichern";
+		if(key.equals("transBtn")) return "Übersetzen";
+		if(key.equals("transLabel")) return "Übersetzungsschnittstelle";
 		
 		return null;
 	}
@@ -69,7 +79,18 @@ public class Localization_de extends Localization{
 				"localChoicesEng",
 				"localChoicesGer",
 				"localChoicesRus",
-				"localConfigMenuLabel"
+				"localConfigMenuLabel",
+				"errOpenKey",
+				"errCloseKey",
+				"errCloseOpenKey",
+				"errNoKeys",
+				"startDetectBtn",
+				"stopDetectBtn",
+				"errIndex",
+				"stopBtn",
+				"saveKeys",
+				"transBtn",
+				"transLabel"
 				));
 	}
 	

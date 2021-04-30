@@ -1,6 +1,5 @@
 /**
  * Resource bundle for the English language from the Country of the United States of America that is utilized by the application.
- * Utilizes Alpha-2 of the ISO-3166 for country codes and ISO-639-2 for the language codes
  */
 package com.github.masonBeattie99.EZ_Translate.resources;
 
@@ -38,6 +37,17 @@ public class Localization_us extends Localization{
 		if(key.equals("localChoicesGer")) return "ger";
 		if(key.equals("localChoicesRus")) return "rus";
 		if(key.equals("localConfigMenuLabel")) return "Localization Configuration Menu";
+		if(key.equals("errOpenKey")) return "Error: Invalid Open Key";
+		if(key.equals("errCloseKey")) return "Error: Invalid Close Key";
+		if(key.equals("errCloseOpenKey")) return "Error: Invalid Open and Close Key";
+		if(key.equals("errNoKeys")) return "Error: No Key Binds Configured";
+		if(key.equals("startDetectBtn")) return "Starting Keyboard Input Reading";
+		if(key.equals("stopDetectBtn")) return "Keyboard Input Reading Stopped";
+		if(key.equals("errIndex")) return "Error: Index Error";
+		if(key.equals("stopBtn")) return "Stop";
+		if(key.equals("saveKeys")) return "Save Keybinds";
+		if(key.equals("transBtn")) return "Translate";
+		if(key.equals("transLabel")) return "Translation Interface";
 		
 		return null;
 	}
@@ -51,8 +61,8 @@ public class Localization_us extends Localization{
 				"shutdownNoti",
 				"addAppMsg",
 				"deleAppMsg",
-				"closeMsg",
-				"appliMsg",
+				"closeBtn",
+				"appLabel",
 				"appConfigMenuLabel",
 				"configAppBtn",
 				"configKeyBndBtn",
@@ -69,7 +79,18 @@ public class Localization_us extends Localization{
 				"localChoicesEng",
 				"localChoicesGer",
 				"localChoicesRus",
-				"localConfigMenuLabel"
+				"localConfigMenuLabel",
+				"errOpenKey",
+				"errCloseKey",
+				"errCloseOpenKey",
+				"errNoKeys",
+				"startDetectBtn",
+				"stopDetectBtn",
+				"errIndex",
+				"stopBtn",
+				"saveKeys",
+				"transBtn",
+				"transLabel"
 				));
 	}
 

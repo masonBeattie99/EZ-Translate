@@ -1,6 +1,5 @@
 /**
  * Resource bundle for the Russian language from the Country of the Russian Federation that is utilized by the application.
- * Utilizes Alpha-2 of the ISO-3166 for country codes and ISO-639-2 for the language codes
  */
 package com.github.masonBeattie99.EZ_Translate.resources;
 
@@ -38,7 +37,17 @@ public class Localization_ru extends Localization{
 		if(key.equals("localChoicesGer")) return "нем";
 		if(key.equals("localChoicesRus")) return "рус";
 		if(key.equals("localConfigMenuLabel")) return "Меню настройки локализации";
-		
+		if(key.equals("errOpenKey")) return "Ошибка: недействительный открытый ключ";
+		if(key.equals("errCloseKey")) return "Ошибка: недействительный ключ закрытия";
+		if(key.equals("errCloseOpenKey")) return "Ошибка: недействительный ключ открытия и закрытия";
+		if(key.equals("errNoKeys")) return "Ошибка: не настроены привязки клавиш";
+		if(key.equals("startDetectBtn")) return "Начало чтения ввода с клавиатуры";
+		if(key.equals("stopDetectBtn")) return "Чтение ввода с клавиатуры остановлено";
+		if(key.equals("errIndex")) return "Ошибка: ошибка индекса";
+		if(key.equals("stopBtn")) return "Стоп";
+		if(key.equals("saveKeys")) return "Сохранить привязки клавиш";
+		if(key.equals("transBtn")) return "Переведите";
+		if(key.equals("transLabel")) return "Интерфейс перевода";
 		return null;
 	}
 	
@@ -52,7 +61,7 @@ public class Localization_ru extends Localization{
 				"addAppMsg",
 				"deleAppMsg",
 				"closeBtn",
-				"appliMsg",
+				"appLabel",
 				"appConfigMenuLabel",
 				"configAppBtn",
 				"configKeyBndBtn",
@@ -69,7 +78,18 @@ public class Localization_ru extends Localization{
 				"localChoicesEng",
 				"localChoicesGer",
 				"localChoicesRus",
-				"localConfigMenuLabel"
+				"localConfigMenuLabel",
+				"errOpenKey",
+				"errCloseKey",
+				"errCloseOpenKey",
+				"errNoKeys",
+				"startDetectBtn",
+				"stopDetectBtn",
+				"errIndex",
+				"stopBtn",
+				"saveKeys",
+				"transBtn",
+				"transLabel"
 				));
 	}
 	
