@@ -35,6 +35,7 @@ public class DetectionService{
 		
 		this.am = am;
 		
+		same = false;
 		open = false;
 		
 		openKeyString = "";
@@ -55,9 +56,6 @@ public class DetectionService{
 		if(openKeyString.equals(closeKeyString)) {
 			same = true;
 		}
-		else {
-			same = false;
-		}
 		
 		//code to disable console output
 		Logger log = Logger.getLogger(GlobalScreen.class.getPackage().getName());
@@ -69,8 +67,6 @@ public class DetectionService{
 			GlobalScreen.registerNativeHook();
 		}
 		catch (NativeHookException e) {
-			
-			System.out.println("Issue registering native hooks");
 			am.stopDetect();
 			
 		}		
@@ -91,7 +87,6 @@ public class DetectionService{
 			GlobalScreen.unregisterNativeHook();
 		}
 		catch(NativeHookException e){
-			System.out.println("Issue unregistering native hooks");
 			e.printStackTrace();			
 		}
 		
@@ -140,7 +135,7 @@ public class DetectionService{
 			if(same) {
 				
 				if(inputString.contains(openKeyString) && !open) {
-					closeAction();
+					openAction();
 					
 					//declares the menu opened
 					open = true;
@@ -149,7 +144,7 @@ public class DetectionService{
 					inputString = "";
 				}
 				else if(inputString.contains(closeKeyString) && open){
-					openAction();
+					closeAction();
 					
 					//declares the menu closed
 					open = false;
@@ -206,12 +201,12 @@ public class DetectionService{
 
 		@Override
 		public void nativeKeyReleased(NativeKeyEvent e) {
-			
+			//do nothing
 		}
 
 		@Override
 		public void nativeKeyTyped(NativeKeyEvent e) {
-			
+			//do nothing
 		}
 		
 	}
