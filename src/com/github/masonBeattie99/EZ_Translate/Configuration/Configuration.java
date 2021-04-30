@@ -6,6 +6,7 @@ package com.github.masonBeattie99.EZ_Translate.configuration;
 
 import java.io.File;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.io.FileOutputStream;
@@ -175,6 +176,8 @@ public class Configuration {
 			//created a new file writer that reads in eligible UTF-8 data (for cyrillic characters)
 			configWriter = new OutputStreamWriter(new FileOutputStream(configFile), StandardCharsets.UTF_8);
 			
+			BufferedWriter writer = new BufferedWriter(configWriter);
+			
 			//creates a string of apps that is formatted for storage within the configuration file. Does not add delimiter for last item
 			/**
 			for(int i = 0; i < apps.size(); i++) {
@@ -194,9 +197,10 @@ public class Configuration {
 					currOpenKey + CONFIG_DELIM +
 					currCloseKey + CONFIG_DELIM);
 			
-			configWriter.write(configString);
+			writer.write(configString);
 			
-			configWriter.flush();
+			writer.flush();
+			writer.close();
 			configWriter.close();
 			
 		}
@@ -418,6 +422,34 @@ public class Configuration {
 		//checking value of the current open bind
 		if(keyBind.length() != 0) {
 			
+			if(keyBind.contains("Windows")) {
+				return false;
+			}
+			else if(keyBind.contains("End")) {
+				return false;
+			}
+			else if(keyBind.contains("Home")) {
+				return false;
+			}
+			else if(keyBind.contains("Backspace")) {
+				return false;
+			}
+			else if(keyBind.contains("Space")) {
+				return false;
+			}
+			else if(keyBind.contains("Insert")) {
+				return false;
+			}
+			else if(keyBind.contains("Escape")) {
+				return false;
+			}
+			else if(keyBind.contains("Tab")) {
+				return false;
+			}
+			else {
+				//do nothing and move on to specific combinations
+			}
+			
 			//add further validation code here
 			
 			switch(keyBind) {
@@ -429,6 +461,16 @@ public class Configuration {
 			case "Ctrl V ":
 				return false;
 			case "Ctrl Z ":
+				return false;
+			case "Ctrl F ":
+				return false;
+			case "Ctrl N ":
+				return false;
+			case "Ctrl Y":
+				return false;
+			case "Alt D ":
+				return false;
+			case "Ctrl W":
 				return false;
 			case "Alt Tab ":
 				return false;
@@ -459,6 +501,8 @@ public class Configuration {
 			case "F12 ":
 				return false;
 			case "Ctrl Alt Delete ":
+				return false;
+			case "Ctrl Alt Tab":
 				return false;
 			}
 			
@@ -547,20 +591,21 @@ public class Configuration {
 		else if(this.getLocal() == 2) {
 			localConver = "рус";
 			
-			try {
-				byte[] byteString = localConver.getBytes("UTF-8");
-				String encodedString = new String(byteString, StandardCharsets.UTF_8);
-				localConver = encodedString;
-			}
-			catch(UnsupportedEncodingException e){
-				
-				
-				
-			}
 		}
 		
+	
+		try {
+			byte[] byteString = localConver.getBytes("UTF-8");
+			String encodedString = new String(byteString, StandardCharsets.UTF_8);
+			localConver = encodedString;
+		}
+		catch(UnsupportedEncodingException e){
+		
+			return "Encoding Error";
+			
+		}
 		//result = String.format("Localization: %s \nOpening Keybind: %s \nClosing Keybind: %s \nApplications: %s", localConver, this.getOpenKey(), this.getCloseKey(), this.getApps());
-		result = String.format("Localization: %s \nOpening Keybind: %s \nClosing Keybind: %s ", localConver, this.getOpenKey(), this.getCloseKey());
+		result = String.format("Localization: %s Open Key: %s Close Key: %s", localConver, this.getOpenKey(), this.getCloseKey());
 		
 		return result;
 		
