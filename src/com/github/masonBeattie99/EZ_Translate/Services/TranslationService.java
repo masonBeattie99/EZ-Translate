@@ -18,9 +18,41 @@ public class TranslationService {
 		
 		final String NO_SUPP = "Error: Language Not Supported!";
 		
-		String[] engList = {"Hello", "How are you?", "Good morning", "Good day", "Good night", "Goodbye"};
-		String[] gerList = {"Hallo", "Wie gehts?", "Guten Morgen", "Guten Tag", "Guten Nacht", "Auf Wiedersehen"};
-		String[] rusList = {"Привет", "Как дела?", "Доброе утро", "Добрый день", "Спокойной ночи","До свидания"};
+		String[] engList = {
+				"Hello",
+				"How are you",
+				"Good morning",
+				"Good day",
+				"Good evening",
+				"Good night",
+				"Goodbye",
+				"What time is it",
+				"Where are you from",
+				"Thank you"};
+		
+		String[] gerList = {
+				"Hallo",
+				"Wie gehts",
+				"Guten Morgen",
+				"Guten Tag",
+				"Guten Abend",
+				"Guten Nacht",
+				"Auf Wiedersehen",
+				"wie spät ist es",
+				"Woher kommst du",
+				"Vielen Dank"};
+		
+		String[] rusList = {
+				"Привет",
+				"Как дела",
+				"Доброе утро",
+				"Добрый день", 
+				"Добрый вечер",
+				"Спокойной ночи",
+				"До свидания",
+				"который сейчас час",
+				"Откуда ты",
+				"Спасибо"};
 		
 		String[] transToList = new String[6];
 		
