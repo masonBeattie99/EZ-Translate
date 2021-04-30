@@ -40,7 +40,7 @@ public class EZTranslateMenu extends Menu{
 		
 		configBtn = new JButton(am.accessLocal().getString("configBtn"));
 		startBtn = new JButton(am.accessLocal().getString("startBtn"));
-		shutdownBtn = new JButton ("TEMP SHUTDOWN BTN");
+		shutdownBtn = new JButton (am.accessLocal().getString("stopBtn"));
 		closeBtn = new JButton(am.accessLocal().getString("closeBtn"));
 		
 		//sets the shutdown button to invisible
@@ -133,7 +133,7 @@ public class EZTranslateMenu extends Menu{
 		
 		configBtn.setText(am.accessLocal().getString("configBtn"));
 		startBtn.setText(am.accessLocal().getString("startBtn"));
-		shutdownBtn.setText(("TEMP SHUTDOWN BTN"));
+		shutdownBtn.setText(am.accessLocal().getString("stopBtn"));
 		closeBtn.setText(am.accessLocal().getString("closeBtn"));
 		this.setTitle(am.accessLocal().getString("mainMenuLabel"));
 		

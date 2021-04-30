@@ -5,7 +5,6 @@ package com.github.masonBeattie99.EZ_Translate;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import java.util.ArrayList;
 @SuppressWarnings("serial")
 public class KeybindConfigurationMenu extends Menu{
 
@@ -35,8 +34,8 @@ public class KeybindConfigurationMenu extends Menu{
 		private ActionListener saveKeyAL;
 		
 		//key adapters used by the key listeners to observe keyboard input
-		private KeyAdapter openKeyAda;
-		private KeyAdapter closeKeyAda;
+		private KeyListener openKeyAda;
+		private KeyListener closeKeyAda;
 		
 		//window adapter to detect when menu closes, to perform a custom closing operation
 		private WindowAdapter wa;		
@@ -59,7 +58,7 @@ public class KeybindConfigurationMenu extends Menu{
 			
 			upOpenKeyBtn = new JButton(am.accessLocal().getString("upOpenKeyBtn"));
 			upCloseKeyBtn = new JButton(am.accessLocal().getString("upCloseKeyBtn"));
-			saveKeyBtn = new JButton("TEMP SAVE CLOSE BUTTON");
+			saveKeyBtn = new JButton(am.accessLocal().getString("saveKeys"));
 			closeBtn = new JButton (am.accessLocal().getString("closeBtn"));
 			openKeyInputField = new JTextField(am.accessConfig().getOpenKey());
 			closeKeyInputField = new JTextField(am.accessConfig().getCloseKey());
@@ -76,7 +75,7 @@ public class KeybindConfigurationMenu extends Menu{
 			cp.add(closeBtn);
 			cp.add(saveKeyBtn);			
 			
-			openKeyAda = new KeyAdapter() {
+			openKeyAda = new KeyListener() {
 				
 				@Override public void keyPressed(final KeyEvent e) {
 					
@@ -87,10 +86,20 @@ public class KeybindConfigurationMenu extends Menu{
 					openKeyInputField.setText(currentOpenBind);
 					
 				}
+
+				@Override
+				public void keyTyped(KeyEvent e) {
+					//no functionality
+				}
+
+				@Override
+				public void keyReleased(KeyEvent e) {
+					//no functionality
+				}
 				
 			};
 			
-			closeKeyAda = new KeyAdapter() {
+			closeKeyAda = new KeyListener() {
 				
 				@Override public void keyPressed(final KeyEvent e) {
 					
@@ -101,6 +110,18 @@ public class KeybindConfigurationMenu extends Menu{
 					closeKeyInputField.setText(currentCloseBind);
 					
 				}
+
+				@Override
+				public void keyTyped(KeyEvent e) {
+					//no functionality
+					
+				}
+
+				@Override
+				public void keyReleased(KeyEvent e) {
+					//no functionality
+					
+				}
 				
 			};
 			
@@ -109,6 +130,9 @@ public class KeybindConfigurationMenu extends Menu{
 				
 				@Override
 				public void actionPerformed(ActionEvent evt) {
+					
+					//clears input listening
+					openKeyInputField.removeKeyListener(openKeyAda);
 					
 					//resets the current config and the text field associated with it
 					currentOpenBind = "";
@@ -132,7 +156,10 @@ public class KeybindConfigurationMenu extends Menu{
 				
 				@Override
 				public void actionPerformed(ActionEvent evt) {
-									
+					
+					//clears input listening
+					closeKeyInputField.removeKeyListener(closeKeyAda);
+					
 					//resets the current config and the text field associated with it
 					currentCloseBind = "";
 					am.accessConfig().clearCloseKey();
@@ -171,6 +198,9 @@ public class KeybindConfigurationMenu extends Menu{
 					currentOpenBind = "";
 					currentCloseBind = "";
 					
+					openKeyInputField.setText(am.accessConfig().getOpenKey());
+					closeKeyInputField.setText(am.accessConfig().getCloseKey());
+					
 					//action listener has to be refreshed. Doesn't work any other way.
 					//upOpenKeyBtn.addActionListener(upKeyAL);
 					//upCloseKeyBtn.addActionListener(closeKeyAL);
@@ -202,7 +232,7 @@ public class KeybindConfigurationMenu extends Menu{
 			
 			upOpenKeyBtn.setText(am.accessLocal().getString("upOpenKeyBtn"));
 			upCloseKeyBtn.setText(am.accessLocal().getString("upCloseKeyBtn"));
-			saveKeyBtn.setText("TEMP SAVE CLOSE BUTTON");
+			saveKeyBtn.setText(am.accessLocal().getString("saveKeys"));
 			closeBtn.setText(am.accessLocal().getString("closeBtn"));
 			this.setTitle(am.accessLocal().getString("keyConfigMenuLabel"));
 			

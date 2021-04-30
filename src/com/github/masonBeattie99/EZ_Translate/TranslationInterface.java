@@ -43,7 +43,7 @@ public class TranslationInterface extends Menu{
 		
 		cp.setLayout(new FlowLayout());
 		
-		transBtn = new JButton ("TEMP TRANS BUTTON");
+		transBtn = new JButton (am.accessLocal().getString("transBtn"));
 		//detectBtn = new JButton ("TEMP DETECT BUTTON");
 		transField = new JTextField();
 		//detectField = new JTextField();
@@ -109,7 +109,7 @@ public class TranslationInterface extends Menu{
 		};
 		
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		setTitle("TEMP TRANSLATE INTERFACE");
+		setTitle(am.accessLocal().getString("transLabel"));
 		setSize(350,120);
 		
 	}//constructor
@@ -119,8 +119,8 @@ public class TranslationInterface extends Menu{
 	 */
 	public void updateText() {
 		
-		setTitle("TEMP TRANSLATE INTERFACE");
-		transBtn.setText(am.accessLocal().getString("localChoicesGer"));
+		setTitle(am.accessLocal().getString("transLabel"));
+		transBtn.setText(am.accessLocal().getString("transBtn"));
 		//detectBtn = new JButton ("TEMP DETECT BUTTON");
 		
 		options = new String[] {

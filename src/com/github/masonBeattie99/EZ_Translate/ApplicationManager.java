@@ -299,13 +299,13 @@ public class ApplicationManager {
 		
 		//checks if there was an error, if there was display appropriate menu, if not update menus text
 		if(changeOpenKeyFail && changeCloseKeyFail) {
-			JOptionPane.showMessageDialog(noti,"TEMP ERROR INVALID OPEN AND CLOSE KEY", "TEMP ERROR INVALID OPEN AND CLOSE KEY", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(noti,localResource.getString("errCloseOpenKey"), localResource.getString("errCloseOpenKey"), JOptionPane.ERROR_MESSAGE);
 		}
 		else if(changeOpenKeyFail) {
-			JOptionPane.showMessageDialog(noti,"TEMP ERROR INVALID OPEN KEY", "TEMP ERROR INVALID OPEN KEY", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(noti,localResource.getString("errOpenKey"), localResource.getString("errOpenKey"), JOptionPane.ERROR_MESSAGE);
 		}
 		else if(changeCloseKeyFail) {
-			JOptionPane.showMessageDialog(noti,"TEMP ERROR INVALID CLOSE KEY", "TEMP ERROR INVALID CLOSE KEY", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(noti,localResource.getString("errCloseKey"), localResource.getString("errCloseKey"), JOptionPane.ERROR_MESSAGE);
 		}
 		else {
 			
@@ -343,14 +343,14 @@ public class ApplicationManager {
 		//checking if keybinds are actually configured before starting
 		if((config.getOpenKey().equals("NOT_CONFIGURED") || config.getCloseKey().equals("NOT_CONFIGURED")) || (config.getCloseKey().isBlank() || config.getOpenKey().isBlank())) {
 			
-			JOptionPane.showMessageDialog(noti,"TEMP ERROR NO KEYBIND CONFIG", "TEMP ERROR NO KEYBIND CONFIG", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(noti,localResource.getString("errNoKeys"), localResource.getString("errNoKeys"), JOptionPane.ERROR_MESSAGE);
 			
 			return false;
 			
 		}
 		else {
 			
-			JOptionPane.showMessageDialog(noti,"TEMP STARTING APPLICATION");
+			JOptionPane.showMessageDialog(noti,localResource.getString("startDetectBtn"));
 			
 			ds.start();
 			
@@ -364,6 +364,9 @@ public class ApplicationManager {
 	 * stops the detection service
 	 */
 	public void stopDetect() {
+		
+		JOptionPane.showMessageDialog(noti,localResource.getString("stopDetectBtn"));
+		
 		trslinter.hideMenu();
 		ds.close();
 		
@@ -383,23 +386,21 @@ public class ApplicationManager {
 	public String translateLang(int index, String phrase) {
 		
 		String result = "";
-		String langTo = "";
 		
-		if(index == 0) {
-			langTo  = "eng";
-		}
-		else if(index == 1) {
-			langTo = "ger";
-		}
-		else if(index == 2) {
-			langTo = "rus";
-		}
-		else {
+		if(index != 0 && index != 1 && index != 2) {
+			
 			//insert appropriate error message box
 
-			JOptionPane.showMessageDialog(noti,"TEMP ERROR INVALID INDEX", "TEMP ERROR INVALID INDEX", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(noti,localResource.getString("errIndex"), localResource.getString("errIndex"), JOptionPane.ERROR_MESSAGE);
 			
-			return new String("INVALID INDEX ERROR");
+			return new String(localResource.getString("errIndex"));
+			
+		}
+		else {
+
+			result = TranslationService.translate(index, phrase);
+			
+			return result;
 		}
 		
 		//currLang = LanguageDetectionService.detectLang(phrase);
@@ -412,9 +413,7 @@ public class ApplicationManager {
 		}
 		*/
 		
-		result = TranslationService.translate(index, phrase);
 		
-		return result;
 		
 	}//translate
 	
