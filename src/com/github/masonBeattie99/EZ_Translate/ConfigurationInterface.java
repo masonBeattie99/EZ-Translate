@@ -44,7 +44,7 @@ public class ConfigurationInterface extends Menu{
 		localBtn = new JButton(am.accessLocal().getString("configLocalBtn"));
 		closeBtn = new JButton (am.accessLocal().getString("closeBtn"));
 		configLabel = new JLabel(am.accessLocal().getString("configsLabel"));
-		configs = new JTextField();
+		configs = new JTextField(75);
 		configs.setEditable(false);
 		
 		//adding items to frame
@@ -113,7 +113,7 @@ public class ConfigurationInterface extends Menu{
 		
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setTitle(am.accessLocal().getString("configMenuLabel"));
-		setSize(700,240);
+		setSize(1000,300);
 		
 		
 	}//constructor

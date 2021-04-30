@@ -87,7 +87,7 @@ public class LocalizationConfigurationMenu extends Menu{
 				
 				setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 				setTitle(am.accessLocal().getString("localConfigMenuLabel"));
-				setSize(350,120);
+				setSize(400,200);
 				
 				
 			}//constructor

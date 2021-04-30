@@ -45,9 +45,9 @@ public class TranslationInterface extends Menu{
 		
 		transBtn = new JButton (am.accessLocal().getString("transBtn"));
 		//detectBtn = new JButton ("TEMP DETECT BUTTON");
-		transField = new JTextField();
+		transField = new JTextField(50);
 		//detectField = new JTextField();
-		transResult = new JTextField();
+		transResult = new JTextField(50);
 		//detectResult = new JTextField();
 		
 		options = new String[] {
@@ -62,9 +62,9 @@ public class TranslationInterface extends Menu{
 		transResult.setEditable(false);
 		//detectResult.setEditable(false);
 		
-		transField.setColumns(5);
+		transField.setColumns(20);
 		//detectField.setColumns(5);
-		transResult.setColumns(5);
+		transResult.setColumns(20);
 		//detectResult.setColumns(5);
 		
 		cp.add(transBtn);
@@ -110,7 +110,7 @@ public class TranslationInterface extends Menu{
 		
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setTitle(am.accessLocal().getString("transLabel"));
-		setSize(350,120);
+		setSize(500,300);
 		
 	}//constructor
 	

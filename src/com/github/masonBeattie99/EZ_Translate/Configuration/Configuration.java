@@ -298,20 +298,14 @@ public class Configuration {
 			
 			}
 			
-			try {
-				
-				byteString = newKey.getBytes("UTF-8");
-				encodedString = new String(byteString, StandardCharsets.UTF_8);
-				currOpenKey = encodedString;
-				
-				if(this.updateFile()) {
-					return true;
-				}
-				else {
-					return false;
-				}
-				}
-			catch(UnsupportedEncodingException e) {
+			byteString = newKey.getBytes(StandardCharsets.UTF_8);
+			encodedString = new String(byteString, StandardCharsets.UTF_8);
+			currOpenKey = encodedString;
+			
+			if(this.updateFile()) {
+				return true;
+			}
+			else {
 				return false;
 			}
 		
@@ -344,20 +338,14 @@ public class Configuration {
 			
 			}
 			
-			try {
-				
-				byteString = newKey.getBytes("UTF-8");
-				encodedString = new String(byteString, StandardCharsets.UTF_8);
-				currCloseKey = encodedString;
-			
-				if(this.updateFile()) {
-					return true;
-				}
-				else {
-					return false;
-				}
+			byteString = newKey.getBytes(StandardCharsets.UTF_8);
+			encodedString = new String(byteString, StandardCharsets.UTF_8);
+			currCloseKey = encodedString;
+		
+			if(this.updateFile()) {
+				return true;
 			}
-			catch(UnsupportedEncodingException e) {
+			else {
 				return false;
 			}
 		
@@ -594,16 +582,10 @@ public class Configuration {
 		}
 		
 	
-		try {
-			byte[] byteString = localConver.getBytes("UTF-8");
-			String encodedString = new String(byteString, StandardCharsets.UTF_8);
-			localConver = encodedString;
-		}
-		catch(UnsupportedEncodingException e){
+		byte[] byteString = localConver.getBytes(StandardCharsets.UTF_8);
+		String encodedString = new String(byteString, StandardCharsets.UTF_8);
+		localConver = encodedString;
 		
-			return "Encoding Error";
-			
-		}
 		//result = String.format("Localization: %s \nOpening Keybind: %s \nClosing Keybind: %s \nApplications: %s", localConver, this.getOpenKey(), this.getCloseKey(), this.getApps());
 		result = String.format("Localization: %s Open Key: %s Close Key: %s", localConver, this.getOpenKey(), this.getCloseKey());
 		

@@ -60,8 +60,8 @@ public class KeybindConfigurationMenu extends Menu{
 			upCloseKeyBtn = new JButton(am.accessLocal().getString("upCloseKeyBtn"));
 			saveKeyBtn = new JButton(am.accessLocal().getString("saveKeys"));
 			closeBtn = new JButton (am.accessLocal().getString("closeBtn"));
-			openKeyInputField = new JTextField(am.accessConfig().getOpenKey());
-			closeKeyInputField = new JTextField(am.accessConfig().getCloseKey());
+			openKeyInputField = new JTextField(am.accessConfig().getOpenKey(), 30);
+			closeKeyInputField = new JTextField(am.accessConfig().getCloseKey(), 30);
 			
 			//input fields are used solely for display
 			openKeyInputField.setEditable(false);
@@ -72,8 +72,8 @@ public class KeybindConfigurationMenu extends Menu{
 			cp.add(openKeyInputField);
 			cp.add(upCloseKeyBtn);
 			cp.add(closeKeyInputField);
+			cp.add(saveKeyBtn);	
 			cp.add(closeBtn);
-			cp.add(saveKeyBtn);			
 			
 			openKeyAda = new KeyListener() {
 				
@@ -220,7 +220,7 @@ public class KeybindConfigurationMenu extends Menu{
 			
 			setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 			setTitle(am.accessLocal().getString("keyConfigMenuLabel"));
-			setSize(350,120);
+			setSize(500,500);
 			
 			
 		}//constructor

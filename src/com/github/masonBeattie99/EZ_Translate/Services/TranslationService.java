@@ -95,15 +95,8 @@ public class TranslationService {
 			
 		}
 		
-		try {
-			byte[] byteString = result.getBytes("UTF-8");
-			return new String (byteString, StandardCharsets.UTF_8);
-		}
-		catch(UnsupportedEncodingException e) {
-			return NO_SUPP;
-		}
-		
-		
+		byte[] byteString = result.getBytes(StandardCharsets.UTF_8);
+		return new String (byteString, StandardCharsets.UTF_8);
 		
 	}//translate
 	
